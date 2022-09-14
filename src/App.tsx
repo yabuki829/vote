@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Content from './components/Content';
 
-function App() {
+import Header from './components/Header';
+import RightBar from './components/RightBar';
+import SideBar from './components/SideBar';
+
+
+
+function App(){
+  const [isSideBarOpen,setSideBarOpen] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   
+      <div className=' antialiased md:flex'>
+        <div className='sticky top-0 z-50 h-0 hidden md:block'>
+          <SideBar isOpen={isSideBarOpen} setSideBarOpen={setSideBarOpen} />
+        </div>
+
+        <div className='flex-grow sticky top-0 z-50'>
+          <Header/ >
+          <div className=' md:mt-0'>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/>
+            <Content/> <Content/> <Content/> <Content/>
+          </div>
+         
+        </div>   
+        <div className='top-0 right-0 sticky md:h-full hidden md:block'>
+          <RightBar/>
+        </div>
+      </div>
+
+     
+    
   );
 }
 
