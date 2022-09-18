@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import vote from "./image/vote.jpg" 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+      <header>
+          <meta name="twitter:card" content="summary_large_image"/>
+          <meta property="og:title" content="Vote" />
+          <meta property="og:image" content={vote} />
+        </header>
     <App />
   </React.StrictMode>
 );
