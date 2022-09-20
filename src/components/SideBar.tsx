@@ -17,12 +17,8 @@ const SideBar: React.FC<Props> = ( props: Props) => {
         <ul className='mt-10 flex-grow'>
           <li>
             <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>ホーム</Link>
-            {/* // <a href="" className='block px-4 py-2 hover:bg-indigo-700 rounded-md '>ホーム</a> */}
           </li>
-          {/* <li>
-            <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>投票箱</Link>
-           
-          </li> */}
+         
           <li>
             <Link to="/thread" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>スレッド</Link>
             
@@ -35,7 +31,7 @@ const SideBar: React.FC<Props> = ( props: Props) => {
             <Link to="/contact" className='block px-4 py-2 hover:bg-indigo-700 rounded-md' >お問い合せ</Link>
             
           </li>
-          <li className=' bg-blue-400 text-center mt-10 p-5 rounded'>
+          <li className='bg-blue-400 text-center mt-10 p-5 rounded'>
             <Link to="/post">投票を作成する</Link>
           </li>
         </ul>

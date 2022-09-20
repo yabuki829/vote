@@ -20,6 +20,10 @@ const Header:React.FC = () => {
               </Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}>
               </Route>
+              <Route path='/profile' element={<h1>プロフィール</h1>}>
+              </Route>
+              <Route path='/*' element={<h1>404: Not Found</h1>}>
+              </Route>
           </Routes>
          
         </h1>
@@ -34,7 +38,6 @@ const Header:React.FC = () => {
         <ul className='flex  text-white'>
           <li>
             <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md '>ホーム</Link>
-           
           </li>
           <li>
             <Link to="/thread" className='block px-4 py-2 hover:bg-indigo-700 rounded-md '>スレッド</Link>

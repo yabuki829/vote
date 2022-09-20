@@ -9,11 +9,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <header>
-          <meta name="twitter:card" content="summary_large_image"/>
-          <meta property="og:title" content="Vote" />
-          <meta property="og:image" content={vote} />
-        </header>
+    <header>
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta property="og:title" content="Vote" />
+      <meta property="og:image" content={vote} />
+    </header>
     <App />
   </React.StrictMode>
 );

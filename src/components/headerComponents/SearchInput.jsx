@@ -1,6 +1,7 @@
 import React from 'react'
 
 const SearchInput = () => {
+  console.log("SearchInput")
   return (
     <div className='flex w-full  invisible md:visible'>
         <input className='w-full px-2 border' type="text" placeholder='検索' />
