@@ -1,13 +1,14 @@
 import React from 'react'
-import {BrowserRouter,Link} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 
-type Props =  {
-  isOpen:boolean
-  setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>;
-}
-const SideBar: React.FC<Props> = ( props: Props) => {
-  function handleOpenSideBar(){
-    props.setSideBarOpen((preState) => !preState)
+
+const SideBar: React.FC = () => {
+  const navigate = useNavigate();
+  function handleTapPostButton(){
+    //ログイン済みであれば Post画面に遷移する
+    navigate("/post")
+    //未ログインであれば　login画面に遷移する
+
   }
   console.log("SideBar")
   return (
@@ -18,7 +19,6 @@ const SideBar: React.FC<Props> = ( props: Props) => {
           <li>
             <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>ホーム</Link>
           </li>
-         
           <li>
             <Link to="/thread" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>スレッド</Link>
             

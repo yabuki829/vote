@@ -5,7 +5,7 @@ const RightBar = () => {
   console.log("RightBar")
   return (
     <div className="top-0 right-0 sticky md:h-full hidden md:block">
-      <nav className='  overflow-scroll  w-96 bg-gray-200 text-white md:h-screen md:p-3 '>
+      <nav className='  overflow-scroll  w-96 bg-gray-100 text-white md:h-screen md:p-3 '>
        
        <SearchInput/>
         <h1 className='text-black font-bold my-5 text-center'>おすすめのスレッド</h1>
