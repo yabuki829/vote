@@ -4,7 +4,7 @@ import Content from '../Content'
 const Profile = () => {
   return (
     <div>  
-      <div className='flex items-center px-20 pt-8'>
+      <div className='flex justify-center items-center px-20 pt-8'>
         <img className='w-24 h-24 border-2 rounded-full object-cover mr-4 shadow' src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="" />
         <div className='px-5'>
           <div className='items-center flex'>

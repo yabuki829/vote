@@ -2,7 +2,7 @@ import React from 'react'
 import { Link} from "react-router-dom"
 const Login = () => {
   return (
-    <div className="w-3/4 md:w-2/5  mx-auto p-5 mt-10 bg-gray-200 rounded border-2 border-gray-300 ">
+    <div className="w-3/4 md:w-2/5  mx-auto p-5 mt-10 bg-gray-100 rounded border-2 border-gray-300 ">
       <h1 className='text-2xl font-bold'>Login</h1>
       <form className='py-5' action="">
         <div className='items-center pb-5'>

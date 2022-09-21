@@ -11,6 +11,7 @@ import Contact from './components/contents/contact/Contact';
 import Profile from './components/contents/Profile';
 import Register from './components/contents/Auth/Register';
 import Login from './components/contents/Auth/Login';
+import Post from './components/contents/Post/Post';
 
 function App(){
   const [isSideBarOpen,setSideBarOpen] = useState(false)
@@ -33,7 +34,8 @@ function App(){
               </Route>
               <Route path='/contact' element={<Contact/>}>
               </Route>
-              <Route path='/post' element={<h1>投稿ページ</h1>}>
+              <Route path='/post' element={<Post/>}>
+                
               </Route>
               <Route path='/profile' element={<Profile/>}>
               </Route>
