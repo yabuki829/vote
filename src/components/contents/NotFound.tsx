@@ -15,6 +15,8 @@ const NotFound = () => {
         <Link to="/" className=' m-10 px-5 py-3 rounded-lg bg-blue-400 text-white text-center'>トップに戻る</Link>
       </div>
       
+
+      
     </div>
   )
 }

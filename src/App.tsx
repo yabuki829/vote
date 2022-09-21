@@ -28,7 +28,7 @@ function App(){
           <Header/ >
           <div className=' md:mt-0'>
             <Routes>
-              <Route path='/' element={<><Content/><Content/><Content/><Content/></>}>
+              <Route path='/' element={<Content/>}>
               </Route>
               <Route path='/thread' element={ <h1>Thread</h1>}>
               </Route>
