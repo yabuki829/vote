@@ -14,7 +14,6 @@ import Login from './components/contents/Auth/Login';
 import Post from './components/contents/Post/Post';
 
 function App(){
-  const [isSideBarOpen,setSideBarOpen] = useState(false)
 
   return (
     <Router>
@@ -23,7 +22,6 @@ function App(){
         <div className='sticky top-0 z-50 h-0 hidden md:block'>
           <SideBar  />
         </div>
-
         <div className='flex-grow sticky top-0 z-50'>
           <Header/ >
           <div className=' md:mt-0'>
@@ -50,8 +48,6 @@ function App(){
           <Route path='/' element={<RightBar/>}></Route>
           <Route path='/thread' element={ <RightBar/>}></Route>
           <Route path='/profile' element={<RightBar/>}></Route>
-       
-         
         </Routes>
       </div>
      

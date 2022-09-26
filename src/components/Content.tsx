@@ -1,30 +1,49 @@
-import React from 'react'
-import VoteCard from './contents/Vote/VoteCard'
+import React,{ useState,useEffect} from 'react';
+import VoteCard from './contents/Vote/VoteCard';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import { User,Vote } from '../Type';
 
-type Vote = {
-   id:string
-   text:String
-}
-
+const baseURL = "http://127.0.0.1:8000/api/vote/";
+//API_TOKENはクッキーに保存する
+const API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0MTk1MzQwLCJqdGkiOiI2NGE3ZDViNjM2NzE0NzQ4YjdhZTAxNjU3YTIzM2ZiMSIsInVzZXJfaWQiOjF9.26O-Xox0ucsn4tr4_bOr0Hr5cDPHlNCBYHMhLSn3IkA"
 const Content:React.FC = () => {
-   const voteList:Array<Vote> = [{id:"1",text:"aa"},{id:"2",text:"bb"},{id:"3",text:"cc"},{id:"4",text:"dd"}]
+   const [votes, setPost] = useState<Array<Vote>>([]);
+   //質問と選択肢を取得する
+   console.log("レンダリングがされました。")
+   useEffect(() => {
+      // console.log("useEffect",baseURL)
+     
+      axios.get(baseURL,
+         { headers: { Authorization: "JWT " + API_TOKEN } })
+         .then((response:AxiosResponse<Array<Vote>>) => {
+         console.log("----------------------------")
+         // console.log(response.data)
+         console.log("取得完了")
+         setPost(response.data);
+      });
+
+    },[]);
+   
+
    return (
          <>
-            <h1 className='text-2xl font-bold mx-3 mt-5'> <span>「React」</span>で検索しました</h1>
-            
+         <h1>test</h1>
+            {/* <h1 className='text-2xl font-bold mx-3 mt-5'> <span>「React」</span>で検索しました</h1> */}
                {
-                 
-                  voteList.map((vote)=> (
-                     <VoteCard/>
+                  votes.map((vote) => (
+                     <VoteCard
+                        questionText={vote.questionText} 
+                        id={vote.id} 
+                        user={vote.user} 
+                        createdAt={vote.createdAt}
+                        image={vote.image}
+                        isOnlyLoginUser={vote.isOnlyLoginUser}
+                        choices={vote.choices} /> 
                   ))
-                 
                }
-              
                
-            
-         </>
-        
-   
+              
+         </>   
 
    )
 }

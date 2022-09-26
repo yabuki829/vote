@@ -5,13 +5,20 @@ import { useNavigate,Route,Routes,Link} from "react-router-dom"
 
 const Header:React.FC = () => {
   const navigate = useNavigate();
-
+  const isLogin = false
   function handleImageTap(){
     console.log("profileに遷移します")
+    if (isLogin) {
+      navigate("/profile")
+    }
+    else{
+      navigate("/register")
+    }
     //未ログインのユーザーであればログイン画面に遷移する
     // navigate("/login")
     //ログイン済みであればprofileに遷移する
-    navigate("/profile")
+
+   
     
   }
   
