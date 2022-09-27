@@ -32,7 +32,7 @@ const SideBar: React.FC = () => {
             
           </li>
           <li className='bg-blue-400 text-center mt-10 p-5 rounded'>
-            <Link to="/post">投票を作成する</Link>
+            <Link to="/post">質問を作成する</Link>
           </li>
         </ul>
       </nav>

@@ -8,7 +8,7 @@ import SideBar from './components/SideBar';
 import {BrowserRouter as Router, Route,Routes} from "react-router-dom"
 import NotFound from './components/contents/NotFound';
 import Contact from './components/contents/contact/Contact';
-import Profile from './components/contents/Profile';
+import Profile from './components/contents/Profile/Profile';
 import Register from './components/contents/Auth/Register';
 import Login from './components/contents/Auth/Login';
 import Post from './components/contents/Post/Post';

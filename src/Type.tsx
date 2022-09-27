@@ -11,6 +11,7 @@ export type Vote = {
   // 今後stringに変更する
   choices:Array<Choice>
   //全体の投稿数がほしいな
+  numberOfVotes:number
 }
 
 
