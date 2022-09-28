@@ -12,7 +12,7 @@ const Header:React.FC = () => {
       navigate("/profile")
     }
     else{
-      navigate("/register")
+      navigate("/login")
     }
     //未ログインのユーザーであればログイン画面に遷移する
     // navigate("/login")
@@ -24,7 +24,7 @@ const Header:React.FC = () => {
   
   return (
     <div className='lg:flex w-full h-16 bg-gray-100 sticky top-0'>
-      <header className='w-full items-center flex justify-between md:mx-5 '>
+      <header className='w-full items-center flex justify-between md:mx-3 '>
         {/*  パソコン */}
         <h1 className='text-3xl sm: text-xl font-bold  hidden md:block'>
           <Routes>
@@ -38,19 +38,18 @@ const Header:React.FC = () => {
               </Route>
               <Route path='/profile' element={<h1>プロフィール</h1>}>
               </Route>
-              <Route path='/register' element={<h1>アカウント作成</h1>}></Route>
-              <Route path='/login' element={<h1>ログイン</h1>}></Route>
-              <Route path='/*' element={<h1>404: Not Found</h1>}> </Route>
           </Routes>
         </h1>
        
        
         {/* モバイル */}
-        <h1 className='text-3xl sm: text-xl font-bold md:mx-10 block md:hidden'>Vote</h1>
+        <h1 className='text-3xl sm: text-xl font-bold mx-5 md:mx-10 block md:hidden'>Vote</h1>
+        {/* <div className='items-center block'> */}
+          <button className="items-center block" onClick={handleImageTap}>
+            <img className='border-2 rounded-full object-cover mr-4 shadow w-10 h-10' src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="" />
+          </button>
       
-        <button onClick={handleImageTap}>
-         <img className='border-2 rounded-full object-cover mr-4 shadow w-10 h-10' src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="" />
-        </button>
+       
       </header>
       
       

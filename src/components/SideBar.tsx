@@ -31,7 +31,7 @@ const SideBar: React.FC = () => {
             <Link to="/contact" className='block px-4 py-2 hover:bg-indigo-700 rounded-md' >お問い合せ</Link>
             
           </li>
-          <li className='bg-blue-400 text-center mt-10 p-5 rounded'>
+          <li className='bg-blue-400 hover:bg-blue-300 text-center mt-10 p-5 rounded'>
             <Link to="/post">質問を作成する</Link>
           </li>
         </ul>
