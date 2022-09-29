@@ -1,28 +1,45 @@
 import React,{ useState,useEffect} from 'react'
 import VoteCard from './contents/Vote/VoteCard'
-import axios, {  AxiosResponse} from "axios"
+import axios, {  AxiosResponse ,AxiosError } from "axios"
 import { User,Vote } from '../Type'
-import { baseURL } from '../methods/Api'
+import { baseURL} from '../methods/Api'
+import { useCookies } from "react-cookie";
+import { useNavigate,Route,Routes,Link} from "react-router-dom"
 
 //API_TOKENはクッキーに保存する
-const API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0MjYxNjQ0LCJqdGkiOiI4NzUwOWRhMjM0MTE0ODBiYjExNTJiODI5MWIwZTBhNyIsInVzZXJfaWQiOjF9.ebXImSeHw8FCPB5OvGFjhNrmzqTWu6DPQwRv9AIiFkA"
 const Content:React.FC = () => {
-   const [votes, setPost] = useState<Array<Vote>>([]);
+   const [cookies, setCookie, removeCookie] = useCookies()
+   const [votes, setPost] = useState<Array<Vote>>([])
+   const navigate = useNavigate()
    console.log("レンダリングがされました。")
    useEffect(() => {
       console.log("useEffect",baseURL)
    
-      axios.get(baseURL,
-         { headers: { Authorization: "JWT " + API_TOKEN } })
-         .then((response:AxiosResponse<Array<Vote>>) => {
-         console.log("----------------------------")
-         console.log(response.data)
-         console.log("取得完了")
-         setPost(response.data);
-      });
+      fetchAPIQuestionData()
 
     },[]);
 
+   function fetchAPIQuestionData(){
+      const token = cookies.token  
+      axios.get(`${baseURL}api/vote`,{
+         headers: { 
+          "Content-Type": "applicaiton/json",
+          Authorization: "JWT " + `${token}`
+        }
+       })
+         .then((res:AxiosResponse<Array<Vote>>) => {
+         console.log("----------------------------")
+         console.log(res.data)
+         console.log("取得完了")
+         setPost(res.data) 
+        
+     })
+     .catch((e: AxiosError<{ error: string }>) => {
+      // エラー処理
+      console.log(e.message);
+      navigate("login")
+    });
+    }
    
    console.log(votes.length)
 

@@ -2,31 +2,33 @@ import React,{useState} from 'react'
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import axios from 'axios';
 import { Auth_Login, login } from '../../../methods/Api';
-
+import { useCookies } from "react-cookie";
 
 
 
 const Login:React.FC =  () =>  {
-  const { register, handleSubmit,formState: { errors } } = useForm<Auth_Login>();
-  const navigate = useNavigate();
-  const handleLogin: SubmitHandler<Auth_Login> =async data =>{
+  // token: にjwttokenを保存してる
+  const [cookies, setCookie, removeCookie] = useCookies()
+
+  const { register, handleSubmit,formState: { errors } } = useForm<Auth_Login>()
+  const navigate = useNavigate()
+
+  const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
     const result = await login(auth)
-    console.log("ホーム画面に遷移する")
-    // axios
-    navigate("/")
-    // base_url/ api / login/ 
-  };
+    setCookie("token",result)
 
+    navigate("/")
+  };
+  
   
   return (
     <div className=" flex justify-center mt-10" >
       <div className='w-1/2 bg-gray-400"'>
         <div className='flex justify-center'>
-          <h1 className='text-2xl font-bold'>ログイン</h1>
+          <h1 className='text-2xl font-bold'>ログイン </h1>
         </div>
         
         <form onSubmit={handleSubmit(handleLogin)} className='py-5 ' action="">
