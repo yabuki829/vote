@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
-
+import { postAPIQuestionData } from '../../../methods/Api'
+import { useCookies } from "react-cookie";
 const Post = () => {
-  const [selections, setSelection] = useState([{ id: createRandomId(), title: "" }])
+  const [selections, setSelection] = useState([{ id: createRandomId(), text: "" }])
   const [text,setText] = useState("")
-
+  const [cookies, setCookie, removeCookie] = useCookies()
   
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = createRandomId()
 
     setSelection([...selections, {
       id: id,
-      title: ""
+      text: ""
     }
     ])
   }
   function handleChangeSelectionTitle(event: React.ChangeEvent<HTMLInputElement>, id: string) {
     setSelection(
-      (preSelecitons) => preSelecitons.map((seleciton) => (seleciton.id === id ? { id: id, title: event.target.value } : seleciton))
+      (preSelecitons) => preSelecitons.map((seleciton) => (seleciton.id === id ? { id: id, text: event.target.value } : seleciton))
     )
   }
   function handleChangeText(event: React.ChangeEvent<HTMLTextAreaElement>){
@@ -52,8 +53,17 @@ const Post = () => {
     //処理
     alert("投稿する")
     alert(text)
+    
     console.log("質問内容",text)
-
+    const token = cookies.token 
+    const voteData= {
+      questionText: text,
+      createdAt:"2022-09-29",
+      image: null,
+      isOnlyLoginUser: true,
+      choices: selections,
+    } 
+    postAPIQuestionData(voteData,token)
     
 
   };
@@ -75,7 +85,7 @@ const Post = () => {
 
             {selections.map((selection) =>
               <div className='flex p-3 ' >
-                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.title} className="w-4/5  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder='20文字まで' />
+                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="w-4/5  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder='20文字まで' />
                 <button onClick={() => handleDeleteSelection(selection.id)} className='block px-3 ml-5 bg-red-400 text-center text-white rounded-md hover:bg-red-600'>削除</button>
               </div>
             )}

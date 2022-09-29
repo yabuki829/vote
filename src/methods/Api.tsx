@@ -28,21 +28,34 @@ export async function login(auth:Auth_Login){
   });
   
   const token =  res.data["access"]
-  // setCookie("token",token)
   return res.data["access"]
-
  
 }
 
 export async function register(auth:Auth_Login){
   const res = await axios.post(`${baseURL}api/register`,auth,{
     headers: {
-      "Content-Type": "applicaiton/json",
+      "Content-Type": "application/json",
     }
   });
   console.log("データ登録",res.data)
   const token =  res.data["access"]
 
   //user情報が返ってくるはず
+  return res.data
+}
+
+
+export async function postAPIQuestionData(vote:any,token:string){
+  console.log("投稿します",vote)
+  const res = await axios.post(`${baseURL}api/vote/`,vote,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${token}`
+    }
+  });
+  console.log("--------------投稿完了---------------")
+  console.log(res)
+  
   return res.data
 }
