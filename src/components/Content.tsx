@@ -11,12 +11,9 @@ const Content:React.FC = () => {
    const [cookies, setCookie, removeCookie] = useCookies()
    const [votes, setPost] = useState<Array<Vote>>([])
    const navigate = useNavigate()
-   console.log("レンダリングがされました。")
    useEffect(() => {
       console.log("useEffect",baseURL)
-   
       fetchAPIQuestionData()
-
     },[]);
 
    function fetchAPIQuestionData(){
@@ -37,8 +34,9 @@ const Content:React.FC = () => {
      })
      .catch((e: AxiosError<{ error: string }>) => {
       // エラー処理
+      //ログインしてなければ navigate("login")
       console.log(e.message);
-      navigate("login")
+      alert("エラー")
     });
     }
 
@@ -50,7 +48,6 @@ const Content:React.FC = () => {
 
    return (
          <>
-         <h1>test</h1>
             {/* <h1 className='text-2xl font-bold mx-3 mt-5'> <span>「React」</span>で検索しました</h1> */}
                {
                   votes.map((vote) => (

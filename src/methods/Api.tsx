@@ -32,16 +32,18 @@ export async function login(auth:Auth_Login){
  
 }
 
-export async function register(auth:Auth_Login){
-  const res = await axios.post(`${baseURL}api/register`,auth,{
+export async function registerUser(auth:Auth_Login){
+  console.log("apiに接続します")
+  console.log(auth)
+  const res = await axios.post(`${baseURL}api/register/`,auth,{
     headers: {
       "Content-Type": "application/json",
     }
   });
   console.log("データ登録",res.data)
-  const token =  res.data["access"]
 
-  //user情報が返ってくるはず
+  //user情報が返ってくるはず　
+  //cookieにnicknameだけ保存したい
   return res.data
 }
 

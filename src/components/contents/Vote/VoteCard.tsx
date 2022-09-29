@@ -35,14 +35,16 @@ const VoteCard:React.FC<Vote> = (props) => {
       <div className='mx-10 '>
         {
           choices.map((choice)=>(
-            
+            //もし投稿していたらhover:色変わらない様にする
             <button onClick={(e) => handleVote(choice.id,choice.text)}  className='border border-gray-300 mb-2 w-full' key={choice.id}>
-              <div className='flex justify-between'>
-                <h1 className='text-left pl-2 bg-blue-300'>{choice.text}</h1>
+              <div className='flex relative justify-between hover:bg-gray-300'>
+                {/* <h1 style={ {color: 'red'} }></h1>width:70%; */}
+                <div className='absolute bg-blue-400 bg-opacity-40 text-left whitespace-nowrap' style={ {width:"20%",color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>
+                <h1 className='text-left pl-2 '>{choice.text}</h1>
+
                 <h1 className='pr-3 text-gray-500'>20%</h1>
+               
               </div>
-              
-              
             </button>
               
           
@@ -52,11 +54,6 @@ const VoteCard:React.FC<Vote> = (props) => {
         }
               
       </div>
-        
-   
-
-       
-     
       
     </div>
   )

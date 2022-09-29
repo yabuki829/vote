@@ -28,7 +28,7 @@ const Login:React.FC =  () =>  {
     <div className=" flex justify-center mt-10" >
       <div className='w-1/2 bg-gray-400"'>
         <div className='flex justify-center'>
-          <h1 className='text-2xl font-bold'>ログイン </h1>
+          <h1 className='text-2xl font-bold underline'>ログイン </h1>
         </div>
         
         <form onSubmit={handleSubmit(handleLogin)} className='py-5 ' action="">

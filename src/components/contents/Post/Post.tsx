@@ -58,7 +58,6 @@ const Post = () => {
     const token = cookies.token 
     const voteData= {
       questionText: text,
-      createdAt:"2022-09-29",
       image: null,
       isOnlyLoginUser: true,
       choices: selections,
