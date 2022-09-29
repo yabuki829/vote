@@ -21,6 +21,7 @@ const Content:React.FC = () => {
 
    function fetchAPIQuestionData(){
       const token = cookies.token  
+      // TODO 前取得から制限する
       axios.get(`${baseURL}api/vote`,{
          headers: { 
           "Content-Type": "applicaiton/json",
@@ -39,6 +40,10 @@ const Content:React.FC = () => {
       console.log(e.message);
       navigate("login")
     });
+    }
+
+    function fetchAdditionalData(){
+      // TODO 一番下までスクロールしたら追加でデータを取得する
     }
    
    console.log(votes.length)

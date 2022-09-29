@@ -7,8 +7,6 @@ const Post = () => {
   
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = createRandomId()
-    console.log("addSelection")
-    console.log(id)
 
     setSelection([...selections, {
       id: id,
@@ -30,8 +28,14 @@ const Post = () => {
   }
   function handleDeleteSelection(id: string) {
     //イベントを削除する
-    console.log(id, "を削除します")
-    setSelection(selections.filter((selection) => selection.id !== id));
+    if (selections.length > 2){
+      console.log(id, "を削除します")
+      setSelection(selections.filter((selection) => selection.id !== id));
+    }
+    else {
+      alert("最低二つ選択肢が必要です")
+    }
+    
   }
   function createRandomId(): string {
     var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -41,17 +45,25 @@ const Post = () => {
     return id
   }
 
+  
 
-  const onClick = (event: React.MouseEvent<HTMLInputElement>) => {
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     //処理
+    alert("投稿する")
+    alert(text)
+    console.log("質問内容",text)
+
+    
+
   };
   // console.log(createRandomId())
   return (
     <div>
-      <div className="w-4/5 mx-auto p-5 mt-10 bg-gray-100 rounded border-2 border-gray-300 ">
+      <div className="w-4/5 mx-auto p-5 mt-5  ">
         <div className='flex justify-between'>
           <h1 className='block mb-2 text-4xl font-bold text-gray-900 dark:text-gray-400'>Create</h1>
-          <button onClick={(e) => handleAddSelection(e)} className='bg-blue-400 text-white p-2 mt-5 rounded hover:bg-blue-600'>投稿する</button>
+          <button onClick={(e) => onClick(e)} className='bg-blue-400 text-white p-2 mt-5 rounded hover:bg-blue-600'>投稿する</button>
         </div>
         <div className='mx-5 pt-3'>
           <div className="sm:col-span-2 ">
