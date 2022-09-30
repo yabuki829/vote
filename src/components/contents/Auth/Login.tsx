@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
-import { useNavigate,Route,Routes,Link} from "react-router-dom"
+import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import { Auth_Login, login, postAPIRegisterProfile } from '../../../methods/Api';
+import { Auth_Login, login } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
 
 
@@ -25,7 +25,7 @@ const Login:React.FC =  () =>  {
   
   return (
     <div className=" flex justify-center mt-10" >
-      <div className='w-1/2 bg-gray-400"'>
+      <div className='w-2/3 md:w-1/2  bg-gray-400"'>
         <div className='flex justify-center'>
           <h1 className='text-2xl font-bold underline'>ログイン </h1>
         </div>
