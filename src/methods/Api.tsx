@@ -14,19 +14,14 @@ export type Auth_Login = {
 
 
 
-//保存してるデータ　
-// token,
-
 export async function login(auth:Auth_Login){
   //トークン メールアドレス　パスワードが必要
-  // const [cookies, setCookie, removeCookie] = useCookies();
   console.log("api接続します")
   const res = await axios.post(`${baseURL}authen/jwt/create`,auth,{
     headers: {
       "Content-Type": "application/json",
     }
   });
-  
   const token =  res.data["access"]
   return res.data["access"]
  
@@ -34,20 +29,19 @@ export async function login(auth:Auth_Login){
 
 export async function registerUser(auth:Auth_Login){
   console.log("apiに接続します")
-  console.log(auth)
   const res = await axios.post(`${baseURL}api/register/`,auth,{
     headers: {
       "Content-Type": "application/json",
     }
   });
   console.log("データ登録",res.data)
-
   //user情報が返ってくるはず　
   //cookieにnicknameだけ保存したい
   return res.data
 }
 
-
+//質問を取得する 
+//TODO 現在は全て取得になっていて投稿数が多くなったときに動作が重くなるため、取得数を変更したい。
 export async function postAPIQuestionData(vote:any,token:string){
   console.log("投稿します",vote)
   const res = await axios.post(`${baseURL}api/vote/`,vote,{
@@ -59,5 +53,16 @@ export async function postAPIQuestionData(vote:any,token:string){
   console.log("--------------投稿完了---------------")
   console.log(res)
   
+  return res.data
+}
+
+export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
+  console.log("profileを作成します")
+  const res = await axios.post(`${baseURL}api/profile/`,auth,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${token}`
+    }
+  });
   return res.data
 }

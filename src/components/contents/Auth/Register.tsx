@@ -2,20 +2,21 @@ import React from 'react'
 import Footer from '../Footer/Footer'
 import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Auth_Login, registerUser } from '../../../methods/Api';
-
+import { Auth_Login, login, postAPIRegisterProfile, registerUser } from '../../../methods/Api';
+import { useCookies } from "react-cookie";
 const Register = () => {
+  const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
   const { register, handleSubmit,formState: { errors } } = useForm<Auth_Login>()
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
-    const result = await registerUser(auth)
-    // data["username"]
 
-    //proifleを作成する
-
-    navigate("/login")
+    await registerUser(auth)
+    const result:string = await login(auth)
+    await postAPIRegisterProfile(auth,result)
+    setCookie("token",result)
+    navigate("/")
   };
 
   return (

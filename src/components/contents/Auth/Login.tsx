@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import { Auth_Login, login } from '../../../methods/Api';
+import { Auth_Login, login, postAPIRegisterProfile } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
 
 
@@ -17,9 +17,8 @@ const Login:React.FC =  () =>  {
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
-    const result = await login(auth)
+    const result:string = await login(auth)
     setCookie("token",result)
-
     navigate("/")
   };
   
