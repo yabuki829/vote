@@ -33,10 +33,18 @@ const Content:React.FC = () => {
         
      })
      .catch((e: AxiosError<{ error: string }>) => {
-      // エラー処理
-      //ログインしてなければ navigate("login")
-      console.log(e.message);
-      alert("エラー")
+      console.log("エラー",e.response?.status)
+      switch (e.response?.status){
+        
+         case 401:
+            //認証エラー
+            navigate("/login")
+            break
+         case 403:
+            break
+         default:
+            break
+      }
     });
     }
 
@@ -58,7 +66,8 @@ const Content:React.FC = () => {
                         createdAt={vote.createdAt}
                         image={vote.image}
                         isOnlyLoginUser={vote.isOnlyLoginUser}
-                        choices={vote.choices} numberOfVotes={vote.numberOfVotes}                        /> 
+                        choices={vote.choices}
+                        numberOfVotes={vote.numberOfVotes}                        /> 
                   ))
                }
                

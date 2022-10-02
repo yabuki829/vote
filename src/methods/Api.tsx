@@ -13,7 +13,6 @@ export type Auth_Login = {
 
 
 
-
 export async function login(auth:Auth_Login){
   //トークン メールアドレス　パスワードが必要
   console.log("api接続します")
@@ -64,5 +63,20 @@ export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
       Authorization: "JWT " + `${token}`
     }
   });
+  return res.data
+}
+
+//投票する
+export async function putAPISelectChoice(choiceID:string,token:string,voteID:string){
+  console.log(choiceID,"を選択しました")
+  console.log(token)
+  
+  const res = await axios.put(`${baseURL}api/vote/03f1b6af-f79c-404b-81e8-2b5638a7b7a5/`,choiceID,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${token}`
+    }
+  });
+
   return res.data
 }

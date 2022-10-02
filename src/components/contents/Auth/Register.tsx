@@ -8,11 +8,15 @@ const Register = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
   const { register, handleSubmit,formState: { errors } } = useForm<Auth_Login>()
+
+
+
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
 
-    await registerUser(auth)
+    const user = await registerUser(auth)
+    setCookie("userid",user["id"])
     const result:string = await login(auth)
     await postAPIRegisterProfile(auth,result)
     setCookie("token",result)
