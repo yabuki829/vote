@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip'
 import ProfileCard from '../Profile/ProfileCard'
 import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
+import MenuCard from './MenuCard'
 
 
 const VoteCard:React.FC<Vote> = (props) => {
@@ -14,6 +15,7 @@ const VoteCard:React.FC<Vote> = (props) => {
   const imageStyle = "w-10 h-10 border-2 rounded-full object-cover mr-4 shadow"
   const [cookies, setCookie, removeCookie] = useCookies()
   const [voted,setVoted] = useState(isVoted())
+  const [isShownMenuCard,setIsShownMenuCard] = useState(false)
 
   async function  handleVote(choiceID:string,text:string){
     if (!isVoted()) {
@@ -36,8 +38,10 @@ const VoteCard:React.FC<Vote> = (props) => {
     
     
   }
-  
-  //投票していたら結果を表示する
+
+  function handleMenuCard(){
+    setIsShownMenuCard(!isShownMenuCard)
+  }
 
   function isVoted():boolean{
     //投票済みかどうか確認する
@@ -67,6 +71,7 @@ const VoteCard:React.FC<Vote> = (props) => {
   }
 
 
+  // TODO リファクタリングしたい
   // isVoted がtrue 投票済み
   // isChoice がtrue 投票した選択肢
   const votedStyle = "  whitespace-nowrap bg-blue-300  text-left"
@@ -74,7 +79,6 @@ const VoteCard:React.FC<Vote> = (props) => {
   const votedStyle2 = "  whitespace-nowrap bg-gray-200 text-left"
 
   //         　falseで未投票
-
 
   const isVotedStyle1 = "flex relative justify-between cursor-default"
   const isNotVotedStyle1 = "flex relative justify-between hover:bg-gray-200 "
@@ -91,17 +95,25 @@ const VoteCard:React.FC<Vote> = (props) => {
   return (
     <div className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
       {/* 詳細画面に遷移する */}
-      <a href="/profile"> 
         <div className='flex justify-between  items-center'>
           <div className='flex items-center '>
             { user.image ? (<img className={imageStyle}  src={user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
-            <h1>{user.nickName}</h1>
+            <h1 className='a'>{user.nickName}</h1>
           </div>
-            <img className="w-5 h-5" src={menuIcon} alt="" />
-           
+
+
+            
+            <div className='flex '>
+             
+              {
+                isShownMenuCard ? (<MenuCard/>):(<h1 className='invisible absolute'>こんなところまで見るなんてえっちね</h1>)
+              }
+              
+                <img onClick={handleMenuCard} className=" w-5 h-5 " src={menuIcon} alt="" /> 
+            </div>
+            
         </div>
         
-      </a>
       <h1 className=' text-xl font-bold my-5 hover:underline'><a href="">{questionText}</a> </h1>
       <div className='mx-10 '>
       <h1>{voted ?("投票済み"):("未投票")}</h1>

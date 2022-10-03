@@ -24,7 +24,7 @@ export type Choice ={
 
 export type Profile ={
    //今後uuid(string)に変更する
-  id:number
+  id:string
   nickName:string
   user:User
   createdAt:string
@@ -32,6 +32,6 @@ export type Profile ={
 }
 export type User ={
   //今後uuid(string)に変更する
-  id:number
+  id:string
 }
 
