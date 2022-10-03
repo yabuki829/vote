@@ -71,7 +71,7 @@ export async function putAPISelectChoice(choiceID:string,token:string,voteID:str
   console.log(choiceID,"を選択しました")
   console.log(token)
   
-  const res = await axios.put(`${baseURL}api/vote/03f1b6af-f79c-404b-81e8-2b5638a7b7a5/`,choiceID,{
+  const res = await axios.put(`${baseURL}api/vote/${voteID}/`,choiceID,{
     headers: {
       "Content-Type": "application/json",
       Authorization: "JWT " + `${token}`
