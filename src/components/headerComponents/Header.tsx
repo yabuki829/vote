@@ -23,7 +23,7 @@ const Header:React.FC = () => {
   }
   
   return (
-    <div className='lg:flex w-full h-16 bg-gray-100 sticky top-0'>
+    <div className='lg:flex w-full h-16 bg-gray-100 z-10 sticky top-0'>
       <header className='w-full items-center flex justify-between md:mx-3 '>
         {/*  パソコン */}
         <h1 className='text-3xl sm: text-xl font-bold  hidden md:block'>
