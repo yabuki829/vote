@@ -77,6 +77,6 @@ export async function putAPISelectChoice(choiceID:string,token:string,voteID:str
       Authorization: "JWT " + `${token}`
     }
   });
-
+  //profileを返した方がいいかも
   return res.data
 }

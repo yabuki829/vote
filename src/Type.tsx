@@ -19,7 +19,7 @@ export type Vote = {
 export type Choice ={
   id:string
   text:string
-  votedUserCount:Array<string>
+  votedUserCount:Array<User>
 }
 
 export type Profile ={
