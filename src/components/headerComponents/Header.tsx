@@ -27,9 +27,10 @@ const Header:React.FC = () => {
       <header className='w-full items-center flex justify-between md:mx-3 '>
         {/*  パソコン */}
         <h1 className='text-3xl sm: text-xl font-bold  hidden md:block'>
-          <Routes>
+        <Routes>
               <Route path='/' element={<h1>投票箱</h1> }>
               </Route>
+              <Route path='/vote/:id' element={<h1>投票箱</h1>}></Route>
               <Route path='/thread' element={ <h1>スレッド</h1>}>
               </Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}>

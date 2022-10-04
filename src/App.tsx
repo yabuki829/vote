@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Content from './components/Content';
+import Content from './components/contents/Vote/Content';
 
 import Header from './components/headerComponents/Header';
 import RightBar from './components/headerComponents/RightBar';
@@ -12,6 +12,8 @@ import Profile from './components/contents/Profile/Profile';
 import Register from './components/contents/Auth/Register';
 import Login from './components/contents/Auth/Login';
 import Post from './components/contents/Post/Post';
+import ThreadContent from './components/contents/Thread/ThreadContent';
+import VoteDetails from './components/contents/Vote/VoteDetails';
 
 function App(){
 
@@ -28,7 +30,9 @@ function App(){
             <Routes>
               <Route path='/' element={<Content/>}>
               </Route>
-              <Route path='/thread' element={ <h1>Thread</h1>}>
+              <Route path='/vote/:id' element={<VoteDetails/>}>
+              </Route>
+              <Route path='/thread' element={ <ThreadContent/>}>
               </Route>
               <Route path='/contact' element={<Contact/>}>
               </Route>
@@ -44,10 +48,12 @@ function App(){
             </Routes>
           </div>
         </div> 
+        
         <Routes>
           <Route path='/' element={<RightBar/>}></Route>
           <Route path='/thread' element={ <RightBar/>}></Route>
           <Route path='/profile' element={<RightBar/>}></Route>
+          <Route path='/vote/:id' element={<RightBar/>}></Route>
         </Routes>
       </div>
      

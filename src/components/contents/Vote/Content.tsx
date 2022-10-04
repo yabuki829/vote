@@ -1,8 +1,8 @@
 import React,{ useState,useEffect} from 'react'
-import VoteCard from './contents/Vote/VoteCard'
+import VoteCard from './VoteCard'
 import axios, {  AxiosResponse ,AxiosError } from "axios"
-import { User,Vote } from '../Type'
-import { baseURL} from '../methods/Api'
+import { User,Vote } from '../../../Type'
+import { baseURL} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 
@@ -56,7 +56,6 @@ const Content:React.FC = () => {
 
    return (
          <>
-            {/* <h1 className='text-2xl font-bold mx-3 mt-5'> <span>「React」</span>で検索しました</h1> */}
                {
                   votes.map((vote) => (
                      <VoteCard

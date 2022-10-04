@@ -1,14 +1,12 @@
 
 import React, { useState } from 'react'
-import { Choice, Profile, Vote ,User} from '../../../Type'
+import { Choice, Vote ,User} from '../../../Type'
 import profile  from "../../../image/profile.png"
 import menuIcon from "../../../image/menu.png"
-import ReactTooltip from 'react-tooltip'
-import ProfileCard from '../Profile/ProfileCard'
 import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import MenuCard from './MenuCard'
-
+import { useNavigate,Route,Routes,Link} from "react-router-dom"
 
 const VoteCard:React.FC<Vote> = (props) => {
   const { questionText,user,choices,id } = props
@@ -42,6 +40,7 @@ const VoteCard:React.FC<Vote> = (props) => {
   function handleMenuCard(){
     setIsShownMenuCard(!isShownMenuCard)
   }
+
 
   function isVoted():boolean{
     //投票済みかどうか確認する
@@ -113,11 +112,12 @@ const VoteCard:React.FC<Vote> = (props) => {
             </div>
             
         </div>
+        <Link to='/vote/${props.id}' className='hover:bg-gray-100'>
+          <h1 className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </h1>
+        </Link>
         
-      <h1 className=' text-xl font-bold my-5 hover:underline'><a href="">{questionText}</a> </h1>
       <div className='mx-10 '>
-      <h1>{voted ?("投票済み"):("未投票")}</h1>
-      <h1>{numberOfVotes}人が投票してます</h1>
+      
         {
           
           choices.map((choice)=>(
@@ -146,7 +146,7 @@ const VoteCard:React.FC<Vote> = (props) => {
           ))
           
         }
-              
+        <h1 className='text-right'>{numberOfVotes}人が投票</h1>
       </div>
       
     </div>
