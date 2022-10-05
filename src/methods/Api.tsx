@@ -62,14 +62,16 @@ export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
       "Content-Type": "application/json",
       Authorization: "JWT " + `${token}`
     }
-  });
+
+    
+  })
+  console.log("作成しました");
+  console.log("-^--------------")
   return res.data
 }
 
 //投票する
 export async function putAPISelectChoice(choiceID:string,token:string,voteID:string){
-  console.log(choiceID,"を選択しました")
-  console.log(token)
   
   const res = await axios.put(`${baseURL}api/vote/${voteID}/`,choiceID,{
     headers: {

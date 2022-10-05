@@ -2,8 +2,10 @@ import React,{useState} from 'react'
 import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import { Auth_Login, login } from '../../../methods/Api';
+import { Auth_Login, baseURL, login } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
+import axios, { AxiosResponse } from 'axios';
+import { Profile } from '../../../Type';
 
 
 
@@ -19,9 +21,27 @@ const Login:React.FC =  () =>  {
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
     const result:string = await login(auth)
     setCookie("token",result)
+    
+    await handleGetProfile(result)
     navigate("/")
+    
   };
-  
+
+  async function handleGetProfile(token:string){
+    axios.get(`${baseURL}api/profile`,{
+      headers: { 
+       "Content-Type": "applicaiton/json",
+       Authorization: "JWT " + `${token}`
+     }
+    })
+      .then((res:AxiosResponse<Array<Profile>>) => {
+      setCookie("userid",res.data[0].user.id)
+      //profileに画像が登録されていればクッキーに保存する
+      if(res.data[0].image != ""){
+        setCookie("profileimage",res.data[0].image)
+      }
+  })
+  }
   
   return (
     <div className=" flex justify-center mt-10" >

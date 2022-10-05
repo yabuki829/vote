@@ -12,11 +12,11 @@ const Content:React.FC = () => {
    const [votes, setPost] = useState<Array<Vote>>([])
    const navigate = useNavigate()
    useEffect(() => {
-      console.log("useEffect",baseURL)
+      // console.log("useEffect",baseURL)
       fetchAPIQuestionData()
     },[]);
 
-   function fetchAPIQuestionData(){
+   function  fetchAPIQuestionData(){
       const token = cookies.token  
       // TODO 前取得から制限する
       axios.get(`${baseURL}api/vote`,{
@@ -27,8 +27,9 @@ const Content:React.FC = () => {
        })
          .then((res:AxiosResponse<Array<Vote>>) => {
          console.log("----------------------------")
-         console.log(res.data)
+         console.log(res.data[1])
          console.log("取得完了")
+
          setPost(res.data) 
         
      })
@@ -58,15 +59,20 @@ const Content:React.FC = () => {
          <>
                {
                   votes.map((vote) => (
-                     <VoteCard
-                        questionText={vote.questionText}
-                        id={vote.id}
-                        user={vote.user}
-                        createdAt={vote.createdAt}
-                        image={vote.image}
-                        isOnlyLoginUser={vote.isOnlyLoginUser}
-                        choices={vote.choices}
-                        numberOfVotes={vote.numberOfVotes}                        /> 
+                     <div key={vote.id}>
+                        
+                      
+                        <VoteCard
+                           questionText={vote.questionText}
+                           id={vote.id}
+                           user={vote.user}
+                           createdAt={vote.createdAt}
+                           image={vote.image}
+                           isOnlyLoginUser={vote.isOnlyLoginUser}
+                           choices={vote.choices}
+                           numberOfVotes={vote.numberOfVotes}                        /> 
+                     </div>
+                    
                   ))
                }
                

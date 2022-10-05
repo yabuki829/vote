@@ -31,7 +31,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
         <h1 className='text-xl font-bold'>{title}</h1>
       </div>
       
-      <Link to={"/vote/"+vote.id} className='hover:bg-gray-100'>
+      <Link to={"/vote/"+vote.id} state={{vote:vote}} className='hover:bg-gray-100'>
         <div className='border rounded-lg mx-10 p-2 mb-5 hover:bg-gray-100'>
           <div className='flex justify-between  items-center'>
             <div className='flex items-center '>

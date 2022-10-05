@@ -12,10 +12,11 @@ const Register = () => {
 
 
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
-    //ログインする
+    //アカウント作成
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
 
     const user = await registerUser(auth)
+    alert(user["id"])
     setCookie("userid",user["id"])
     const result:string = await login(auth)
     await postAPIRegisterProfile(auth,result)
