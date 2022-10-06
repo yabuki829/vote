@@ -41,3 +41,11 @@ export type Thread = {
   title:string
   createdAt:string
 } 
+
+
+export type Comment = {
+  id: string
+  user:Profile
+  text:string
+  createdAt:string
+}

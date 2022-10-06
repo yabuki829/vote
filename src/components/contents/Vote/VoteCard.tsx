@@ -6,7 +6,8 @@ import menuIcon from "../../../image/menu.png"
 import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import MenuCard from './MenuCard'
-import { useNavigate,Route,Routes,Link} from "react-router-dom"
+import { Link} from "react-router-dom"
+import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 
 const VoteCard:React.FC<Vote> = (props) => {
   const { questionText,user,choices,id} = props
@@ -20,10 +21,7 @@ const VoteCard:React.FC<Vote> = (props) => {
       const token = cookies.token  
       console.log("api通信を行います")
       await putAPISelectChoice(choiceID,token,id)
-
       const user:User = {id:cookies.userid}
-      
-
       props.numberOfVotes.push(user)
      
       choices.map((choice) => (
@@ -33,8 +31,6 @@ const VoteCard:React.FC<Vote> = (props) => {
       
       setVoted(true)
     }
-    
-    
   }
 
   function handleMenuCard(){
@@ -82,25 +78,10 @@ const VoteCard:React.FC<Vote> = (props) => {
 
   // TODO リファクタリングしたい
 
-
-  //選択肢のStyle
-    //投票済みの選択済の場合のスタイル
-  const votedChoicedStyle = "  whitespace-nowrap bg-blue-300  text-left"
-   //投票済みだけど選択してない場合
-  const voteNotChoicedStyle2 = "  whitespace-nowrap bg-gray-300 text-left"
-
-
-  // 投票済みの時ホバーした時に指マークにならないようにするやつ
-  const isVotedStyle1 = "flex relative justify-between cursor-default"
-  //未投票時にホバーした時色が変わる様にするやつ
-  const isNotVotedStyle1 = "flex relative justify-between hover:bg-gray-200 "
+  
+ 
 
   const styleBackground = voted ? isVotedStyle1 : isNotVotedStyle1
-
-  
-  //選択肢の上のパーセントを表してる色のやつ?　↓こいつ選択肢のtextにかかってる
-  const isVotedStyle2 = " pl-2 bg-opacity-100 absolute"
-  const isNotVotedStyle2 = " pl-2 bg-opacity-100 "
 
   const styleChoiceText = voted ? isVotedStyle2 : isNotVotedStyle2
 
@@ -128,7 +109,7 @@ const VoteCard:React.FC<Vote> = (props) => {
             </div>
             
         </div>
-        <Link to={"vote/"+props.id} state={{vote:props}} className='hover:bg-gray-100'>
+        <Link to={"vote/"+props.id} state={{vote:props,userid:cookies.userid}} className='hover:bg-gray-100'>
           <h1 className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </h1>
         </Link>
         
@@ -146,7 +127,7 @@ const VoteCard:React.FC<Vote> = (props) => {
                   <h1 className={styleChoiceText}>{choice.text}</h1>
                   {
                     voted && (
-                      isChoice(choice) ?( <div className={votedChoicedStyle} style={ { width: Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%" ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>) : ( <div className={voteNotChoicedStyle2} style={ {width:Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%"   ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>)
+                      isChoice(choice) ?( <div className={votedChoicedStyle} style={ { width: Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%" ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>) : ( <div className={voteNotChoicedStyle} style={ {width:Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%"   ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>)
                     )  
                   }
                   {

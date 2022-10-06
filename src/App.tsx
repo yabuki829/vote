@@ -4,7 +4,7 @@ import Content from './components/contents/Vote/Content';
 
 import Header from './components/headerComponents/Header';
 import RightBar from './components/headerComponents/RightBar';
-import SideBar from './components/SideBar';
+import SideBar from './components/headerComponents/SideBar';
 import {BrowserRouter as Router, Route,Routes} from "react-router-dom"
 import NotFound from './components/contents/NotFound';
 import Contact from './components/contents/contact/Contact';

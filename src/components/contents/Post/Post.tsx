@@ -77,7 +77,7 @@ const Post = () => {
         <div className='mx-5 pt-3'>
           <div className="sm:col-span-2 ">
             <label className="block mb-2 text-2xl font-bold text-gray-900 dark:text-gray-400">内容 <span>{text.length}</span> 文字 </label>
-            <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full text-xl text-gray-900 bg-gray-50　shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder='120文字まで'></textarea>
+            <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full text-xl text-gray-900 bg-gray-50 shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder='120文字まで'></textarea>
           </div>
           <div className="sm:col-span-2 pt-10  ">
             <label className="block mb-2 text-2xl font-bold text-gray-900 dark:text-gray-400">選択肢</label>
