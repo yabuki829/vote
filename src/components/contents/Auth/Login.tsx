@@ -40,6 +40,7 @@ const Login:React.FC =  () =>  {
       if(res.data[0].image != ""){
         setCookie("profileimage",res.data[0].image)
       }
+      setCookie("nickName",res.data[0].nickName)
   })
   }
   

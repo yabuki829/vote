@@ -24,10 +24,12 @@ const VoteDetails = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const [comments,setComments] = useState<Array<Comment>>([])
   const [mycomment,setMyComment] = useState("")
+  
   useEffect(() => {
     // console.log("useEffect",baseURL)
     fetchAPICommentData()
   },[]);
+
 
 
   function checkSelectedChoice(choice:Choice){
@@ -93,7 +95,7 @@ const VoteDetails = () => {
       }
      })
        .then((res:AxiosResponse<Array<Comment>>) => {
-     
+  
        setComments(res.data) 
         
    })
@@ -130,11 +132,12 @@ const VoteDetails = () => {
         Authorization: "JWT " + `${token}`
      }
     })
-      .then((res) => {
-      console.log(res.data)
-      setMyComment("")
-  }
-  )
+    .then((res:AxiosResponse<Array<Comment>>) => {
+  
+      setComments(res.data) 
+      setMyComment("コメント")
+       
+  })
   }
 
   let commentCountText 
