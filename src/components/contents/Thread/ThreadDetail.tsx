@@ -3,7 +3,7 @@ import React from 'react'
 const ThreadDetail = () => {
 
   return (
-    <div></div>
+    <div>スレッド詳細画面</div>
   )
 }
 

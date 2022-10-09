@@ -26,8 +26,8 @@ const VoteDetails = () => {
   const [mycomment,setMyComment] = useState("")
   
   useEffect(() => {
-    // console.log("useEffect",baseURL)
     fetchAPICommentData()
+    console.log("呼ばれてます")
   },[]);
 
 
@@ -50,6 +50,7 @@ const VoteDetails = () => {
 
   function isVoted(){
     const myuserid:string = userid
+
     const user_dic  =  vote.numberOfVotes
     for (let i = 0; i < user_dic.length; i++) {
       if( myuserid === user_dic[i].id ){  
@@ -65,7 +66,6 @@ const VoteDetails = () => {
   async function handleVote(choiceID:string,choiceText:string){
     if (!isVoted()) {
       const token = cookies.token  
-      console.log("api通信を行います")
       await putAPISelectChoice(choiceID,token,vote.id)
       const user:User = {id:userid}
       vote.numberOfVotes.push(user)

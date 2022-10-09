@@ -39,7 +39,7 @@ const Content:React.FC = () => {
         
          case 401:
             //認証エラー
-            // navigate("/login")
+            navigate("/login")
             break
          case 403:
             break

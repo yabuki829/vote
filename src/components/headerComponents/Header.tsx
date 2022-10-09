@@ -9,12 +9,8 @@ const Header:React.FC = () => {
   const isLogin = false
   function handleImageTap(){
     console.log("profileに遷移します")
-    if (isLogin) {
       navigate("/profile")
-    }
-    else{
-      navigate("/login")
-    }
+  
     //未ログインのユーザーであればログイン画面に遷移する
     // navigate("/login")
     //ログイン済みであればprofileに遷移する
@@ -40,6 +36,7 @@ const Header:React.FC = () => {
               <Route path='/' element={<h1>投票箱</h1> }>
               </Route>
               <Route path='/vote/:id' element={<h1>投票箱</h1>}></Route>
+              <Route path='/thread/:id' element={ <h1>スレッド</h1>}></Route>
               <Route path='/thread' element={ <h1>スレッド</h1>}>
               </Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}>
