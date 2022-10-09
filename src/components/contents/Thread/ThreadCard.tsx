@@ -18,7 +18,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
   const myuserid = cookies.userid
   return (
     <div className="bg-white border shadow-lg rounded-lg mx-10 my-3 py-5 ">
-      <Link to={"/thread/"+vote.id} state={{}} className='hover:bg-gray-100'>
+      <Link to={"/thread/"+vote.id} state={{threadid:id,vote:vote,user:user,title:title}} className='hover:bg-gray-100'>
         <div className='mx-3 p-2'>
           <div className='flex justify-between  items-center'>
             <div className='flex items-center '>
