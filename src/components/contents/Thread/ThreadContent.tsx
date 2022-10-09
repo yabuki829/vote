@@ -4,11 +4,12 @@ import { useCookies } from "react-cookie";
 import { Thread } from '../../../Type';
 import { baseURL} from '../../../methods/Api'
 import ThreadCard from './ThreadCard';
+import { useNavigate} from "react-router-dom"
 //スレッド一覧
 const ThreadContent = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const [threads, setTreads] = useState<Array<Thread>>([])
- 
+  const navigate = useNavigate()
   function fetchAPIThreadData(){
     
     const token = cookies.token  
@@ -31,7 +32,7 @@ const ThreadContent = () => {
      
       case 401:
          //認証エラー
-         // navigate("/login")
+         navigate("/login")
          break
       case 403:
          break

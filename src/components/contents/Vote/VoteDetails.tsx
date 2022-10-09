@@ -6,7 +6,9 @@ import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, voted
 import { useCookies } from "react-cookie";
 import { baseURL, putAPISelectChoice } from '../../../methods/Api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useNavigate} from "react-router-dom"
+import arrowleft  from "../../../image/arrowleft.png"
 
 interface state {
   vote: Vote
@@ -24,7 +26,7 @@ const VoteDetails = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const [comments,setComments] = useState<Array<Comment>>([])
   const [mycomment,setMyComment] = useState("")
-  
+  const navigate = useNavigate()
   useEffect(() => {
     fetchAPICommentData()
     console.log("呼ばれてます")
@@ -148,8 +150,12 @@ const VoteDetails = () => {
       commentCountText = comments.length+"件のコメント"
     }
 
+    function goBack(){
+      navigate(-1)
+    }
   return (
     <div className='m-3'>
+      <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
        <div className='flex items-center'>
           <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000"+vote.user.image} alt="" />
           <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>

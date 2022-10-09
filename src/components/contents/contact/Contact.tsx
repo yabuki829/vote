@@ -15,10 +15,9 @@ const Contact = () => {
 
   const handleSendEmail: SubmitHandler<Email_Send> = async data =>{
     //メールを送信する
-    const publicKey = '${process.env.REACT_APP_PUBLIC_KEY}'
-    
-    const serviceID = '${process.env.REACT_APP_SERVICE_ID}'
-    const templateID = '${process.env.REACT_APP_TEMPLATE_ID}'
+    const publicKey = `${process.env.REACT_APP_PUBLIC_KEY}`
+    const serviceID = `${process.env.REACT_APP_SERVICE_ID}`
+    const templateID = `${process.env.REACT_APP_TEMPLATE_ID}`
     console.log("送信します")
     console.log(data["email"])
     const templateParams = {
@@ -26,12 +25,18 @@ const Contact = () => {
       from_name: data["username"],
       message: data["message"]
     };
+    console.log(process.env.REACT_APP_PUBLIC_KEY)
+    console.log(serviceID)
+    console.log(templateID)
     
     emailjs.send(serviceID,templateID, templateParams,publicKey)
     .then(function(response) {
       console.log('SUCCESS!', response.status, response.text);
+
       alert("送信しました。内容を確認し次第返信いたします。")
    }, function(error) {
+    console.log("-----------------------")
+    console.log(error)
     alert("現在アクセスが多いためTwitterからお願いいたします。")
    });
 
