@@ -23,6 +23,7 @@ const Login:React.FC =  () =>  {
     setCookie("token",result)
     
     await handleGetProfile(result)
+    alert("ホーム画面に移動します")
     navigate("/")
     
   };

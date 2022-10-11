@@ -41,6 +41,7 @@ export async function registerUser(auth:Auth_Login){
 
 //質問を取得する 
 //TODO 現在は全て取得になっていて投稿数が多くなったときに動作が重くなるため、取得数を変更したい。
+
 export async function postAPIQuestionData(vote:any,token:string){
   console.log("投稿します",vote)
   const res = await axios.post(`${baseURL}api/vote/`,vote,{
@@ -65,8 +66,7 @@ export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
 
     
   })
-  console.log("作成しました");
-  console.log("-^--------------")
+  
   return res.data
 }
 
@@ -79,6 +79,26 @@ export async function putAPISelectChoice(choiceID:string,token:string,voteID:str
       Authorization: "JWT " + `${token}`
     }
   });
-  //profileを返した方がいいかも
+
   return res.data
+}
+
+
+export async function postAPIThread(token:string,vote_id:string,title:string){
+  //vote id
+  //title
+  const data = {
+    vote_id:vote_id,
+    thread_title:title
+  }
+  const res = await axios.post(`${baseURL}api/thread/`,data,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${token}`
+    }
+  });
+  return res.data
+}
+export async function postAPIThreadComment(){
+
 }

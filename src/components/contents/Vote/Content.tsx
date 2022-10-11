@@ -11,6 +11,7 @@ const Content:React.FC = () => {
    const [cookies, setCookie, removeCookie] = useCookies()
    const [votes, setPost] = useState<Array<Vote>>([])
    const navigate = useNavigate()
+   
    useEffect(() => {
       // console.log("useEffect",baseURL)
       fetchAPIQuestionData()
@@ -19,7 +20,7 @@ const Content:React.FC = () => {
    function  fetchAPIQuestionData(){
       const token = cookies.token  
       // TODO 前取得から制限する
-      axios.get(`${baseURL}api/vote`,{
+      axios.get(`${baseURL}api/vote/`,{
          headers: { 
           "Content-Type": "applicaiton/json",
           Authorization: "JWT " + `${token}`

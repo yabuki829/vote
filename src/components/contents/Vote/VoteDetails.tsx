@@ -4,11 +4,13 @@ import { useLocation } from "react-router-dom"
 import { Choice, User, Vote, Comment, Thread } from '../../../Type';
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 import { useCookies } from "react-cookie";
-import { baseURL, putAPISelectChoice } from '../../../methods/Api';
+import { baseURL, postAPIThread, putAPISelectChoice } from '../../../methods/Api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
 import arrowleft from "../../../image/arrowleft.png"
+import ThreadCard from '../Thread/ThreadCard';
+import profile  from "../../../image/profile.png"
 
 interface state {
   vote: Vote
@@ -27,10 +29,13 @@ const VoteDetails = () => {
   const [comments, setComments] = useState<Array<Comment>>([])
   const [threads,setThreads] = useState<Array<Thread>>([])
   const [mycomment, setMyComment] = useState("")
+  const [threadTitle,setThreadTitle] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
   const navigate = useNavigate()
+
   useEffect(() => {
     fetchAPICommentData()
+    fetchAPIThreadData()
     console.log("呼ばれてます")
   }, []);
 
@@ -88,7 +93,7 @@ const VoteDetails = () => {
   const numberOfVotes = vote.numberOfVotes.length
 
   const onStyle = "bg-gray-300  w-1/2"
-  const offStyle = "w-1/2 border"
+  const offStyle = "w-1/2 border border-gray-300 "
 
   const menuCommentStyle = isCommentComp ? onStyle : offStyle
   const menuThreadStyle = isCommentComp ? offStyle : onStyle
@@ -122,15 +127,40 @@ const VoteDetails = () => {
         }
       });
   }
+  function fetchAPIThreadData(){
+    
+    const token = cookies.token  
 
-  function fetchAPIThread(){
-    const token = cookies.token
+    axios.get(`${baseURL}api/vote/${vote.id}/thread`,{
+      headers: {
+        "Content-Type": "applicaiton/json",
+        Authorization: "JWT " + `${token}`
+      }
+    })
+    .then((res: AxiosResponse<Array<Thread>>) => {
+      setThreads(res.data)
+    })
+
+  }
+
+  function handleChangeThreadTitle(event: React.ChangeEvent<HTMLInputElement>) {
+    setThreadTitle(event.target.value)
   }
   function handleChangeCommentField(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setMyComment(event.target.value)
   }
   type comment_type = {
     text: string
+  }
+
+  async function handelPOSTThread(){
+    //新規スレッドの作成
+    const token = cookies.token
+    const result = await postAPIThread(token,vote.id,threadTitle)
+    //スレッドの詳細画面に遷移する
+    setThreadTitle("")
+    alert("作成しました")
+
   }
   function handlePOSTComment() {
 
@@ -172,7 +202,7 @@ const VoteDetails = () => {
     <div className='m-3'>
 
       <div className='flex items-center'>
-        <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + vote.user.image} alt="" />
+        <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={vote.user.image ? ("http://127.0.0.1:8000" + vote.user.image):(profile)} alt="" />
         <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>
       </div>
 
@@ -227,7 +257,7 @@ const VoteDetails = () => {
 
               </div>
               <div className='m-2 flex justify-end '>
-                <button className=' py-2 px-2  ' >キャンセル</button>
+                <button onClick={()=> setMyComment("")} className=' py-2 px-2  ' >キャンセル</button>
                 <button onClick={handlePOSTComment} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400' >コメント</button>
               </div>
             </div>
@@ -241,7 +271,7 @@ const VoteDetails = () => {
                 comments.map((comment) => (
                   <div className='p-3'>
                     <div className='flex items-center'>
-                      <img className='w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + comment.user.image} alt="" />
+                      <img className='w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={comment.user.image ? ("http://127.0.0.1:8000" + comment.user.image):(profile)} alt="" />
                       <h1 className='mx-3'>{comment.user.nickName}</h1>
                     </div>
                     <h1 className='mb-2'>{comment.text}</h1>
@@ -260,19 +290,26 @@ const VoteDetails = () => {
                     <img className=' w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
                   </a>
                   
-                  <input placeholder='新規スレッド' className='w-full mx-3 border  p-1' type="text" />
+                  <input onChange={(e) => handleChangeThreadTitle(e)} value={threadTitle} placeholder='新規スレッド' className='w-full mx-3 border  p-1' type="text" />
                 </div>
                 
               </div>
               <div className='m-2 flex justify-end '>
-                <button className=' py-2 px-2  ' >キャンセル</button>
-                <button onClick={handlePOSTComment} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400' >作成</button>
+                <button onClick={()=>setThreadTitle("")} className=' py-2 px-2  ' >キャンセル</button>
+                <button onClick={handelPOSTThread} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400' >作成</button>
               </div>
               <h1>
                 { ThreadCountText}
               </h1>
               <hr />
-             
+              {
+                threads.map((thread)=>(
+                  <ThreadCard 
+                  id={thread.id} 
+                  user={thread.user}
+                   vote={thread.vote} title={thread.title} createdAt={thread.createdAt}/>
+                ))
+              }
             </div>
           </div>
           

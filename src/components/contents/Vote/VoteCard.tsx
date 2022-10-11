@@ -6,7 +6,7 @@ import menuIcon from "../../../image/menu.png"
 import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import MenuCard from './MenuCard'
-import { Link} from "react-router-dom"
+import { Link, useLocation} from "react-router-dom"
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 
 const VoteCard:React.FC<Vote> = (props) => {
@@ -15,7 +15,7 @@ const VoteCard:React.FC<Vote> = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const [voted,setVoted] = useState(isVoted() )
   const [isShownMenuCard,setIsShownMenuCard] = useState(false)
-
+  const location = useLocation();
   async function  handleVote(choiceID:string,text:string){
     if (!isVoted()) {
       const token = cookies.token  
@@ -88,6 +88,14 @@ const VoteCard:React.FC<Vote> = (props) => {
   const numberOfVotes =  props.numberOfVotes.length
 
 
+  
+  let isThread = false
+  if (location.pathname.split("/")[1] === "thread"){
+    isThread = true
+  }
+    
+
+
   return (
     <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
       {/* 詳細画面に遷移する */}
@@ -96,8 +104,8 @@ const VoteCard:React.FC<Vote> = (props) => {
             { user.image ? (<img className={imageStyle}  src={ "http://127.0.0.1:8000"+user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
             <h1 className='a'>{user.nickName}</h1>
           </div>
-
-
+         
+         
             
             <div className='flex '>
              
@@ -109,9 +117,13 @@ const VoteCard:React.FC<Vote> = (props) => {
             </div>
             
         </div>
-        <Link to={"vote/"+props.id} state={{vote:props,userid:cookies.userid}} className='hover:bg-gray-100'>
-          <h1 className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </h1>
-        </Link>
+        {
+          isThread ? (<h1 className='text-xl font-bold my-5 '>{questionText}</h1>): ( 
+            <Link to={"/vote/"+props.id} state={{vote:props,userid:cookies.userid}} className='hover:bg-gray-100'>
+              <h1 className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </h1>
+            </Link>)
+            }
+       
         
       <div className='mx-10 '>
        
