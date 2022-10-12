@@ -75,9 +75,6 @@ const VoteCard:React.FC<Vote> = (props) => {
     return false
   }
 
-
-  // TODO リファクタリングしたい
-
   
  
 
@@ -119,7 +116,7 @@ const VoteCard:React.FC<Vote> = (props) => {
         </div>
         {
           isThread ? (<h1 className='text-xl font-bold my-5 '>{questionText}</h1>): ( 
-            <Link to={"/vote/"+props.id} state={{vote:props,userid:cookies.userid}} className='hover:bg-gray-100'>
+            <Link to={"/vote/"+props.id} className='hover:bg-gray-100'>
               <h1 className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </h1>
             </Link>)
             }

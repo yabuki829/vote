@@ -6,40 +6,41 @@ import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, voted
 import { useCookies } from "react-cookie";
 import { baseURL, postAPIThread, putAPISelectChoice } from '../../../methods/Api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
-import arrowleft from "../../../image/arrowleft.png"
 import ThreadCard from '../Thread/ThreadCard';
 import profile  from "../../../image/profile.png"
 
-interface state {
-  vote: Vote
-  userid: string
-}
 
 type Comment_Type = {
   comment: string;
 }
+
 const VoteDetails = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<Comment_Type>()
   const location = useLocation();
-  const { vote, userid } = location.state as state
-  const [voted, setVoted] = useState(isVoted())
+  const [vote, setVote] = useState<Vote>({
+    id:"",
+    user: { id: "", user: { id: "" }, nickName: "", image: "", createdAt: "" },
+    questionText:"", createdAt:"", image:"", isOnlyLoginUser:false,
+    choices:[{id:"",text:"",votedUserCount:[{id:""},]}],numberOfVotes:[]
+
+  })
   const [cookies, setCookie, removeCookie] = useCookies()
+  
+ 
   const [comments, setComments] = useState<Array<Comment>>([])
   const [threads,setThreads] = useState<Array<Thread>>([])
   const [mycomment, setMyComment] = useState("")
   const [threadTitle,setThreadTitle] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
+  const [voted, setVoted] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
+    // alert("useEffect")
     fetchAPICommentData()
     fetchAPIThreadData()
-    console.log("呼ばれてます")
+    fetchAPIDetailVoteData()
   }, []);
-
-
 
   function checkSelectedChoice(choice: Choice) {
     const userid = cookies.userid
@@ -55,13 +56,47 @@ const VoteDetails = () => {
     }
     return false
   }
+  
+  function fetchAPIDetailVoteData(){
+    //投稿の詳細を取得する
+    const vote_id = location.pathname.split('/')[2]
+    const token = cookies.token
+    
+     axios.get(`${baseURL}api/vote/${vote_id}`, {
+      headers: {
+        "Content-Type": "applicaiton/json",
+        Authorization: "JWT " + `${token}`
+      }
+    })
+      .then((res: AxiosResponse<Array<Vote>>) => {
+        setVote(res.data[0])
+        
+        //投票済みかどうか
+        const voteduser = res.data[0].numberOfVotes
+        setVoted(isVoted(voteduser))
 
+      })
+      .catch((e: AxiosError<{ error: string }>) => {
+        switch (e.response?.status) {
 
-  function isVoted() {
-    const myuserid: string = userid
+          case 401:
+            //認証エラー
+            // navigate("/login")
+            break
+          case 403:
+            break
+          default:
+            break
+        }
+      });
 
-    const user_dic = vote.numberOfVotes
+  }
+ 
+  function isVoted(user_dic:Array<User>) {
+    const myuserid: string = cookies.userid
+    console.log("投票者",user_dic)
     for (let i = 0; i < user_dic.length; i++) {
+      console.log(myuserid ,"===", user_dic[i].id)
       if (myuserid === user_dic[i].id) {
         return true
         break
@@ -73,10 +108,10 @@ const VoteDetails = () => {
 
 
   async function handleVote(choiceID: string, choiceText: string) {
-    if (!isVoted()) {
+    if (!voted) {
       const token = cookies.token
       await putAPISelectChoice(choiceID, token, vote.id)
-      const user: User = { id: userid }
+      const user: User = { id: cookies.userid }
       vote.numberOfVotes.push(user)
 
       vote.choices.map((choice) => (
@@ -101,7 +136,9 @@ const VoteDetails = () => {
 
   function fetchAPICommentData() {
     const token = cookies.token
-    axios.get(`${baseURL}api/vote/${vote.id}/comment`, {
+    const vote_id = location.pathname.split('/')[2]
+
+    axios.get(`${baseURL}api/vote/${vote_id}/comment`, {
       headers: {
         "Content-Type": "applicaiton/json",
         Authorization: "JWT " + `${token}`
@@ -113,7 +150,6 @@ const VoteDetails = () => {
 
       })
       .catch((e: AxiosError<{ error: string }>) => {
-        console.log("エラー", e.response?.status)
         switch (e.response?.status) {
 
           case 401:
@@ -130,14 +166,17 @@ const VoteDetails = () => {
   function fetchAPIThreadData(){
     
     const token = cookies.token  
-
-    axios.get(`${baseURL}api/vote/${vote.id}/thread`,{
+    const vote_id = location.pathname.split('/')[2]
+    
+    axios.get(`${baseURL}api/vote/${vote_id }/thread`,{
       headers: {
         "Content-Type": "applicaiton/json",
         Authorization: "JWT " + `${token}`
       }
     })
     .then((res: AxiosResponse<Array<Thread>>) => {
+      console.log("----------------------")
+      console.log(res.data)
       setThreads(res.data)
     })
 
@@ -238,6 +277,7 @@ const VoteDetails = () => {
             </div>
           ))
         }
+       
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
       </div>
 

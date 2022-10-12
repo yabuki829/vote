@@ -21,7 +21,7 @@ const Register = () => {
     const result:string = await login(auth)
     await postAPIRegisterProfile(auth,result)
     setCookie("token",result)
-    navigate("/")
+    navigate(-1)
   };
 
   return (

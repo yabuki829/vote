@@ -24,7 +24,7 @@ const Login:React.FC =  () =>  {
     
     await handleGetProfile(result)
     alert("ホーム画面に移動します")
-    navigate("/")
+    navigate(-1)
     
   };
 

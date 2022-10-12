@@ -1,7 +1,7 @@
 import React,{ useState,useEffect} from 'react'
 import VoteCard from './VoteCard'
 import axios, {  AxiosResponse ,AxiosError } from "axios"
-import { User,Vote } from '../../../Type'
+import { Profile, User,Vote } from '../../../Type'
 import { baseURL} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
@@ -13,13 +13,12 @@ const Content:React.FC = () => {
    const navigate = useNavigate()
    
    useEffect(() => {
-      // console.log("useEffect",baseURL)
       fetchAPIQuestionData()
+      getAPIProfileData()
     },[]);
 
    function  fetchAPIQuestionData(){
       const token = cookies.token  
-      // TODO 前取得から制限する
       axios.get(`${baseURL}api/vote/`,{
          headers: { 
           "Content-Type": "applicaiton/json",
@@ -27,15 +26,10 @@ const Content:React.FC = () => {
         }
        })
          .then((res:AxiosResponse<Array<Vote>>) => {
-         console.log("----------------------------")
-         console.log(res.data[1])
-         console.log("取得完了")
-
          setPost(res.data) 
         
      })
      .catch((e: AxiosError<{ error: string }>) => {
-      console.log("エラー",e.response?.status)
       switch (e.response?.status){
         
          case 401:
@@ -49,12 +43,39 @@ const Content:React.FC = () => {
       }
     });
     }
-
+    function getAPIProfileData() {
+      const token = cookies.token
+      axios.get(`${baseURL}api/profile/`, {
+        headers: {
+          "Content-Type": "applicaiton/json",
+          Authorization: "JWT " + `${token}`
+        }
+      })
+        .then((res: AxiosResponse<Array<Profile>>) => {
+  
+          console.log("Profileを取得完了")
+          console.log(res.data)
+         //  setProfile(res.data[0])
+  
+        })
+        .catch((e: AxiosError<{ error: string }>) => {
+          console.log("エラー", e.response?.status)
+          switch (e.response?.status) {
+            case 401:
+              //認証エラー
+              // navigate("/login")
+              break
+            case 403:
+  
+            default:
+              break
+          }
+        });
+    }
     function fetchAdditionalData(){
       // TODO 一番下までスクロールしたら追加でデータを取得する
     }
    
-   console.log(votes.length)
 
    return (
          <>

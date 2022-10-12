@@ -22,8 +22,8 @@ const MyProfile = () => {
   const menuThreadStyle = isVoteComp ? offStyle : onStyle
   useEffect(() => {
     getAPIProfileData()
-    getAPIMyVotdData()
-    getAPIMyVote()
+    // getAPIMyVotdData()
+    // getAPIMyVote()
     
   }, []);
 
@@ -99,8 +99,6 @@ const MyProfile = () => {
       }
     })
       .then((res: AxiosResponse<Array<Vote>>) => {
-        console.log("投票済みのデータ")
-        console.log(res)
         setVotedData(res.data)
       })
       .catch((e: AxiosError<{ error: string }>) => {
