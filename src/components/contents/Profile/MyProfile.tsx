@@ -4,12 +4,11 @@ import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import { baseURL } from '../../../methods/Api'
 import { Profile, Vote } from '../../../Type'
-import Content from '../Vote/Content'
 import VoteCard from '../Vote/VoteCard'
 import ProfileCard from './ProfileCard'
 
 const MyProfile = () => {
-  const [cookies, setCookie, removeCookie] = useCookies()
+  const [cookies] = useCookies()
   const [profile, setProfile] = useState<Profile>({ id: "", user: { id: "" }, nickName: "", createdAt: "", image: "" })
   const navigate = useNavigate()
   const [isVoteComp, setisVoteComp] = useState(true)
@@ -20,33 +19,32 @@ const MyProfile = () => {
 
   const menuCommentStyle = isVoteComp ? onStyle : offStyle
   const menuThreadStyle = isVoteComp ? offStyle : onStyle
+
   useEffect(() => {
     getAPIProfileData()
-    // getAPIMyVotdData()
-    // getAPIMyVote()
+    getAPIMyVotdData()
+    getAPIMyVote()
     
   }, []);
-
+  
   function getAPIProfileData() {
     const token = cookies.token
-    axios.get(`${baseURL}api/profile/`, {
+    axios.get(`${baseURL}api/profile`, {
       headers: {
         "Content-Type": "applicaiton/json",
         Authorization: "JWT " + `${token}`
       }
     })
       .then((res: AxiosResponse<Array<Profile>>) => {
-
-        console.log("Profileを取得完了")
-        console.log(res.data)
         setProfile(res.data[0])
 
       })
       .catch((e: AxiosError<{ error: string }>) => {
-        console.log("エラー", e.response?.status)
+      //  alert(e.message)
         switch (e.response?.status) {
           case 401:
             //認証エラー
+            alert("401")
             // navigate("/login")
             break
           case 403:
@@ -69,8 +67,6 @@ const MyProfile = () => {
     })
       .then((res: AxiosResponse<Array<Vote>>) => {
 
-        console.log("自分の投稿を取得完了")
-        console.log(res.data)
         setVotes(res.data)
 
       })
@@ -141,12 +137,12 @@ const MyProfile = () => {
       </div>
 
       <div className='flex justify-center my-10 '>
-        <button onClick={() => setisVoteComp(true)} className={menuCommentStyle}>自分の投稿</button>
+        <button onClick={() => setisVoteComp(true)} className={menuCommentStyle}>最近の投稿</button>
         <button onClick={() => setisVoteComp(false)} className={menuThreadStyle}>投票済み</button>
       </div>
       {isVoteComp ? (
         <div>
-          {votesMessage}
+           <h1 className='mx-3'> {votesMessage}</h1>
           <hr />
           {votes.map((vote) => (
              <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes}/>
@@ -154,7 +150,9 @@ const MyProfile = () => {
         </div>
       ) : ( 
         <div>
-          {votedDatMessage}
+          <h1 className='mx-3'> {votedDatMessage}</h1>
+         
+          
           <hr />
           {voteddata.map((vote) => (
             <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes}/>

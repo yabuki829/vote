@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { User, Vote,Comment } from '../../../Type'
+import { User, Vote,Comment, Thread, defaultThread } from '../../../Type'
 import VoteCard from '../Vote/VoteCard'
 import { useCookies } from "react-cookie";
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -14,19 +14,53 @@ interface state {
   title: string
 }
 const ThreadDetail = () => {
-  const location = useLocation();
-  const { vote, user, title, threadid } = location.state as state
+  const location = useLocation()
   const [comments,setComments] = useState<Array<Comment>>([])
+  const [thread,setThread] = useState<Thread>(defaultThread)
+  const {vote} = thread 
   const [myComment,setMyComment] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
   useEffect(() => {
-   fetchAPIThreadCommentData()
+    fetcheAPIThreadData()
+    fetchAPIThreadCommentData()
   }, []);
 
+
+  function fetcheAPIThreadData(){
+    const token = cookies.token
+    const thread_id = location.pathname.split('/')[2]
+
+    axios.get(`${baseURL}api/thread/${thread_id}`, {
+      headers: {
+        "Content-Type": "applicaiton/json",
+        Authorization: "JWT " + `${token}`
+      }
+    })
+      .then((res: AxiosResponse<Array<Thread>>) => {
+        console.log(res.data)
+        setThread(res.data[0])
+
+      })
+      .catch((e: AxiosError<{ error: string }>) => {
+        console.log("エラー", e.response?.status)
+        switch (e.response?.status) {
+
+          case 401:
+            //認証エラー
+            navigate("/login")
+            break
+          case 403:
+            break
+          default:
+            break
+        }
+      });
+  }
   function fetchAPIThreadCommentData(){
     const token = cookies.token
-    axios.get(`${baseURL}api/thread/${threadid}/comment`, {
+    const thread_id = location.pathname.split('/')[2]
+    axios.get(`${baseURL}api/thread/${thread_id}/comment`, {
       headers: {
         "Content-Type": "applicaiton/json",
         Authorization: "JWT " + `${token}`
@@ -57,7 +91,8 @@ const ThreadDetail = () => {
 
     const token = cookies.token
     const data = {text:myComment}
-    axios.post(`${baseURL}api/thread/${threadid}/comment`,data , {
+    const thread_id = location.pathname.split('/')[2]
+    axios.post(`${baseURL}api/thread/${thread_id}/comment`,data , {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + `${token}`
@@ -80,19 +115,23 @@ const ThreadDetail = () => {
   }
   return (
     <div className='my-5'>
-      <div className='mx-3'>
-        <h1 className='text-2xl font-bold'>{title}</h1>
+      <div className='flex mx-3 text-2xl font-bold'>
+        <h1>テーマ:</h1>
+        <h1 className=''>{thread.title}</h1>
       </div>
-      <VoteCard id={vote.id} user={{
-        id: vote.user.id,
-        nickName: vote.user.nickName,
-        user: {
-          id: vote.user.user.id
-        },
-        createdAt: vote.user.createdAt,
-        image: vote.image
-      }} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} />
+      <div className='border rounded-md  mx-10 my-3 hover:bg-gray-100'>
+        <VoteCard id={vote.id} user={{
+          id: vote.user.id,
+          nickName: vote.user.nickName,
+          user: {
+            id: vote.user.user.id
+          },
+          createdAt: vote.user.createdAt,
+          image: vote.image
+        }} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} />
 
+      </div>
+      
       <div >
         <div className='p-2 flex'>
           <img className=' w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={cookies.profileimage ? ("http://127.0.0.1:8000"+ cookies.profileimage):(profile)} alt="" />

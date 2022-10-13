@@ -2,10 +2,8 @@
 import React, { useState } from 'react'
 import { Choice, Vote ,User} from '../../../Type'
 import profile  from "../../../image/profile.png"
-import menuIcon from "../../../image/menu.png"
 import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
-import MenuCard from './MenuCard'
 import { Link, useLocation} from "react-router-dom"
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 
@@ -43,7 +41,6 @@ const VoteCard:React.FC<Vote> = (props) => {
     //props.numberOfVotesに自分のidがあるかどうかを調べる
     //あれば投票済み
     const myuserid = cookies.userid
-
     const user_dic  =  props.numberOfVotes
     console.log("-----------------")
     for (let i = 0; i < user_dic.length; i++) {
@@ -94,25 +91,17 @@ const VoteCard:React.FC<Vote> = (props) => {
 
 
   return (
-    <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
+    // <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
+    <Link to={"/vote/"+props.id} className='hover:bg-gray-100'>
+    <div  className=" mx-10 my-3 p-3">
+       
       {/* 詳細画面に遷移する */}
         <div className='flex justify-between  items-center'>
           <div className='flex items-center '>
             { user.image ? (<img className={imageStyle}  src={ "http://127.0.0.1:8000"+user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
             <h1 className='a'>{user.nickName}</h1>
           </div>
-         
-         
-            
-            <div className='flex '>
-             
-              {
-                isShownMenuCard ? (<MenuCard/>):(<h1 className='invisible absolute'>こんなところまで見るなんてえっちね</h1>)
-              }
-              
-                <img onClick={handleMenuCard} className=" w-5 h-5 " src={menuIcon} alt="" /> 
-            </div>
-            
+        
         </div>
         {
           isThread ? (<h1 className='text-xl font-bold my-5 '>{questionText}</h1>): ( 
@@ -121,17 +110,18 @@ const VoteCard:React.FC<Vote> = (props) => {
             </Link>)
             }
        
-        
-      <div className='mx-10 '>
        
-              
+      <div  className='mx-10'>
+       
+            
      
         {
           
           choices.map((choice)=>(
+            
             //もし投稿していたらhover:色変わらない様にする
             <div key={choice.id}>
-              <button  onClick={(e) => handleVote(choice.id,choice.text)}  className='border border-gray-300 mb-2 w-full' key={choice.id}>
+              <button    className='border border-gray-300 mb-2 w-full' key={choice.id}>
                 <div className={styleBackground}>         
                   <h1 className={styleChoiceText}>{choice.text}</h1>
                   {
@@ -158,9 +148,20 @@ const VoteCard:React.FC<Vote> = (props) => {
           
         }
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
+        
       </div>
+      <div className='flex justify-between'>
+          <div className='flex'>
+            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-2 my-2 mr-2'>software</Link>
+          </div>
+          
+         
+        </div>
+      <hr />
       
     </div>
+    </Link>
+    
   )
 }
 

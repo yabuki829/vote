@@ -49,3 +49,38 @@ export type Comment = {
   text:string
   createdAt:string
 }
+
+
+export const defaultUser:User = {
+  id:""
+}
+
+
+export const defaultProfile:Profile = {
+  id:"",
+  nickName:"No Name",
+  user:defaultUser,
+  createdAt:"",
+  image:""
+}
+
+export const defaultVote:Vote = {
+  id:"",
+  user:defaultProfile,
+  questionText:"読み込み中~",
+  createdAt:"",
+  image:"",
+  isOnlyLoginUser:false,
+  // 今後stringに変更する
+  choices:[],
+  //全体の投稿数がほしいな
+  numberOfVotes:[]
+}
+export const defaultThread:Thread = {
+  id:1,
+  user:defaultProfile,
+  vote: defaultVote,
+  title:"",
+  createdAt:""
+}
+

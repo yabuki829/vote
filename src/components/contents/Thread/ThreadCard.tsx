@@ -17,8 +17,8 @@ const ThreadCard:React.FC<Thread> = (props) => {
   }
   const myuserid = cookies.userid
   return (
-    <div className="bg-white border shadow-lg rounded-lg mx-10 my-3 py-5 ">
-      <Link to={"/thread/"+vote.id} state={{threadid:id,vote:vote,user:user,title:title}} className='hover:bg-gray-100'>
+    <div className="bg-white mx-10 my-3 py-5 ">
+      <Link to={"/thread/"+id}  className='hover:bg-gray-100'>
         <div className='mx-3 p-2'>
           <div className='flex justify-between  items-center'>
             <div className='flex items-center '>
@@ -26,12 +26,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
             
               <h1 className=''>{user.nickName}</h1>
             </div>
-            <div className='flex '>
-              {
-                isShownMenuCard ? (<ThreadMenuCard/>):(<h1 className='invisible absolute'>こんなところまで見るなんてえっちね</h1>)
-              }
-                <img onClick={handleMenuCard} className=" w-5 h-5 " src={menuIcon} alt="" /> 
-            </div>
+           
           </div>
           <h1 className='text-xl font-bold'>{title}</h1>
         </div>
@@ -54,7 +49,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
       </Link>
       
       
-     
+     <hr />
     </div>
    
   )

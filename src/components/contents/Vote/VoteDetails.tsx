@@ -36,7 +36,6 @@ const VoteDetails = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // alert("useEffect")
     fetchAPICommentData()
     fetchAPIThreadData()
     fetchAPIDetailVoteData()
@@ -85,7 +84,11 @@ const VoteDetails = () => {
             break
           case 403:
             break
+          case 500:
+            navigate("/404")
+            break
           default:
+            navigate("/404")
             break
         }
       });
@@ -154,7 +157,7 @@ const VoteDetails = () => {
 
           case 401:
             //認証エラー
-            // navigate("/login")
+            navigate("/login")
             break
           case 403:
             break
@@ -239,11 +242,15 @@ const VoteDetails = () => {
 
   return (
     <div className='m-3'>
+      <div className='flex justify-between'>
 
-      <div className='flex items-center'>
-        <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={vote.user.image ? ("http://127.0.0.1:8000" + vote.user.image):(profile)} alt="" />
-        <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>
+        <div className='flex items-center'>
+          <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={vote.user.image ? ("http://127.0.0.1:8000" + vote.user.image):(profile)} alt="" />
+          <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>
+        </div>
+        <h1>{vote.createdAt}</h1>
       </div>
+      
 
 
 
