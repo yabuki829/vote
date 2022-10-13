@@ -12,6 +12,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
   const imageStyle = "w-10 h-10 border-2 rounded-full object-cover mr-4 shadow"
   const [isShownMenuCard,setIsShownMenuCard] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies()
+  
   function handleMenuCard(){
     setIsShownMenuCard(!isShownMenuCard)
   }

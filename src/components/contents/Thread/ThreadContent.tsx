@@ -20,9 +20,6 @@ const ThreadContent = () => {
      }
     })
       .then((res:AxiosResponse<Array<Thread>>) => {
-      console.log("----------------------------")
-      console.log(res.data)
-      console.log("Thread取得完了")
       setTreads(res.data) 
      
   })

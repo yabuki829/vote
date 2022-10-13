@@ -57,6 +57,7 @@ const ThreadDetail = () => {
         }
       });
   }
+
   function fetchAPIThreadCommentData(){
     const token = cookies.token
     const thread_id = location.pathname.split('/')[2]
@@ -134,7 +135,7 @@ const ThreadDetail = () => {
       
       <div >
         <div className='p-2 flex'>
-          <img className=' w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={cookies.profileimage ? ("http://127.0.0.1:8000"+ cookies.profileimage):(profile)} alt="" />
+          <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={cookies.profileimage ? ("http://127.0.0.1:8000"+ cookies.profileimage):(profile)} alt="" />
           <textarea onChange={(e) => setMyComment(e.target.value)} value={myComment} className='p-2 border w-full mx-5' placeholder='コメント' ></textarea>
         
         </div>
@@ -151,7 +152,7 @@ const ThreadDetail = () => {
            comments.map((comment) => (
             <div className='p-3'>
               <div className='flex items-center'>
-                <img className='w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={comment.user.image ?("http://127.0.0.1:8000" + comment.user.image) :(profile)} alt="" />
+                <img className='w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={comment.user.image ?("http://127.0.0.1:8000" + comment.user.image) :(profile)} alt="" />
                 <h1 className='mx-3'>{comment.user.nickName}</h1>
               </div>
               <h1 className='mb-2'>{comment.text}</h1>

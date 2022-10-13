@@ -71,9 +71,8 @@ const VoteDetails = () => {
         setVote(res.data[0])
         
         //投票済みかどうか
-        const voteduser = res.data[0].numberOfVotes
-        setVoted(isVoted(voteduser))
-
+        
+        
       })
       .catch((e: AxiosError<{ error: string }>) => {
         switch (e.response?.status) {
@@ -95,6 +94,7 @@ const VoteDetails = () => {
 
   }
  
+
   function isVoted(user_dic:Array<User>) {
     const myuserid: string = cookies.userid
     console.log("投票者",user_dic)
@@ -120,7 +120,6 @@ const VoteDetails = () => {
       vote.choices.map((choice) => (
         (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
       ))
-      // alert("投票完了")
 
       setVoted(true)
     }
@@ -180,6 +179,7 @@ const VoteDetails = () => {
     .then((res: AxiosResponse<Array<Thread>>) => {
       console.log("----------------------")
       console.log(res.data)
+      
       setThreads(res.data)
     })
 
@@ -201,7 +201,6 @@ const VoteDetails = () => {
     const result = await postAPIThread(token,vote.id,threadTitle)
     //スレッドの詳細画面に遷移する
     setThreadTitle("")
-    alert("作成しました")
 
   }
   function handlePOSTComment() {
@@ -249,6 +248,7 @@ const VoteDetails = () => {
           <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>
         </div>
         <h1>{vote.createdAt}</h1>
+       
       </div>
       
 
@@ -299,7 +299,7 @@ const VoteDetails = () => {
           <div>
             <div >
               <div className='p-2 flex'>
-                <img className=' w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
+                <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
                 <textarea onChange={(e) => handleChangeCommentField(e)} value={mycomment} className='p-2 border w-full mx-5' placeholder='コメント' ></textarea>
 
               </div>
@@ -318,7 +318,7 @@ const VoteDetails = () => {
                 comments.map((comment) => (
                   <div className='p-3'>
                     <div className='flex items-center'>
-                      <img className='w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={comment.user.image ? ("http://127.0.0.1:8000" + comment.user.image):(profile)} alt="" />
+                      <img className='w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={comment.user.image ? ("http://127.0.0.1:8000" + comment.user.image):(profile)} alt="" />
                       <h1 className='mx-3'>{comment.user.nickName}</h1>
                     </div>
                     <h1 className='mb-2'>{comment.text}</h1>
@@ -334,7 +334,7 @@ const VoteDetails = () => {
               <div className='p-2 '>
                 <div className='flex'>
                   <a href="/">
-                    <img className=' w-5 h-5 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
+                    <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
                   </a>
                   
                   <input onChange={(e) => handleChangeThreadTitle(e)} value={threadTitle} placeholder='新規スレッド' className='w-full mx-3 border  p-1' type="text" />

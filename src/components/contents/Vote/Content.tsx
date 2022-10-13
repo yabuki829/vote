@@ -14,7 +14,7 @@ const Content:React.FC = () => {
    
    useEffect(() => {
       fetchAPIQuestionData()
-      getAPIProfileData()
+      // getAPIProfileData()
     },[]);
 
    function  fetchAPIQuestionData(){
@@ -55,7 +55,7 @@ const Content:React.FC = () => {
   
           console.log("Profileを取得完了")
           console.log(res.data)
-         //  setProfile(res.data[0])
+          // setProfile(res.data[0])
   
         })
         .catch((e: AxiosError<{ error: string }>) => {
