@@ -84,3 +84,11 @@ export const defaultThread:Thread = {
   createdAt:""
 }
 
+export type Edit_Profile = {
+  nickName:string
+  profileImage:string
+  job:string
+  produce:string
+}
+
+

@@ -15,6 +15,7 @@ import ThreadContent from './components/contents/Thread/ThreadContent';
 import VoteDetails from './components/contents/Vote/VoteDetails';
 import ThreadDetail from './components/contents/Thread/ThreadDetail';
 import OtherProfile from './components/contents/Profile/OtherProfile';
+import EditProfile from './components/contents/Profile/EditProfile';
 
 function App(){
 
@@ -44,6 +45,9 @@ function App(){
               </Route>
               <Route path='profile/:id' element={<OtherProfile/>}>
               </Route>
+
+              <Route path='/edit/profile' element={<EditProfile/>}>
+              </Route>
               <Route path='/profile' element={<Profile/>}>
               </Route>
               <Route path='/register' element={<Register/>}></Route>
@@ -59,6 +63,7 @@ function App(){
           <Route path='/thread' element={ <RightBar/>}></Route>
           <Route path='/profile' element={<RightBar/>}></Route>
           <Route path='/profile/:id' element={<RightBar/>}></Route>
+          <Route path='/edit/profile' element={<RightBar/>}></Route>
           <Route path='/vote/:id' element={<RightBar/>}></Route>
           <Route path='/thread/:id' element={<RightBar/>}></Route>
         </Routes>

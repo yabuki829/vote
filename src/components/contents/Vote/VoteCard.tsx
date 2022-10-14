@@ -129,17 +129,18 @@ const VoteCard:React.FC<Vote> = (props) => {
           ))
           
         }
-        
-        <h1 className='text-right'>{numberOfVotes}人が投票</h1>
-        
-      </div>
-      <div className='flex justify-between'>
+         <div className='flex justify-between py-3  '>
           <div className='flex'>
-            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-2 my-2 mr-2'>software</Link>
+            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-3 py- mr-2'>software</Link>
+            <Link to={"/tag/"+"起業家"} className='bg-gray-200 rounded-full px-3 py-1 mr-2'>起業家</Link>
           </div>
-          
+          <h1 className='text-right'>{numberOfVotes}人が投票</h1>
          
         </div>
+       
+        
+      </div>
+     
       <hr />
       
     </div>

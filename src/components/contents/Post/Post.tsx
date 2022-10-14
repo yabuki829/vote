@@ -84,7 +84,7 @@ const Post = () => {
 
             {selections.map((selection) =>
               <div className='flex p-3 ' >
-                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="w-4/5  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder='20文字まで' />
+                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="w-4/5  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder='15文字まで' />
                 <button onClick={() => handleDeleteSelection(selection.id)} className='block px-3 ml-5 bg-red-400 text-center text-white rounded-md hover:bg-red-600'>削除</button>
               </div>
             )}

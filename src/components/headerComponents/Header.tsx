@@ -47,11 +47,18 @@ const Header:React.FC = () => {
                   <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
                   <h1>スレッド</h1>
                 </div>}></Route>
+
               <Route path='/thread' element={ <h1>スレッド</h1>}> </Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}></Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}></Route>
               <Route path='/profile' element={<h1>プロフィール</h1>}></Route>
               <Route path='/profile/:id' element={<h1>プロフィール</h1>}></Route>
+              <Route path='/edit/profile' element={ 
+              <div className='flex items-center'> 
+                  <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+                  <h1>プロフィール編集</h1>
+                </div>}>
+              </Route>
           </Routes>
         </h1>
        

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import { baseURL } from '../../../methods/Api'
 import { Profile, Vote } from '../../../Type'
 import VoteCard from '../Vote/VoteCard'
@@ -128,13 +128,18 @@ const MyProfile = () => {
     votedDatMessage = `${voteddata.length}件の投稿に投票をしてます`
 
   }
-  return (
 
+  
+  return (
     <div className='mx-2'>
       <ProfileCard id={profile?.id} nickName={profile?.nickName} user={profile?.user} createdAt={profile.createdAt} image={profile.image} />
       <div className='flex justify-center my-3 '>
-        <button className=' bg-gray-200 rounded-md px-4 py-1 hover:bg-gray-300'>プロフィールを編集する</button>
+      <Link to={"/edit/profile"}  className='bg-gray-200 rounded-md px-4 py-1 hover:bg-gray-300'>
+        プロフィールを編集する
+      </Link>
+       
       </div>
+      
 
       <div className='flex justify-center my-10 '>
         <button onClick={() => setisVoteComp(true)} className={menuCommentStyle}>最近の投稿</button>
