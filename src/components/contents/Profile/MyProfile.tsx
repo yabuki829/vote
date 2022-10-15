@@ -24,7 +24,6 @@ const MyProfile = () => {
     getAPIProfileData()
     getAPIMyVotdData()
     getAPIMyVote()
-    
   }, []);
   
   function getAPIProfileData() {
@@ -134,7 +133,7 @@ const MyProfile = () => {
     <div className='mx-2'>
       <ProfileCard id={profile?.id} nickName={profile?.nickName} user={profile?.user} createdAt={profile.createdAt} image={profile.image} />
       <div className='flex justify-center my-3 '>
-      <Link to={"/edit/profile"}  className='bg-gray-200 rounded-md px-4 py-1 hover:bg-gray-300'>
+      <Link to={"/edit/profile"} state={{ profile: profile }}  className='bg-gray-200 rounded-md px-4 py-1 hover:bg-gray-300'>
         プロフィールを編集する
       </Link>
        

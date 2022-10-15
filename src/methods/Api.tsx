@@ -1,7 +1,7 @@
 import React from 'react'
 import axios, {  AxiosResponse} from "axios"
 import { type } from '@testing-library/user-event/dist/type';
-import { Vote } from '../Type';
+import { Profile, Vote } from '../Type';
 
 //TODO デプロイする時隠す
 export const baseURL = "http://127.0.0.1:8000/"
@@ -69,6 +69,25 @@ export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
   
   return res.data
 }
+
+
+export type Change_Profile = {
+  nickName:string
+  profileImage:File
+  produce:string
+  isImageNone:false
+  // job:string
+}
+
+export type Change_Profile_without_image = {
+  nickName:string
+  produce:string
+  isImageNone:true
+  // job:string
+}
+
+
+  
 
 //投票する
 export async function putAPISelectChoice(choiceID:string,token:string,voteID:string){
