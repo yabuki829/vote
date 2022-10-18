@@ -82,8 +82,6 @@ const Content:React.FC = () => {
                {
                   votes.map((vote) => (
                      <div key={vote.id}>
-                        
-                      
                         <VoteCard
                         questionText={vote.questionText}
                         id={vote.id}

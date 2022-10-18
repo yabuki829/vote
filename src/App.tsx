@@ -16,13 +16,14 @@ import VoteDetails from './components/contents/Vote/VoteDetails';
 import ThreadDetail from './components/contents/Thread/ThreadDetail';
 import OtherProfile from './components/contents/Profile/OtherProfile';
 import EditProfile from './components/contents/Profile/EditProfile';
+import Tag from './components/contents/Tag/Tag';
+import Search from './components/contents/Search/Search';
 
 function App(){
 
   return (
     <Router>
       <div className=' antialiased md:flex'>
-       
         <div className='sticky top-0 z-50 h-0 hidden md:block'>
           <SideBar  />
         </div>
@@ -30,26 +31,17 @@ function App(){
           <Header/ >
           <div className=' md:mt-0'>
             <Routes>
-              <Route path='/' element={<Content/>}>
-              </Route>
-              <Route path='/vote/:id' element={<VoteDetails/>}>
-              </Route>
-              <Route path='/thread/:id' element={ <ThreadDetail/>}>
-              </Route>
-              <Route path='/thread' element={ <ThreadContent/>}>
-              </Route>
-              <Route path='/contact' element={<Contact/>}>
-              </Route>
-              <Route path='/post' element={<Post/>}>
-                
-              </Route>
-              <Route path='profile/:id' element={<OtherProfile/>}>
-              </Route>
-
-              <Route path='/edit/profile' element={<EditProfile/>}>
-              </Route>
-              <Route path='/profile' element={<Profile/>}>
-              </Route>
+              <Route path='/' element={<Content/>}></Route>
+              <Route path='/vote/:id' element={<VoteDetails/>}></Route>
+              <Route path='/thread/:id' element={ <ThreadDetail/>}></Route>
+              <Route path='/thread' element={ <ThreadContent/>}></Route>
+              <Route path='/contact' element={<Contact/>}></Route>
+              <Route path='/post' element={<Post/>}></Route>
+              <Route path='profile/:id' element={<OtherProfile/>}> </Route>
+              <Route path='search' element={<Search/>}> </Route>
+              <Route path='tag' element={<Tag/>}> </Route>
+              <Route path='/edit/profile' element={<EditProfile/>}></Route>
+              <Route path='/profile' element={<Profile/>}></Route>
               <Route path='/register' element={<Register/>}></Route>
               <Route path='/login' element={<Login/>}></Route>
               <Route path='/404' element={<NotFound/ >}></Route>
@@ -64,6 +56,8 @@ function App(){
           <Route path='/profile' element={<RightBar/>}></Route>
           <Route path='/profile/:id' element={<RightBar/>}></Route>
           <Route path='/edit/profile' element={<RightBar/>}></Route>
+          <Route path='search' element={<RightBar/>}> </Route>
+          <Route path='tag' element={<RightBar/>}> </Route>
           <Route path='/vote/:id' element={<RightBar/>}></Route>
           <Route path='/thread/:id' element={<RightBar/>}></Route>
         </Routes>

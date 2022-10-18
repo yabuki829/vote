@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { Choice, Vote ,User} from '../../../Type'
 import profile  from "../../../image/profile.png"
-import { putAPISelectChoice } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { Link, useLocation} from "react-router-dom"
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
@@ -132,8 +131,7 @@ const VoteCard:React.FC<Vote> = (props) => {
         }
          <div className='flex justify-between py-3  '>
           <div className='flex'>
-            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-3 py- mr-2'>{props.tag.title}</Link>
-           
+            <Link to={"/tag"+"?title="+props.tag.title} className='bg-gray-200 rounded-full px-3 py- mr-2'>{props.tag.title}</Link>
           </div>
           <h1 className='text-right'>{numberOfVotes}人が投票</h1>
          

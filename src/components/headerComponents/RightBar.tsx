@@ -1,7 +1,6 @@
 import React from 'react'
 import Footer from "../contents/Footer/Footer"
 import SearchInput from './SearchInput'
-
 const RightBar = () => {
   console.log("RightBar")
   return (

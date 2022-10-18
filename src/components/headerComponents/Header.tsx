@@ -3,11 +3,14 @@ import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import { useCookies } from "react-cookie";
 import profile  from "../../image/profile.png"
 import arrowleft  from "../../image/arrowleft.png"
+import { useLocation } from 'react-router-dom'
 const Header:React.FC = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
-  const isLogin = false
-  
+
+  const search = useLocation().search;
+  const query = new URLSearchParams(search);
+
   function handleImageTap(){
       navigate("/profile")
   }
@@ -46,8 +49,18 @@ const Header:React.FC = () => {
                 <div className='flex items-center'> 
                   <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
                   <h1>スレッド</h1>
-                </div>}></Route>
+                </div>}>
 
+
+                </Route>
+                
+              <Route path='tag' element={
+                <div className='flex items-center'> 
+                  <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+                  <h1>「{query.get('title')}」</h1>
+                </div>
+              }> </Route>
+              <Route path='search' element={<h1>「{query.get('q')}」で検索しました</h1>}> </Route>
               <Route path='/thread' element={ <h1>スレッド</h1>}> </Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}></Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}></Route>
@@ -75,10 +88,7 @@ const Header:React.FC = () => {
             
             
           </button>
-      
-       
       </header>
-      
       
       <div className='block md:hidden bg-indigo-400 '>
         <ul className='flex  text-white'>
