@@ -33,7 +33,7 @@ const VoteCard:React.FC<Vote> = (props) => {
         break
       }
     }
-    
+    console.log("未投票")
     return false
   }
 
@@ -52,6 +52,7 @@ const VoteCard:React.FC<Vote> = (props) => {
       }
       
     } 
+    
     return false
   }
 
@@ -131,8 +132,8 @@ const VoteCard:React.FC<Vote> = (props) => {
         }
          <div className='flex justify-between py-3  '>
           <div className='flex'>
-            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-3 py- mr-2'>software</Link>
-            <Link to={"/tag/"+"起業家"} className='bg-gray-200 rounded-full px-3 py-1 mr-2'>起業家</Link>
+            <Link to={"/tag/"+"tag_id"} className='bg-gray-200 rounded-full px-3 py- mr-2'>{props.tag.title}</Link>
+           
           </div>
           <h1 className='text-right'>{numberOfVotes}人が投票</h1>
          

@@ -21,7 +21,7 @@ const VoteDetails = () => {
     id:"",
     user: { id: "", user: { id: "" }, nickName: "", image: "", createdAt: "" },
     questionText:"", createdAt:"", image:"", isOnlyLoginUser:false,
-    choices:[{id:"",text:"",votedUserCount:[{id:""},]}],numberOfVotes:[]
+    choices:[{id:"",text:"",votedUserCount:[{id:""},]}],numberOfVotes:[],tag:{title:""}
 
   })
   const [cookies, setCookie, removeCookie] = useCookies()
@@ -32,7 +32,7 @@ const VoteDetails = () => {
   const [mycomment, setMyComment] = useState("")
   const [threadTitle,setThreadTitle] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
-  const [voted, setVoted] = useState(true)
+  const [voted, setVoted] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const VoteDetails = () => {
     const user_dic = choice.votedUserCount
     for (let i = 0; i < user_dic.length; i++) {
       if (userid === user_dic[i].id) {
+        console.log("選んだ選択肢")
         return true
         break
       }
@@ -69,9 +70,9 @@ const VoteDetails = () => {
     })
       .then((res: AxiosResponse<Array<Vote>>) => {
         setVote(res.data[0])
-        
+        console.log(res.data[0])
         //投票済みかどうか
-        
+        setVoted(isVoted())
         
       })
       .catch((e: AxiosError<{ error: string }>) => {
@@ -95,23 +96,26 @@ const VoteDetails = () => {
   }
  
 
-  function isVoted(user_dic:Array<User>) {
+  function isVoted() {
     const myuserid: string = cookies.userid
+    const user_dic = vote.numberOfVotes
     console.log("投票者",user_dic)
     for (let i = 0; i < user_dic.length; i++) {
       console.log(myuserid ,"===", user_dic[i].id)
+
       if (myuserid === user_dic[i].id) {
+        console.log("投票済み")
         return true
         break
       }
     }
-
+    console.log("未投票")
     return false
   }
 
 
   async function handleVote(choiceID: string, choiceText: string) {
-    if (!voted) {
+    if (!isVoted()) {
       const token = cookies.token
       await putAPISelectChoice(choiceID, token, vote.id)
       const user: User = { id: cookies.userid }
@@ -125,8 +129,8 @@ const VoteDetails = () => {
     }
   }
 
-  const styleBackground = voted ? isVotedStyle1 : isNotVotedStyle1
-  const styleChoiceText = voted ? isVotedStyle2 : isNotVotedStyle2
+  const styleBackground = isVoted() ? isVotedStyle1 : isNotVotedStyle1
+  const styleChoiceText = isVoted() ? isVotedStyle2 : isNotVotedStyle2
   const numberOfVotes = vote.numberOfVotes.length
 
   const onStyle = "bg-gray-300  w-1/2"
@@ -177,9 +181,6 @@ const VoteDetails = () => {
       }
     })
     .then((res: AxiosResponse<Array<Thread>>) => {
-      console.log("----------------------")
-      console.log(res.data)
-      
       setThreads(res.data)
     })
 
@@ -255,26 +256,29 @@ const VoteDetails = () => {
 
 
 
-      <h1 className='text-2xl font-bold mx-3'> {vote.questionText}{vote.questionText}{vote.questionText}{vote.questionText}{vote.questionText}</h1>
+      <h1 className='text-2xl font-bold mx-3 mt-5'> {vote.questionText}</h1>
 
 
       <div className='mx-20 my-5'>
+      {/* {isVoted() ? (<h1>投票済み</h1>):(<h1>未投票</h1>)} */}
 
         {
           vote.choices.map((choice) => (
             <div key={choice.id}>
               <button onClick={(e) => handleVote(choice.id, choice.text)} className='border border-gray-300 mb-2 w-full' key={choice.id}>
                 <div className={styleBackground}>
+                
+               
                   <h1 className={styleChoiceText}>{choice.text}</h1>
                   {
-                    voted && (
+                    isVoted() && (
                       checkSelectedChoice(choice) ? (<div className={votedChoicedStyle} style={{ width: Math.round(choice.votedUserCount.length / numberOfVotes * 100) + "%", color: "transparent" }}>こんな内側まで見ないでよ、えっち</div>) : (<div className={voteNotChoicedStyle} style={{ width: Math.round(choice.votedUserCount.length / numberOfVotes * 100) + "%", color: "transparent" }}>こんな内側まで見ないでよ、えっち</div>)
                     )
                   }
                   {
 
                     //投票済みであればその選択肢が％を表示する
-                    voted ? (
+                    isVoted() ? (
                       <h1 className='pr-3 text-gray-500 absolute right-0'>
                         {Math.round(choice.votedUserCount.length / numberOfVotes * 100)}%
                       </h1>) : (<></>)

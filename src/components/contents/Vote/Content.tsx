@@ -85,14 +85,14 @@ const Content:React.FC = () => {
                         
                       
                         <VoteCard
-                           questionText={vote.questionText}
-                           id={vote.id}
-                           user={vote.user}
-                           createdAt={vote.createdAt}
-                           image={vote.image}
-                           isOnlyLoginUser={vote.isOnlyLoginUser}
-                           choices={vote.choices}
-                           numberOfVotes={vote.numberOfVotes}                        /> 
+                        questionText={vote.questionText}
+                        id={vote.id}
+                        user={vote.user}
+                        createdAt={vote.createdAt}
+                        image={vote.image}
+                        isOnlyLoginUser={vote.isOnlyLoginUser}
+                        choices={vote.choices}
+                        numberOfVotes={vote.numberOfVotes} tag={vote.tag}                        /> 
                      </div>
                     
                   ))

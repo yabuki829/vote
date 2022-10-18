@@ -4,7 +4,7 @@ import React from 'react'
 
  //選択肢のStyle
 //投票済みの選択済の場合のスタイル
-export const votedChoicedStyle = "  whitespace-nowrap bg-green-300  text-left"
+export const votedChoicedStyle = "  whitespace-nowrap bg-green-300  text-left "
 //投票済みだけど選択してない場合
 export const voteNotChoicedStyle = "  whitespace-nowrap bg-gray-300 text-left"
  

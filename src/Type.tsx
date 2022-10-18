@@ -12,8 +12,12 @@ export type Vote = {
   choices:Array<Choice>
   //全体の投稿数がほしいな
   numberOfVotes:Array<User>
+  tag:Tag
 }
 
+type Tag = {
+  title:string
+}
 
  
 export type Choice ={
@@ -65,16 +69,17 @@ export const defaultProfile:Profile = {
 }
 
 export const defaultVote:Vote = {
-  id:"",
-  user:defaultProfile,
-  questionText:"読み込み中~",
-  createdAt:"",
-  image:"",
-  isOnlyLoginUser:false,
+  id: "",
+  user: defaultProfile,
+  questionText: "読み込み中~",
+  createdAt: "",
+  image: "",
+  isOnlyLoginUser: false,
   // 今後stringに変更する
-  choices:[],
+  choices: [],
   //全体の投稿数がほしいな
-  numberOfVotes:[]
+  numberOfVotes: [],
+  tag: {title:""}
 }
 export const defaultThread:Thread = {
   id:1,
