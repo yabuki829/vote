@@ -33,13 +33,14 @@ const VoteDetails = () => {
   const [threadTitle,setThreadTitle] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
   const [voted, setVoted] = useState(false)
+  const word = location.pathname.split('/')[2]
   const navigate = useNavigate()
 
   useEffect(() => {
     fetchAPICommentData()
     fetchAPIThreadData()
     fetchAPIDetailVoteData()
-  }, []);
+  }, [word]);
 
   function checkSelectedChoice(choice: Choice) {
     const userid = cookies.userid

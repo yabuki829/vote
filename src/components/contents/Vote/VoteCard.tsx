@@ -20,8 +20,7 @@ const VoteCard:React.FC<Vote> = (props) => {
   
     const myuserid = cookies.userid
     const user_dic  =  props.numberOfVotes
-    console.log("-----------------")
-    console.log("投票済みか確認します")
+
     
     for (let i = 0; i < user_dic.length; i++) {
       console.log(myuserid,"===",user_dic[i].id)

@@ -19,6 +19,7 @@ const Search = () => {
   useEffect(() => {
     fetchAPIQuestionData()
   },[word]);
+
   function fetchAPIQuestionData(){
     const token = cookies.token  
     axios.get(`${baseURL}api/vote/?q=${query.get("q")}`,{
