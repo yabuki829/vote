@@ -53,7 +53,7 @@ const RightBar = () => {
 
           votes.map((vote)=>(
             <>
-              <div className='my-5'>
+              <div className='my-2 bg-white p-3 rounded-md'>
                 <Link to={"/vote/"+vote.id} >
                   <div className='flex items-center'>
                     { vote.user.image ? (<img className={imageStyle}  src={ "http://127.0.0.1:8000"+vote.user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }

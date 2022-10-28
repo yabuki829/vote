@@ -44,26 +44,26 @@ const Contact = () => {
 
   return (
 
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white ">
         
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact Us</h2>
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Contact Us</h2>
           
           <form onSubmit={handleSubmit(handleSendEmail)} className="space-y-8">
             <div>
-              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">名前</label>
-              <input  {...register("username", { required: true, maxLength: 20 })}  type="name" id="name" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="名前"  />
+              <label  className="block mb-2 text-sm font-medium text-gray-900 ">名前</label>
+              <input  {...register("username", { required: true, maxLength: 20 })}  type="name" id="name" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 " placeholder="名前"  />
               {errors.username?.type === 'required' && <p className='text-gray-600 text-sm' role="alert">名前を入力してください</p>}
             </div>
             <div>
-              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">メールアドレス</label>
-              <input  {...register("email", { required: true, maxLength: 20 })}  type="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@example.com"  />
+              <label  className="block mb-2 text-sm font-medium text-gray-900 ">メールアドレス</label>
+              <input  {...register("email", { required: true, maxLength: 20 })}  type="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " placeholder="name@example.com"  />
               {errors.email?.type === 'required' && <p className='text-gray-600 text-sm' role="alert">メールアドレスを入力してください</p>}
             </div>
            
             <div className="sm:col-span-2">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">お問合せ内容</label>
-              <textarea  {...register("message", { required: true })}  id="message" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" ></textarea>
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">お問合せ内容</label>
+              <textarea  {...register("message", { required: true })}  id="message" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " ></textarea>
               {errors.message?.type === 'required' && <p className='text-gray-600 text-sm' role="alert">お問合せ内容を入力してください</p>}
             </div>
             <div className='flex justify-center'>

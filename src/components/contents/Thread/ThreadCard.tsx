@@ -22,8 +22,9 @@ const ThreadCard:React.FC<Thread> = (props) => {
       <Link to={"/thread/"+id}  className='hover:bg-gray-100'>
         <div className='mx-3 p-2'>
           <div className='flex justify-between  items-center'>
+            
             <div className='flex items-center '>
-              { user.image ? (<img className={imageStyle}  src={"http://127.0.0.1:8000"+vote.user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
+              { user.image ? (<img className={imageStyle}  src={"http://127.0.0.1:8000"+user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
             
               <h1 className=''>{user.nickName}</h1>
             </div>
