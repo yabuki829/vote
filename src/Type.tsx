@@ -32,6 +32,7 @@ export type Profile ={
   user:User
   createdAt:string
   image:string
+  bio:string
 }
 export type User ={
   id: string
@@ -65,7 +66,8 @@ export const defaultProfile:Profile = {
   nickName:"No Name",
   user:defaultUser,
   createdAt:"",
-  image:""
+  image:"",
+  bio:""
 }
 
 export const defaultVote:Vote = {

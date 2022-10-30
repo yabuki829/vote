@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { Choice, User, Vote, Comment, Thread } from '../../../Type';
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 import { useCookies } from "react-cookie";
@@ -23,7 +23,7 @@ const VoteDetails = () => {
   
   const [vote, setVote] = useState<Vote>({
     id:"",
-    user: { id: "", user: { id: "" }, nickName: "", image: "", createdAt: "" },
+    user: { id: "", user: { id: "" }, nickName: "", image: "", createdAt: "" ,bio:"Z"},
     questionText:"", createdAt:"", image:"", isOnlyLoginUser:false,
     choices:[{id:"",text:"",votedUserCount:[{id:""},]}],numberOfVotes:[],tag:{title:""}
 
@@ -304,11 +304,12 @@ const VoteDetails = () => {
     </Modal>
 
       <div className='flex justify-between'>
-
-        <div className='flex items-center'>
+    
+      <Link to={"/profile/"+vote.user.user.id} className='flex items-center'>
           <img className='text-sm w-10 h-10 md:text-base  border-2 rounded-full object-cover' src={vote.user.image ? ("http://127.0.0.1:8000" + vote.user.image):(profile)} alt="" />
           <h1 className='text-sm mx-3 text-left'>{vote.user.nickName}</h1>
-        </div>
+          
+        </Link>
         <h1>{vote.createdAt}</h1>
        
       </div>
@@ -361,6 +362,11 @@ const VoteDetails = () => {
       <div className='flex justify-center my-3'>
         <button onClick={() => setisCommentComp(true)} className={menuCommentStyle}>コメント</button>
         <button onClick={() => setisCommentComp(false)} className={menuThreadStyle}>スレッド</button>
+      </div>
+     
+      <div className=''>
+        {/* <h1 className='font-bold'>※コメントやスレッドは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
+        <h1 className=' font-bold'>コメントやスレッドは削除できません。</h1>
       </div>
       <br />
       {

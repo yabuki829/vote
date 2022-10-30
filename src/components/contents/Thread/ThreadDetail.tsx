@@ -128,7 +128,9 @@ const ThreadDetail = () => {
             id: vote.user.user.id
           },
           createdAt: vote.user.createdAt,
-          image: vote.image
+          image: vote.image,
+          bio:vote.user.bio
+          
         }} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} tag={vote.tag} />
 
       </div>

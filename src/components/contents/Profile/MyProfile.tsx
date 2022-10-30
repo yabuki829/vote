@@ -9,7 +9,7 @@ import ProfileCard from './ProfileCard'
 
 const MyProfile = () => {
   const [cookies] = useCookies()
-  const [profile, setProfile] = useState<Profile>({ id: "", user: { id: "" }, nickName: "", createdAt: "", image: "" })
+  const [profile, setProfile] = useState<Profile>({ id: "", user: { id: "" }, nickName: "", createdAt: "", image: "" ,bio:""})
   const navigate = useNavigate()
   const [isVoteComp, setisVoteComp] = useState(true)
   const [votes,setVotes] = useState<Array<Vote>>([])
@@ -131,7 +131,7 @@ const MyProfile = () => {
   
   return (
     <div className='mx-2'>
-      <ProfileCard id={profile?.id} nickName={profile?.nickName} user={profile?.user} createdAt={profile.createdAt} image={profile.image} />
+      <ProfileCard id={profile?.id} nickName={profile?.nickName} user={profile?.user} createdAt={profile.createdAt} image={profile.image} bio={profile.bio} />
       <div className='flex justify-center my-3 '>
       <Link to={"/edit/profile"} state={{ profile: profile }}  className='bg-gray-200 rounded-md px-4 py-1 hover:bg-gray-300'>
         プロフィールを編集する
