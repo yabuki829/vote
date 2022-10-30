@@ -136,9 +136,8 @@ const VoteCard:React.FC<Vote> = (props) => {
          
         </div>
        
-        
       </div>
-     
+        
       <hr />
       
     </div>

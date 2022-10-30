@@ -56,12 +56,12 @@ const Login:React.FC =  () =>  {
         <form onSubmit={handleSubmit(handleLogin)} className='py-5 ' action="">
           <div className='items-center pb-5'>
             <label className="">メールアドレス</label>
-            <input {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"   />
+            <input {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "   />
             {errors.email?.type === 'required' && <p className='text-gray-600' role="alert">メールアドレスを入力してください</p>}
           </div>
           <div className='items-center pb-5'>
             <label className=" ">パスワード</label>
-            <input {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"/>
+            <input {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "/>
             {errors.password?.type === 'required' && <p className='text-gray-600' role="alert">パスワードを入力してください</p>}
             {/* {errors.password?.type === "minLength" &&  <p className='text-red-600 text-base' role="alert">*8文字以上の半角英数字</p>} */}
             

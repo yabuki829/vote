@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom"
 import ThreadCard from '../Thread/ThreadCard';
 import profile  from "../../../image/profile.png"
 
-
 type Comment_Type = {
   comment: string;
 }
@@ -33,6 +32,7 @@ const VoteDetails = () => {
   const [threadTitle,setThreadTitle] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
   const [voted, setVoted] = useState(false)
+  const [isME,setisMyVote] = useState(false)
   const word = location.pathname.split('/')[2]
   const navigate = useNavigate()
 
@@ -49,13 +49,42 @@ const VoteDetails = () => {
     const user_dic = choice.votedUserCount
     for (let i = 0; i < user_dic.length; i++) {
       if (userid === user_dic[i].id) {
-        console.log("選んだ選択肢")
         return true
         break
       }
 
     }
     return false
+  }
+
+  function deleteVote(){
+    const vote_id = location.pathname.split('/')[2]
+    const token = cookies.token
+    axios.delete(`${baseURL}api/vote/${vote_id}`, {
+      headers: {
+        "Content-Type": "applicaiton/json",
+        Authorization: "JWT " + `${token}`
+      }
+    })
+    .then((res: AxiosResponse) => {
+      alert("削除完了")
+      //ひとつ前のページに戻る
+      navigate(-1)
+    })
+  }
+  function isMyVote(){
+    const userid = cookies.userid
+    console.log(userid ,vote.user.id)
+    if (vote.user.user.id === userid){
+      // 自分の投稿
+      console.log("自分の投稿です")
+      return true
+    }
+    else{
+      console.log("自分の投高ではないです")
+
+      return false
+    }
   }
   
   function fetchAPIDetailVoteData(){
@@ -71,9 +100,9 @@ const VoteDetails = () => {
     })
       .then((res: AxiosResponse<Array<Vote>>) => {
         setVote(res.data[0])
-        console.log(res.data[0])
         //投票済みかどうか
         setVoted(isVoted())
+        setisMyVote(isMyVote())
         
       })
       .catch((e: AxiosError<{ error: string }>) => {
@@ -81,7 +110,7 @@ const VoteDetails = () => {
 
           case 401:
             //認証エラー
-            // navigate("/login")
+            navigate("/login")
             break
           case 403:
             break
@@ -100,17 +129,13 @@ const VoteDetails = () => {
   function isVoted() {
     const myuserid: string = cookies.userid
     const user_dic = vote.numberOfVotes
-    console.log("投票者",user_dic)
     for (let i = 0; i < user_dic.length; i++) {
-      console.log(myuserid ,"===", user_dic[i].id)
 
       if (myuserid === user_dic[i].id) {
-        console.log("投票済み")
         return true
         break
       }
     }
-    console.log("未投票")
     return false
   }
 
@@ -261,7 +286,6 @@ const VoteDetails = () => {
 
 
       <div className='mx-20 my-5'>
-      {/* {isVoted() ? (<h1>投票済み</h1>):(<h1>未投票</h1>)} */}
 
         {
           vote.choices.map((choice) => (
@@ -291,6 +315,14 @@ const VoteDetails = () => {
         }
        
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
+        
+        <div className='flex justify-end'>
+          <button className='border bg-blue-300 px-3'>共有</button>
+          {  isMyVote() ? ( <button onClick={deleteVote} className='border bg-red-300 px-3 '>削除</button> ):(<></>)}
+       
+         
+        </div>
+       
       </div>
 
       <hr />
@@ -362,7 +394,9 @@ const VoteDetails = () => {
                    vote={thread.vote} title={thread.title} createdAt={thread.createdAt}/>
                 ))
               }
+               
             </div>
+          
           </div>
           
          
