@@ -7,6 +7,7 @@ import { Vote } from '../../Type'
 import Footer from "../contents/Footer/Footer"
 import SearchInput from './SearchInput'
 import profile  from "../../image/profile.png"
+
 const RightBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const [votes, setVotedData] = useState<Array<Vote>>([])

@@ -9,6 +9,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom"
 import ThreadCard from '../Thread/ThreadCard';
 import profile  from "../../../image/profile.png"
+import { useModal } from 'react-hooks-use-modal';
 
 type Comment_Type = {
   comment: string;
@@ -16,6 +17,10 @@ type Comment_Type = {
 
 const VoteDetails = () => {
   const location = useLocation();
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true //これはオプション。デフォルトはfalse
+  });
+  
   const [vote, setVote] = useState<Vote>({
     id:"",
     user: { id: "", user: { id: "" }, nickName: "", image: "", createdAt: "" },
@@ -33,7 +38,8 @@ const VoteDetails = () => {
   const [isCommentComp, setisCommentComp] = useState(true)
   const [voted, setVoted] = useState(false)
   const [isME,setisMyVote] = useState(false)
-  const word = location.pathname.split('/')[2]
+
+  const word = ""
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -52,11 +58,19 @@ const VoteDetails = () => {
         return true
         break
       }
-
     }
     return false
   }
-
+  
+  function copyTextToClipboard(text:string) {
+   
+    navigator.clipboard.writeText(text)
+    .then(function() {
+      alert("urlをコピーしました。")
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+  }
   function deleteVote(){
     const vote_id = location.pathname.split('/')[2]
     const token = cookies.token
@@ -69,19 +83,17 @@ const VoteDetails = () => {
     .then((res: AxiosResponse) => {
       alert("削除完了")
       //ひとつ前のページに戻る
-      navigate(-1)
+      navigate(-1 )
     })
   }
+ 
   function isMyVote(){
     const userid = cookies.userid
-    console.log(userid ,vote.user.id)
     if (vote.user.user.id === userid){
       // 自分の投稿
-      console.log("自分の投稿です")
       return true
     }
     else{
-      console.log("自分の投高ではないです")
 
       return false
     }
@@ -265,9 +277,32 @@ const VoteDetails = () => {
   else {
     ThreadCountText = threads.length + "件のスレッド"
   }
+  const modalStyle: React.CSSProperties = {
+    backgroundColor: '#fff',
+    padding: '60px 100px',
+    borderRadius: '10px',
+  };
 
   return (
     <div className='m-3'>
+     <Modal>
+      <div className='bg-white'> 
+        <div className='px-10'>
+          <h1 className='text-center'>確認</h1>
+          <hr />
+        </div>
+        
+        <h1 className='px-10 py-5'>削除しますよろしいですか？</h1>
+        <hr />
+       
+        <div className='flex justify-evenly'>
+         <button onClick={close} className='w-full'>キャンセル</button>
+         <button onClick={deleteVote} className='w-full bg-red-300'>削除する</button>
+        </div>
+       
+      </div>
+    </Modal>
+
       <div className='flex justify-between'>
 
         <div className='flex items-center'>
@@ -277,11 +312,6 @@ const VoteDetails = () => {
         <h1>{vote.createdAt}</h1>
        
       </div>
-      
-
-
-
-
       <h1 className='text-2xl font-bold mx-3 mt-5'> {vote.questionText}</h1>
 
 
@@ -303,6 +333,7 @@ const VoteDetails = () => {
                   {
 
                     //投票済みであればその選択肢が％を表示する
+                    
                     isVoted() ? (
                       <h1 className='pr-3 text-gray-500 absolute right-0'>
                         {Math.round(choice.votedUserCount.length / numberOfVotes * 100)}%
@@ -312,17 +343,18 @@ const VoteDetails = () => {
               </button>
             </div>
           ))
-        }
-       
+        } 
+        <div className='flex justify-center'>
+        {/* { openModal && (<Modal closeState={closeState} deleteVote={deleteVote}/>) }  */}
+        </div>
+          
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
         
         <div className='flex justify-end'>
-          <button className='border bg-blue-300 px-3'>共有</button>
-          {  isMyVote() ? ( <button onClick={deleteVote} className='border bg-red-300 px-3 '>削除</button> ):(<></>)}
-       
-         
+          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-300 px-3'>共有</button>
+          {  isMyVote() && ( <button onClick={open} className='border bg-red-300 px-3 '>削除</button> )}
         </div>
-       
+            
       </div>
 
       <hr />
