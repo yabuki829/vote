@@ -43,8 +43,8 @@ const VoteDetails = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchAPICommentData()
-    fetchAPIThreadData()
+    // fetchAPICommentData()
+    // fetchAPIThreadData()
     fetchAPIDetailVoteData()
   }, [word]);
 
@@ -77,7 +77,7 @@ const VoteDetails = () => {
     axios.delete(`${baseURL}api/vote/${vote_id}`, {
       headers: {
         "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
+        // Authorization: "JWT " + `${token}`
       }
     })
     .then((res: AxiosResponse) => {
@@ -122,7 +122,7 @@ const VoteDetails = () => {
 
           case 401:
             //認証エラー
-            navigate("/login")
+            // navigate("/login")
             break
           case 403:
             break
@@ -198,7 +198,7 @@ const VoteDetails = () => {
 
           case 401:
             //認証エラー
-            navigate("/login")
+            // navigate("/login")
             break
           case 403:
             break
@@ -286,7 +286,7 @@ const VoteDetails = () => {
   return (
     <div className='m-3'>
      <Modal>
-      <div className='bg-white'> 
+      <div className='bg-white p-2'> 
         <div className='px-10'>
           <h1 className='text-center'>確認</h1>
           <hr />
@@ -295,9 +295,9 @@ const VoteDetails = () => {
         <h1 className='px-10 py-5'>削除しますよろしいですか？</h1>
         <hr />
        
-        <div className='flex justify-evenly'>
+        <div className='flex justify-evenly '>
          <button onClick={close} className='w-full'>キャンセル</button>
-         <button onClick={deleteVote} className='w-full bg-red-300'>削除する</button>
+         <button onClick={deleteVote} className='w-full bg-red-300 hover:bg-red-400'>削除する</button>
         </div>
        
       </div>

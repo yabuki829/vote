@@ -43,8 +43,7 @@ const MyProfile = () => {
         switch (e.response?.status) {
           case 401:
             //認証エラー
-            alert("401")
-            // navigate("/login")
+            navigate("/login")
             break
           case 403:
 

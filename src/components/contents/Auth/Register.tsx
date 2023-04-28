@@ -4,6 +4,7 @@ import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Auth_Login, login, postAPIRegisterProfile, registerUser } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
+
 const Register = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate()
@@ -16,12 +17,11 @@ const Register = () => {
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
 
     const user = await registerUser(auth)
-    alert(user["id"])
-    setCookie("userid",user["id"])
-    const result:string = await login(auth)
-    await postAPIRegisterProfile(auth,result)
-    setCookie("token",result)
-    navigate(-1)
+    navigate("/entry")
+     // const result:string = await login(auth)
+    // setCookie("userid",user["id"])
+    // await postAPIRegisterProfile(auth,result)
+    // setCookie("token",result)
   };
 
   return (

@@ -74,14 +74,14 @@ export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
 export type Change_Profile = {
   nickName:string
   profileImage:File
-  produce:string
+  bio:string
   isImageNone:false
   // job:string
 }
 
 export type Change_Profile_without_image = {
   nickName:string
-  produce:string
+  bio:string
   isImageNone:true
   // job:string
 }

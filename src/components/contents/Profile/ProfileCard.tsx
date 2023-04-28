@@ -15,7 +15,7 @@ const ProfileCard:React.FC<Profile> = (props) => {
         </div>
        
       </div>
-       <div className='x-20 pb-5'>
+       <div className='x-20 pb-5 text-center'>
         {props.bio}
        </div>
        <hr />

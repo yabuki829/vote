@@ -5,6 +5,7 @@ import { Thread } from '../../../Type';
 import { baseURL} from '../../../methods/Api'
 import ThreadCard from './ThreadCard';
 import { useNavigate} from "react-router-dom"
+
 //スレッド一覧
 const ThreadContent = () => {
   const [cookies, setCookie, removeCookie] = useCookies()

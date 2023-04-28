@@ -18,6 +18,8 @@ import OtherProfile from './components/contents/Profile/OtherProfile';
 import EditProfile from './components/contents/Profile/EditProfile';
 import Tag from './components/contents/Tag/Tag';
 import Search from './components/contents/Search/Search';
+import ActiveUser from './components/contents/Auth/Active';
+import Wait from './components/contents/Auth/Wait';
 
 function App(){
 
@@ -45,7 +47,10 @@ function App(){
               <Route path='/register' element={<Register/>}></Route>
               <Route path='/login' element={<Login/>}></Route>
               <Route path='/404' element={<NotFound/ >}></Route>
+              <Route path='/activate/:id/:id' element={<ActiveUser/ >}></Route>
+              <Route path='/entry'element={<Wait/>} ></Route>
               <Route path='/*' element={<NotFound/ >}></Route>
+            
             </Routes>
           </div>
         </div> 
