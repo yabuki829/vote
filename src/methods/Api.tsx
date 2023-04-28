@@ -34,8 +34,7 @@ export async function registerUser(auth:Auth_Login){
     }
   });
   console.log("データ登録",res.data)
-  //user情報が返ってくるはず　
-  //cookieにnicknameだけ保存したい
+  //useridが返ってくる　
   return res.data
 }
 

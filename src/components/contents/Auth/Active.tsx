@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate,Link} from "react-router-dom"
 import { activate } from '../../../methods/activate';
 import { useLocation } from 'react-router-dom'
+import { Auth_Login, registerUser } from '../../../methods/Api';
 
 const ActiveUser = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const ActiveUser = () => {
     alert(token)
     const id = location.pathname.split('/')[2]
     activate(id,token)
-  
+    
   }
   useEffect(() => {
     // 仮登録から本登録に移行させる

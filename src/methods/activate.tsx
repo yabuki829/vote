@@ -20,6 +20,13 @@ export function activate(uidd64:string,token:string){
       "Content-Type": "application/json",
     }
   }).then((res:AxiosResponse<result_data>) => {
-      alert(res.data.message) 
+    if (res.data.message == "success"){
+      return true
+    }
+    else {
+      return false
+    }
+      
   });
+  return false
 }

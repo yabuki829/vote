@@ -4,7 +4,6 @@ import { useCookies } from "react-cookie";
 import profile  from "../../image/profile.png"
 import arrowleft  from "../../image/arrowleft.png"
 import { useLocation } from 'react-router-dom'
-import { isAuthenticate } from '../../methods/isAuthenticate';
 const Header:React.FC = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const Header:React.FC = () => {
 
   let profileImage
   if (cookies.profileimage === "" || cookies.profileimage === "null" || cookies.profileimage === undefined){
-    console.log("デフォルトの画像")
     profileImage = <img className='border-2 rounded-full object-cover pr-4 shadow w-10 h-10' src={profile} alt="" />
   }
   else{
@@ -33,7 +31,7 @@ const Header:React.FC = () => {
 
 
   return (
-    <div className='lg:flex w-full bg-gray-100 z-10 sticky top-0'>
+    <div className='lg:flex w-full bg-gray-100 z-10 sticky top-0 md:h-24'>
       <header className='w-full items-center flex justify-between md:mx-3 '>
         {/*  パソコン */}
         <h1 className='text-3xl sm: text-xl font-bold  hidden md:block'>
@@ -105,16 +103,16 @@ const Header:React.FC = () => {
           </button>
       </header>
       
-      <div className='block md:hidden bg-indigo-400 '>
-        <ul className='flex  text-white'>
+      <div className='block md:hidden  '>
+        <ul className='flex  text-black'>
           <li>
-            <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md '>ホーム</Link>
+            <Link to="/" className='block px-4 py-2 hover:text-gray-500 rounded-md '>ホーム</Link>
           </li>
           <li>
-            <Link to="/thread" className='block px-4 py-2 hover:bg-indigo-700 rounded-md '>スレッド</Link>
+            <Link to="/thread" className='block px-4 py-2 hover:text-gray-500 rounded-md '>スレッド</Link>
           </li>
           <li>
-            <Link to="/contact" className='block px-4 py-2 hover:bg-indigo-700 rounded-md' >お問合せ</Link>
+            <Link to="/contact" className='block px-4 py-2 hover:text-gray-500 rounded-md' >お問合せ</Link>
           </li>
         </ul>
       </div>

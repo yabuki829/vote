@@ -25,7 +25,7 @@ function App(){
 
   return (
     <Router>
-      <div className=' antialiased md:flex'>
+      <div className=' antialiased md:flex '>
         <div className='sticky top-0 z-50 h-0 hidden md:block'>
           <SideBar  />
         </div>

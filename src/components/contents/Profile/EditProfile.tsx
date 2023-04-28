@@ -42,7 +42,6 @@ const EditProfile = () => {
     }
     putAPIChangeProfile(token,data)
     navigate("/profile")
-    //profileに戻る
   }
   
  }

@@ -2,8 +2,9 @@ import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import emailjs from '@emailjs/browser';
 
-// いい名前見つけたら変更する
+//  いい名前見つけたら変更する
 //  ここのContactでしか使用してない
+
 type Email_Send = {
   email: string;
   username:string
@@ -37,7 +38,7 @@ const Contact = () => {
    }, function(error) {
     console.log("-----------------------")
     console.log(error)
-    alert("現在アクセスが多いためTwitterからお願いいたします。")
+    alert("現在アクセスが多いためTwitterDMからお願いいたします。")
    });
 
   };

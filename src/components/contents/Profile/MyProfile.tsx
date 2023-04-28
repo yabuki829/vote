@@ -8,7 +8,7 @@ import VoteCard from '../Vote/VoteCard'
 import ProfileCard from './ProfileCard'
 
 const MyProfile = () => {
-  const [cookies] = useCookies()
+  const [cookies,setCookie] = useCookies()
   const [profile, setProfile] = useState<Profile>({ id: "", user: { id: "" }, nickName: "", createdAt: "", image: "" ,bio:""})
   const navigate = useNavigate()
   const [isVoteComp, setisVoteComp] = useState(true)
@@ -36,7 +36,9 @@ const MyProfile = () => {
     })
       .then((res: AxiosResponse<Array<Profile>>) => {
         setProfile(res.data[0])
-
+          
+        setCookie("profileimage",res.data[0].image)
+        setCookie("nickName",res.data[0].nickName)
       })
       .catch((e: AxiosError<{ error: string }>) => {
       //  alert(e.message)

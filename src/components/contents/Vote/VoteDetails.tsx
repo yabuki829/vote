@@ -284,7 +284,7 @@ const VoteDetails = () => {
   };
 
   return (
-    <div className='m-3'>
+    <div className='m-3 min-h-screen'>
      <Modal>
       <div className='bg-white p-2'> 
         <div className='px-10'>

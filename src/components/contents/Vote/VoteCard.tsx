@@ -21,18 +21,15 @@ const VoteCard:React.FC<Vote> = (props) => {
     const myuserid = cookies.userid
     const user_dic  =  props.numberOfVotes
 
-    alert(myuserid)
     for (let i = 0; i < user_dic.length; i++) {
       
       console.log(myuserid,"===",user_dic[i].id)
       if( myuserid === user_dic[i].id ){
-        alert("投票済み")
         // setVoted(true)
         return true
         break
       }
     }
-    console.log("未投票")
     return false
   }
 

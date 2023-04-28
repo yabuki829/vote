@@ -52,8 +52,6 @@ const Post = () => {
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     //処理
-    alert("投稿する")
-    alert(text)
     
     console.log("質問内容",text)
     const token = cookies.token 
@@ -65,7 +63,7 @@ const Post = () => {
       choices: selections,
     } 
     postAPIQuestionData(voteData,token)
-    
+
 
   };
   // console.log(createRandomId())

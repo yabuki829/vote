@@ -78,7 +78,7 @@ const Content:React.FC = () => {
    
 
    return (
-         <>
+         <div className='min-h-screen'>
                {
                   votes.map((vote) => (
                      <div key={vote.id}>
@@ -97,7 +97,7 @@ const Content:React.FC = () => {
                }
                
               
-         </>   
+         </div>   
 
    )
 }

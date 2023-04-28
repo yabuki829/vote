@@ -15,13 +15,10 @@ const Register = () => {
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //アカウント作成
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
-
-    const user = await registerUser(auth)
+    const user_id = await registerUser(auth)
+    setCookie("userid",user_id)
     navigate("/entry")
-     // const result:string = await login(auth)
-    // setCookie("userid",user["id"])
-    // await postAPIRegisterProfile(auth,result)
-    // setCookie("token",result)
+   
   };
 
   return (
