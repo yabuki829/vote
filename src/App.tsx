@@ -31,7 +31,7 @@ function App(){
         </div>
         <div className='flex-grow sticky top-0 z-50'>
           <Header/ >
-          <div className=' md:mt-0'>
+          <div className=' md:mt-0 '>
             <Routes>
               <Route path='/' element={<Content/>}></Route>
               <Route path='/vote/:id' element={<VoteDetails/>}></Route>

@@ -49,11 +49,11 @@ const ThreadContent = () => {
     <div>
       {threads.map((thread)=> (
         <ThreadCard 
-        id={thread.id}
-        user={thread.user} 
-        vote={thread.vote} 
-        title={thread.title}
-        createdAt={thread.createdAt}/>
+          id={thread.id}
+          user={thread.user}
+          vote={thread.vote}
+          title={thread.title}
+          createdAt={thread.createdAt} explain={thread.explain}/>
       ))}
     </div>
   )

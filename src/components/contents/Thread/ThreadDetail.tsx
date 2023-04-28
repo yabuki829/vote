@@ -115,12 +115,14 @@ const ThreadDetail = () => {
     commentCountText = comments.length + "件のコメント"
   }
   return (
-    <div className='my-5'>
-      <div className='flex mx-3 text-2xl font-bold'>
-        <h1>テーマ:</h1>
+    <div className='my-5 mx-3 min-h-screen'>
+      <div className='flex text-2xl '>
+        <h1 className='font-bold'>テーマ:</h1>
         <h1 className=''>{thread.title}</h1>
+        
       </div>
-      <div className='border rounded-md  mx-10 my-3 hover:bg-gray-100'>
+      <h1 className='mx-2'>{thread.explain}</h1>
+      <div className='border rounded-md  mx-3 my-3 hover:bg-gray-100'>
         <VoteCard id={vote.id} user={{
           id: vote.user.id,
           nickName: vote.user.nickName,

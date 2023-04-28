@@ -35,6 +35,7 @@ const VoteDetails = () => {
   const [threads,setThreads] = useState<Array<Thread>>([])
   const [mycomment, setMyComment] = useState("")
   const [threadTitle,setThreadTitle] = useState("")
+  const [threadExplain,setThreadExplain] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
   const [voted, setVoted] = useState(false)
   const [isME,setisMyVote] = useState(false)
@@ -43,8 +44,8 @@ const VoteDetails = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // fetchAPICommentData()
-    // fetchAPIThreadData()
+    fetchAPICommentData()
+    fetchAPIThreadData()
     fetchAPIDetailVoteData()
   }, [word]);
 
@@ -56,7 +57,7 @@ const VoteDetails = () => {
     for (let i = 0; i < user_dic.length; i++) {
       if (userid === user_dic[i].id) {
         return true
-        break
+        
       }
     }
     return false
@@ -83,7 +84,7 @@ const VoteDetails = () => {
     .then((res: AxiosResponse) => {
       alert("削除完了")
       //ひとつ前のページに戻る
-      navigate(-1 )
+      navigate(-1)
     })
   }
  
@@ -227,6 +228,9 @@ const VoteDetails = () => {
   function handleChangeThreadTitle(event: React.ChangeEvent<HTMLInputElement>) {
     setThreadTitle(event.target.value)
   }
+  function handleChangeThreadExplain(event:React.ChangeEvent<HTMLTextAreaElement>){
+    setThreadExplain(event.target.value)
+  }
   function handleChangeCommentField(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setMyComment(event.target.value)
   }
@@ -237,14 +241,22 @@ const VoteDetails = () => {
   async function handelPOSTThread(){
     //新規スレッドの作成
     const token = cookies.token
-    const result = await postAPIThread(token,vote.id,threadTitle)
+    if (threadTitle == ""){
+      return
+    }
+    const result = await postAPIThread(token,vote.id,threadTitle,threadExplain)
+    
     //スレッドの詳細画面に遷移する
     setThreadTitle("")
+    setThreadExplain("")
 
   }
   function handlePOSTComment() {
 
     const token = cookies.token
+    if (mycomment == ""){
+      return 
+    }
     const data: comment_type = {
       text: mycomment
     }
@@ -411,8 +423,12 @@ const VoteDetails = () => {
                   <a href="/">
                     <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
                   </a>
+                  <div className='w-full'>
+                    <input onChange={(e) => handleChangeThreadTitle(e)} value={threadTitle} placeholder='新規スレッドタイトル' className='w-full mx-3 border  p-1' type="text" />
+                    
+                    <textarea onChange={(e) => handleChangeThreadExplain(e)}  value={threadExplain} placeholder='詳細' className='w-full mx-3 border p-1 h-32 mt-4' />
+                  </div>
                   
-                  <input onChange={(e) => handleChangeThreadTitle(e)} value={threadTitle} placeholder='新規スレッド' className='w-full mx-3 border  p-1' type="text" />
                 </div>
                 
               </div>
@@ -427,9 +443,9 @@ const VoteDetails = () => {
               {
                 threads.map((thread)=>(
                   <ThreadCard 
-                  id={thread.id} 
-                  user={thread.user}
-                   vote={thread.vote} title={thread.title} createdAt={thread.createdAt}/>
+                    id={thread.id}
+                    user={thread.user}
+                    vote={thread.vote} title={thread.title} createdAt={thread.createdAt} explain={thread.explain}/>
                 ))
               }
                

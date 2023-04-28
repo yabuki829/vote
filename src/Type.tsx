@@ -45,6 +45,7 @@ export type Thread = {
   vote:Vote
   title:string
   createdAt:string
+  explain:string
 } 
 
 
@@ -88,7 +89,8 @@ export const defaultThread:Thread = {
   user:defaultProfile,
   vote: defaultVote,
   title:"",
-  createdAt:""
+  createdAt:"",
+  explain:""
 }
 
 export type Edit_Profile = {
