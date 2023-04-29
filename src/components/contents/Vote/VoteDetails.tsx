@@ -378,7 +378,7 @@ const VoteDetails = () => {
      
       <div className=''>
         {/* <h1 className='font-bold'>※コメントやスレッドは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
-        <h1 className=' font-bold'>コメントやスレッドは削除できません。</h1>
+        <h1 className=' font-bold'>コメントやスレッドは現在削除できません。</h1>
       </div>
       <br />
       {

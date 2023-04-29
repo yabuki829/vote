@@ -45,7 +45,7 @@ function App(){
         <div className='sticky top-0 z-50 h-0 hidden md:block'>
           <SideBar  />
         </div>
-        <div className='flex-grow sticky top-0 z-50'>
+        <div className='flex-grow sticky top-0 z-50 '>
           <Header/ >
           <div className=' md:mt-0 '>
               <Routes>

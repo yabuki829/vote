@@ -22,9 +22,10 @@ const Login:React.FC =  () =>  {
     const result:string = await login(auth)
     setCookie("token",result)
     
-    await handleGetProfile(result)
-    alert("ホーム画面に移動します")
-    // navigate(-1)
+    handleGetProfile(result)
+
+    
+    
     
   };
 
@@ -36,14 +37,17 @@ const Login:React.FC =  () =>  {
      }
     })
       .then((res:AxiosResponse<Array<Profile>>) => {
-        console.log(res.data[0].user.id)
+        alert("priofileを取得しました")
+        console.log(res.data)
         setCookie("userid",res.data[0].user.id)
       //profileに画像が登録されていればクッキーに保存する
-      if(res.data[0].image != ""){
-        console.log("画像を保存します")
-        setCookie("profileimage",res.data[0].image)
-      }
-      setCookie("nickName",res.data[0].nickName)
+        if(res.data[0].image != ""){
+          console.log("画像を保存します")
+          setCookie("profileimage",res.data[0].image)
+       }
+       setCookie("nickName",res.data[0].nickName)
+       alert("ホーム画面に移動します")
+      navigate(-1)
   })
   }
   

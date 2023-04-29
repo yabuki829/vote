@@ -18,6 +18,7 @@ const Header:React.FC = () => {
   
   function handleLogout(){
     // token profileを削除する
+    alert("ログアウトしました")
     removeCookie("token")
     removeCookie("bio")
     removeCookie("profileimage")
@@ -44,7 +45,7 @@ const Header:React.FC = () => {
     <div className='lg:flex w-full bg-gray-100 z-10 sticky top-0 md:h-24'>
       <header className='w-full items-center flex justify-between md:mx-3 '>
         {/*  パソコン */}
-        <h1 className='text-3xl sm: text-xl font-bold  hidden md:block'>
+        <div className='text-3xl sm: text-xl font-bold  hidden md:block'>
         <Routes>
               <Route path='/' element={<h1>投票箱</h1> }>
               </Route>
@@ -99,7 +100,7 @@ const Header:React.FC = () => {
                 </div>}>
               </Route>
           </Routes>
-        </h1>
+        </div>
        
        
         {/* モバイル */}
