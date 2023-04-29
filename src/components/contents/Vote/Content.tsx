@@ -1,7 +1,7 @@
 import React,{ useState,useEffect} from 'react'
 import VoteCard from './VoteCard'
 import axios, {  AxiosResponse ,AxiosError } from "axios"
-import { Profile, User,Vote } from '../../../Type'
+import { Profile, Result_Vote,Vote } from '../../../Type'
 import { baseURL} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
@@ -9,12 +9,12 @@ import { useNavigate,Route,Routes,Link} from "react-router-dom"
 //API_TOKENはクッキーに保存する
 const Content:React.FC = () => {
    const [cookies, setCookie, removeCookie] = useCookies()
-   const [votes, setPost] = useState<Array<Vote>>([])
+   const [vote_result, setVote] = useState<Result_Vote>()
    const navigate = useNavigate()
    
    useEffect(() => {
       fetchAPIQuestionData()
-      // getAPIProfileData()
+      getAPIProfileData()
     },[]);
 
    function  fetchAPIQuestionData(){
@@ -25,8 +25,9 @@ const Content:React.FC = () => {
           Authorization: "JWT " + `${token}`
         }
        })
-         .then((res:AxiosResponse<Array<Vote>>) => {
-         setPost(res.data) 
+         .then((res:AxiosResponse<Result_Vote>) => {
+          console.log(res.data)
+          setVote(res.data) 
         
      })
      .catch((e: AxiosError<{ error: string }>) => {
@@ -66,7 +67,9 @@ const Content:React.FC = () => {
               // navigate("/login")
               break
             case 403:
-  
+              break
+            case 500:
+              break
             default:
               break
           }
@@ -80,7 +83,7 @@ const Content:React.FC = () => {
    return (
          <div className='min-h-screen'>
                {
-                  votes.map((vote) => (
+                  vote_result?.results.map((vote) => (
                      <div key={vote.id}>
                         <VoteCard
                         questionText={vote.questionText}

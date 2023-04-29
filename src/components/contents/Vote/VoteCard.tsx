@@ -22,12 +22,9 @@ const VoteCard:React.FC<Vote> = (props) => {
     const user_dic  =  props.numberOfVotes
 
     for (let i = 0; i < user_dic.length; i++) {
-      
-      console.log(myuserid,"===",user_dic[i].id)
+    
       if( myuserid === user_dic[i].id ){
-        // setVoted(true)
         return true
-        break
       }
     }
     return false
@@ -41,7 +38,6 @@ const VoteCard:React.FC<Vote> = (props) => {
     const user_dic  =  choice.votedUserCount
     for(let i = 0; i < user_dic.length; i++){
       if (userid === user_dic[i].id ){
-        console.log("選択済み")
         return true
 
         break

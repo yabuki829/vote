@@ -35,7 +35,7 @@ export async function registerUser(auth:Auth_Login){
   });
   console.log("データ登録",res.data)
   //useridが返ってくる　
-  return res.data
+  return res.data["id"]
 }
 
 //質問を取得する 
@@ -50,9 +50,10 @@ export async function postAPIQuestionData(vote:any,token:string){
     }
   });
   console.log("--------------投稿完了---------------")
-  console.log(res)
   
-  return res.data
+  
+  // vote_idを返す
+  return res.data[0].id
 }
 
 export async function postAPIRegisterProfile(auth:Auth_Login,token:string){

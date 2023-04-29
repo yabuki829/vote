@@ -1,6 +1,14 @@
 import { type } from "@testing-library/user-event/dist/type";
 
 
+export type Result_Vote = {
+  count:number
+  next: string
+  previous :string
+  results: Array<Vote>
+
+}
+
 export type Vote = {
   id:string;
   user:Profile

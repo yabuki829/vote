@@ -16,6 +16,8 @@ const RightBar = () => {
   useEffect(() => {
     getAPIMyUnVotdData()
   },[]);
+
+  // 
   function getAPIMyUnVotdData() {
     const token = cookies.token
     
@@ -33,10 +35,10 @@ const RightBar = () => {
         switch (e.response?.status) {
           case 401:
             //認証エラー
-            // navigate("/login")
+            navigate("/login")
             break
           case 403:
-
+            break
           default:
             break
         }

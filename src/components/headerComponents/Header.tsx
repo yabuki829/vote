@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import { useCookies } from "react-cookie";
 import profile  from "../../image/profile.png"
@@ -11,10 +11,20 @@ const Header:React.FC = () => {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
 
+  const [isLogin,setIsLogin] = useState(false)
   function handleImageTap(){
       navigate("/profile")
   }
   
+  function handleLogout(){
+    // token profileを削除する
+    removeCookie("token")
+    removeCookie("bio")
+    removeCookie("profileimage")
+    removeCookie("userid")
+    removeCookie("nickName")
+
+  }
 
   let profileImage
   if (cookies.profileimage === "" || cookies.profileimage === "null" || cookies.profileimage === undefined){
@@ -92,15 +102,15 @@ const Header:React.FC = () => {
         {/* モバイル */}
         <h1 className='text-3xl sm: text-xl font-bold mx-5 md:mx-10 block md:hidden'>Vote</h1>
         {/* <div className='items-center block'> */}
-          <button className="items-center block" onClick={handleImageTap}>
-            {  
-              //ここでクッキーから画像を取得して表示する
-             profileImage
-
-            }
+        { isLogin ? (
+        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleImageTap}>
+          Logout
+        </button>):(
+        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
+          Login
+        </button>)}
             
-            
-          </button>
+          
       </header>
       
       <div className='block md:hidden  '>

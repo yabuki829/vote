@@ -9,11 +9,11 @@ const ActiveUser = () => {
   const location = useLocation();
 
   function doActive(){
-    // alert(search)
     
     const token = location.pathname.split('/')[3]
-    alert(token)
+
     const id = location.pathname.split('/')[2]
+    alert(token)
     activate(id,token)
     
   }
@@ -25,7 +25,7 @@ const ActiveUser = () => {
   return (
     <div className='bg-gray-100 border my-5 md:my-10 mx-5 md:mx-20 p-5'>
       <h1>登録が完了しました。</h1>
-      <h1>右上のアイコンからログインができます。fefee</h1>
+      <h1>右上のアイコンからログインができます。</h1>
     </div>
   )
 }

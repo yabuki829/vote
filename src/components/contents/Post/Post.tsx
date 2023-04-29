@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { postAPIQuestionData } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom"
 const Post = () => {
   const [selections, setSelection] = useState([{ id: createRandomId(), text: "" }])
   const [text,setText] = useState("")
   const [tag,setTag] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies()
-  
+  const navigate = useNavigate();
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = createRandomId()
 
@@ -61,8 +62,18 @@ const Post = () => {
       tag:tag,
       isOnlyLoginUser: true,
       choices: selections,
+    
     } 
     postAPIQuestionData(voteData,token)
+    .then((vote_id) => {
+      console.log(vote_id)
+      navigate("/vote/"+vote_id)
+    })
+    .catch((error) => {
+      console.error("エラーが発生しました:", error);
+    });
+    
+   
 
 
   };

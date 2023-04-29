@@ -16,7 +16,8 @@ const Register = () => {
     //アカウント作成
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
     const user_id = await registerUser(auth)
-    setCookie("userid",user_id)
+    setCookie("userid",user_id["id"])
+    alert(user_id.id)
     navigate("/entry")
    
   };

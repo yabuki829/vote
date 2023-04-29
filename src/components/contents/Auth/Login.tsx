@@ -24,7 +24,7 @@ const Login:React.FC =  () =>  {
     
     await handleGetProfile(result)
     alert("ホーム画面に移動します")
-    navigate(-1)
+    // navigate(-1)
     
   };
 
@@ -37,7 +37,7 @@ const Login:React.FC =  () =>  {
     })
       .then((res:AxiosResponse<Array<Profile>>) => {
         console.log(res.data[0].user.id)
-      setCookie("userid",res.data[0].user.id)
+        setCookie("userid",res.data[0].user.id)
       //profileに画像が登録されていればクッキーに保存する
       if(res.data[0].image != ""){
         console.log("画像を保存します")

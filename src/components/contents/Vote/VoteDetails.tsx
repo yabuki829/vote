@@ -42,12 +42,12 @@ const VoteDetails = () => {
 
   const word = ""
   const navigate = useNavigate()
-
+  const vote_id = location.pathname.split('/')[2]
   useEffect(() => {
     fetchAPICommentData()
     fetchAPIThreadData()
     fetchAPIDetailVoteData()
-  }, [word]);
+  }, [word,vote_id]);
 
   function checkSelectedChoice(choice: Choice) {
     const userid = cookies.userid
@@ -101,8 +101,9 @@ const VoteDetails = () => {
   }
   
   function fetchAPIDetailVoteData(){
+    alert("投稿を取得します")
     //投稿の詳細を取得する
-    const vote_id = location.pathname.split('/')[2]
+   
     const token = cookies.token
     
      axios.get(`${baseURL}api/vote/${vote_id}`, {
@@ -123,7 +124,7 @@ const VoteDetails = () => {
 
           case 401:
             //認証エラー
-            // navigate("/login")
+            navigate("/login")
             break
           case 403:
             break
@@ -146,7 +147,6 @@ const VoteDetails = () => {
 
       if (myuserid === user_dic[i].id) {
         return true
-        break
       }
     }
     return false
