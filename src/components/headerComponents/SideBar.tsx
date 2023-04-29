@@ -20,7 +20,7 @@ const SideBar: React.FC = () => {
    
       <nav className='w-52 bg-indigo-900 text-white h-screen md:p-4 '>
         <h1 className='font-bold text-2xl sm:text-3xl '>Vote</h1>
-        <ul className='mt-10 flex-grow'>
+        <ul className='mt-10 '>
           <li>
             <Link to="/" className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>ホーム</Link>
           </li>
@@ -35,14 +35,9 @@ const SideBar: React.FC = () => {
           <li>
             <Link to="/contact" className='block px-4 py-2 hover:bg-indigo-700 rounded-md' >お問い合せ</Link>
           </li>
-          {
-            isLogin ? ( 
-            <li>
-             <button className='block px-4 py-2 hover:bg-indigo-700 rounded-md'>ログアウトする</button>
-            </li>):(<></>)
-          }
+         
 
-          <li className='bg-blue-400 hover:bg-blue-300 text-center mt-10 p-5 rounded'>
+          <li className='bg-blue-400 hover:bg-blue-300 text-center mt-10 p-5 rounded bottom-0'>
             <Link to="/post">質問を作成する</Link>
           </li>
         </ul>

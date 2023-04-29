@@ -23,7 +23,7 @@ const Header:React.FC = () => {
     removeCookie("profileimage")
     removeCookie("userid")
     removeCookie("nickName")
-
+    navigate("/login")
   }
 
   let profileImage
@@ -80,6 +80,9 @@ const Header:React.FC = () => {
               <Route path='/contact' element={<h1>お問い合せ</h1>}></Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}></Route>
               <Route path='/profile' element={<h1>プロフィール</h1>}></Route>
+              <Route path='/info' element={<h1>アプリについて</h1>}></Route>
+              <Route path='/privacypolicy' element={<h1>プライバシーポリシー</h1>}></Route>
+              <Route path='/rule' element={<h1>利用規約</h1>}></Route>
               <Route path="/entry" element={<h1>仮登録が完了しました</h1>}></Route>
               <Route path='/activate/:id/:id' element={<h1>本登録が完了しました</h1>}></Route>
 
@@ -102,13 +105,12 @@ const Header:React.FC = () => {
         {/* モバイル */}
         <h1 className='text-3xl sm: text-xl font-bold mx-5 md:mx-10 block md:hidden'>Vote</h1>
         {/* <div className='items-center block'> */}
-        { isLogin ? (
-        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleImageTap}>
+        { cookies.userid ? (
+        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
           Logout
         </button>):(
-        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
-          Login
-        </button>)}
+          <Link to="/login" className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " >Login</Link>
+        )}
             
           
       </header>
