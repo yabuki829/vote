@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import emailjs from '@emailjs/browser';
+import Footer from '../Footer/Footer';
 
 //  いい名前見つけたら変更する
 //  ここのContactでしか使用してない
@@ -75,7 +76,7 @@ const Contact = () => {
           <br />
            <p className='text-center'><span><a className='text-blue-400 hover:underline' href="https://twitter.com/sdi2025" target="_blank">Twiiter</a></span> からのご連絡でも大丈夫です！</p>          
         </div>
-       
+       <Footer/>
       </section>
     
   )

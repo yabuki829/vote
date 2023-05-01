@@ -22,11 +22,7 @@ const Login:React.FC =  () =>  {
     const result:string = await login(auth)
     setCookie("token",result)
     
-    handleGetProfile(result)
-
-    
-    
-    
+    handleGetProfile(result)    
   };
 
   async function handleGetProfile(token:string){
@@ -37,7 +33,7 @@ const Login:React.FC =  () =>  {
      }
     })
       .then((res:AxiosResponse<Array<Profile>>) => {
-        alert("priofileを取得しました")
+        // alert("priofileを取得しました")
         console.log(res.data)
         setCookie("userid",res.data[0].user.id)
       //profileに画像が登録されていればクッキーに保存する
@@ -46,8 +42,8 @@ const Login:React.FC =  () =>  {
           setCookie("profileimage",res.data[0].image)
        }
        setCookie("nickName",res.data[0].nickName)
-       alert("ホーム画面に移動します")
-      navigate(-1)
+      //  alert("ホーム画面に移動します")
+        navigate("/")
   })
   }
   

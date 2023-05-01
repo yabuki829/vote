@@ -12,6 +12,12 @@ export type Auth_Login = {
 }
 
 
+export type Auth_Register = {
+  email:string
+  password: string
+  dateOfBirth: number
+  gender: string
+}
 
 export async function login(auth:Auth_Login){
   //トークン メールアドレス　パスワードが必要
@@ -26,16 +32,20 @@ export async function login(auth:Auth_Login){
  
 }
 
-export async function registerUser(auth:Auth_Login){
-  console.log("apiに接続します")
-  const res = await axios.post(`${baseURL}api/register/`,auth,{
+export async function registerUser(auth:Auth_Register){
+  alert("apiに接続します")
+  await axios.post(`${baseURL}api/register/`,auth,{
     headers: {
       "Content-Type": "application/json",
     }
-  });
-  console.log("データ登録",res.data)
-  //useridが返ってくる　
-  return res.data["id"]
+  }).then((res)=> {
+    //useridが返ってくる　
+    return res.data["id"]
+  }).catch(()=>{
+    alert("エラー")
+    }
+  )
+ 
 }
 
 //質問を取得する 
@@ -113,9 +123,10 @@ export async function putAPISelectChoice(choiceID:string,token:string,voteID:str
   }
   else{
     alert("ログインuserが投票します")
-    const res = await axios.put(`${baseURL}api/vote/${voteID}/`,choiceID,{
+    const res = await axios.put(`${baseURL}api/vote/${voteID}/`,data,{
       headers: {
         "Content-Type": "application/json",
+        Authorization: "JWT " + `${token}`
       }
     });
   
