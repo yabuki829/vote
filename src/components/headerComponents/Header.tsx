@@ -106,7 +106,7 @@ const Header:React.FC = () => {
         {/* モバイル */}
         <h1 className='text-3xl sm: text-xl font-bold mx-5 md:mx-10 block md:hidden'>Vote</h1>
         {/* <div className='items-center block'> */}
-        { cookies.userid ? (
+        { cookies.token ? (
         <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
           Logout
         </button>):(
