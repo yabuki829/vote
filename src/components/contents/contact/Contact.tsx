@@ -50,7 +50,7 @@ const Contact = () => {
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Contact Us</h2>
           
-          <form onSubmit={handleSubmit(handleSendEmail)} className="space-y-8">
+          <form onSubmit={handleSubmit(handleSendEmail)} className="space-y-8 mx-10 md:mx-0">
             <div>
               <label  className="block mb-2 text-sm font-medium text-gray-900 ">名前</label>
               <input  {...register("username", { required: true, maxLength: 20 })}  type="name" id="name" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 " placeholder="名前"  />

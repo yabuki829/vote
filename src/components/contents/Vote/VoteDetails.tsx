@@ -349,7 +349,7 @@ const VoteDetails = () => {
       <h1 className='text-2xl font-bold mx-3 mt-5'> {vote.questionText}</h1>
 
 
-      <div className='mx-20 my-5'>
+      <div className='mx-10 md:mx-20 my-5'>
 
         {
           vote.choices.map((choice) => (
@@ -408,12 +408,12 @@ const VoteDetails = () => {
             <div >
               <div className='p-2 flex'>
                 <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
-                <textarea onChange={(e) => handleChangeCommentField(e)} value={mycomment} className='p-2 border w-full mx-5' placeholder='コメント' ></textarea>
+                <textarea onChange={(e) => handleChangeCommentField(e)} value={mycomment} className='p-2 border w-full ' placeholder='コメント' ></textarea>
 
               </div>
               <div className='m-2 flex justify-end '>
-                <button onClick={()=> setMyComment("")} className=' py-2 px-2  ' >キャンセル</button>
-                <button onClick={handlePOSTComment} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400' >コメント</button>
+                <button onClick={()=> setMyComment("")} className=' px-3 py-1 my-5 text-sm mx:text-base' >キャンセル</button>
+                <button onClick={handlePOSTComment} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400 text-sm mx:text-base' >コメント</button>
               </div>
             </div>
             <div>

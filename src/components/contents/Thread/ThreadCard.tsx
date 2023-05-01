@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie'
 
 
 const ThreadCard:React.FC<Thread> = (props) => {
-  const { id,vote,user, title  } = props
+  const { id,vote,user, title,createdAt  } = props
   const imageStyle = "w-10 h-10 border-2 rounded-full object-cover mr-4 shadow"
   const [isShownMenuCard,setIsShownMenuCard] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies()
@@ -18,7 +18,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
   }
   const myuserid = cookies.userid
   return (
-    <div className="bg-white mx-10 my-3 py-5 ">
+    <div className="bg-white md:mx-10 my-3 py-5 ">
       <Link to={"/thread/"+id}  className='hover:bg-gray-100'>
         <div className='mx-3 p-2'>
           <div className='flex justify-between  items-center'>
@@ -28,7 +28,7 @@ const ThreadCard:React.FC<Thread> = (props) => {
             
               <h1 className=''>{user.nickName}</h1>
             </div>
-           
+            <h1>{createdAt}</h1>
           </div>
           <h1 className='text-xl font-bold'>{title}</h1>
         </div>
