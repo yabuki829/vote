@@ -89,17 +89,40 @@ export type Change_Profile_without_image = {
 
   
 
-//投票する
-export async function putAPISelectChoice(choiceID:string,token:string,voteID:string){
-  
-  const res = await axios.put(`${baseURL}api/vote/${voteID}/`,choiceID,{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "JWT " + `${token}`
-    }
-  });
+// 投票する 
+// 投票に関しては未ログインのuserでも投票できるようになっている
+export async function putAPISelectChoice(choiceID:string,token:string,voteID:string,userid:string){
 
-  return res.data
+  let data = {
+    "userid" : userid,
+    "choiceID":choiceID
+  }
+  if (data.userid == undefined ){
+    data.userid = ""
+  }
+  if (token == undefined || token == ""){
+    alert("非ログインuserが投票します")
+    const res = await axios.put(`${baseURL}api/vote/${voteID}/?mode=anonymous`,data,{
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+  
+    return res.data["userid"]
+  
+  }
+  else{
+    alert("ログインuserが投票します")
+    const res = await axios.put(`${baseURL}api/vote/${voteID}/`,choiceID,{
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+  
+    return res.data["userid"]
+  }
+
+ 
 }
 
 

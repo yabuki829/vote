@@ -67,7 +67,7 @@ const VoteCard:React.FC<Vote> = (props) => {
 
 
   return (
-    <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
+    // <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
     <Link to={"/vote/"+props.id} className='hover:bg-gray-100 w-full'>
       <div  className=" mx-10 my-3 ">
         {/* 詳細画面に遷移する */}
@@ -136,7 +136,7 @@ const VoteCard:React.FC<Vote> = (props) => {
         
       </div>
     </Link>
-    </div>
+    // </div>
   )
 }
 

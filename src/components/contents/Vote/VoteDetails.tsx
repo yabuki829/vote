@@ -44,8 +44,8 @@ const VoteDetails = () => {
   const navigate = useNavigate()
   const vote_id = location.pathname.split('/')[2]
   useEffect(() => {
-    fetchAPICommentData()
-    fetchAPIThreadData()
+    // fetchAPICommentData()
+    // fetchAPIThreadData()
     fetchAPIDetailVoteData()
   }, [word,vote_id]);
 
@@ -109,7 +109,7 @@ const VoteDetails = () => {
      axios.get(`${baseURL}api/vote/${vote_id}`, {
       headers: {
         "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
+        // Authorization: "JWT " + `${token}`
       }
     })
       .then((res: AxiosResponse<Array<Vote>>) => {
@@ -152,19 +152,40 @@ const VoteDetails = () => {
     return false
   }
 
-
+  //投票する
   async function handleVote(choiceID: string, choiceText: string) {
     if (!isVoted()) {
-      const token = cookies.token
-      await putAPISelectChoice(choiceID, token, vote.id)
-      const user: User = { id: cookies.userid }
-      vote.numberOfVotes.push(user)
+      if  (cookies.token == undefined){
+        const userid = cookies.userid
+        await putAPISelectChoice(choiceID,"", vote.id,userid).then((userid)=>{
+          alert(userid+"を保存します")
+          setCookie("userid",userid)
+          const user: User = { id: userid }
+          vote.numberOfVotes.push(user)
+          
+          vote.choices.map((choice) => (
+            (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
+          ))
+    
+          setVoted(true)
+        })
+  
+      }
+      else{
+        const token = cookies.token
+        const userid = cookies.userid
+        await putAPISelectChoice(choiceID, token, vote.id,userid)
+        const user: User = { id: cookies.userid }
+        vote.numberOfVotes.push(user)
+  
+        vote.choices.map((choice) => (
+          (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
+        ))
+  
+        setVoted(true)
+      }
 
-      vote.choices.map((choice) => (
-        (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
-      ))
-
-      setVoted(true)
+    
     }
   }
 
