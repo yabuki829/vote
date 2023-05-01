@@ -101,7 +101,6 @@ const VoteDetails = () => {
   }
   
   function fetchAPIDetailVoteData(){
-    alert("投稿を取得します")
     //投稿の詳細を取得する
    
     const token = cookies.token
@@ -154,24 +153,33 @@ const VoteDetails = () => {
 
   //投票する
   async function handleVote(choiceID: string, choiceText: string) {
+  
     if (!isVoted()) {
-      if  (cookies.token == undefined){
+      // tokenがあるかどうかでLoginしてるか判別している
+      if  (cookies.token == undefined || cookies.token == ""){
         const userid = cookies.userid
-        await putAPISelectChoice(choiceID,"", vote.id,userid).then((userid)=>{
-          alert(userid+"を保存します")
-          setCookie("userid",userid)
+        await putAPISelectChoice(choiceID,"", vote.id,userid).then((return_userid)=>{
+           
+          // useridが帰ってきた場合にのみ保存する
+          if (userid != undefined){
+            setCookie("userid",userid)
+          }
+
+        
           const user: User = { id: userid }
           vote.numberOfVotes.push(user)
           
           vote.choices.map((choice) => (
             (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
           ))
-    
           setVoted(true)
+          
         })
   
       }
       else{
+        
+       
         const token = cookies.token
         const userid = cookies.userid
         await putAPISelectChoice(choiceID, token, vote.id,userid)
