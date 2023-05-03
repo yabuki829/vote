@@ -41,8 +41,8 @@ function App(){
       <Opening/>
       :
         <Router>
-      <div className=' antialiased md:flex '>
-        <div className='sticky top-0 z-50 h-0 hidden md:block'>
+      <div className=' antialiased flex '>
+        <div className='sticky top-0 z-50 h-0 '>
           <SideBar  />
         </div>
         <div className='flex-grow sticky top-0 z-50 '>

@@ -116,25 +116,7 @@ const Header:React.FC = () => {
           
       </header>
       
-      <div className='block md:hidden  '>
-        <ul className='flex justify-between text-black  mx-5'>
-          <div className='flex '>
-            <li>
-              <Link to="/" className='block px-4 py-2 hover:text-gray-500 rounded-md '>ホーム</Link>
-            </li>
-            <li>
-              <Link to="/thread" className='block px-4 py-2 hover:text-gray-500 rounded-md '>スレッド</Link>
-            </li>
-            <li>
-              <Link to="/contact" className='block px-4 py-2 hover:text-gray-500 rounded-md' >お問合せ</Link>
-            </li>
-          </div>
-          
-          <li>
-            <Link to="/post" className='block px-4 py-2  bg-blue-500 text-white rounded-md' >質問</Link>
-          </li>
-        </ul>
-      </div>
+     
     </div>
     
     
