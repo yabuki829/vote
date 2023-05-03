@@ -393,8 +393,8 @@ const VoteDetails = () => {
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
         
         <div className='flex justify-end'>
-          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-300 px-3'>共有</button>
-          {  isMyVote() && ( <button onClick={open} className='border bg-red-300 px-3 '>削除</button> )}
+          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-400 px-3 text-white'>共有</button>
+          {  isMyVote() && ( <button onClick={open} className='border bg-red-400 px-3  text-white'>削除</button> )}
         </div>
             
       </div>
