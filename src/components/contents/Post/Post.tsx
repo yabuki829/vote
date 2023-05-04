@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import { postAPIQuestionData } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom"
+import { useModal } from 'react-hooks-use-modal';
 const Post = () => {
   const [selections, setSelection] = useState([{ id: createRandomId(), text: "" }])
   const [text,setText] = useState("")
   const [tag,setTag] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
+
+
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true //これはオプション。デフォルトはfalse
+  });
 
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = createRandomId()
@@ -83,6 +89,23 @@ const Post = () => {
   };
   return (
     <div>
+       <Modal>
+      <div className='bg-white p-2'> 
+        <div className='px-10'>
+          <h1 className='text-center'>確認</h1>
+          <hr />
+        </div>
+        
+        <h1 className='px-10 py-5'>削除しますよろしいですか？</h1>
+        <hr />
+       
+        <div className='flex justify-evenly '>
+         <button className='w-full'>キャンセル</button>
+         <button  className='w-full bg-red-300 hover:bg-red-400'>投稿する</button>
+        </div>
+       
+      </div>
+    </Modal>
       <div className="w-4/5 mx-auto p-5 mt-5  ">
         <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full md:text-xl  outline-0 shadow-sm border" placeholder='質問や選択肢の補足を入力'></textarea>
         <div className="sm:col-span-2 pt-10  ">

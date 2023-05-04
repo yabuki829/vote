@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import profile  from "../../image/profile.png"
 import arrowleft  from "../../image/arrowleft.png"
 import { useLocation } from 'react-router-dom'
+import SearchInput from './SearchInput';
 const Header:React.FC = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
@@ -112,11 +113,8 @@ const Header:React.FC = () => {
         </button>):(
           <Link to="/login" className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " >Login</Link>
         )}
-            
-          
       </header>
-      
-     
+      <SearchInput/>
     </div>
     
     

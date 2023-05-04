@@ -201,7 +201,7 @@ const VoteDetails = () => {
   const styleChoiceText = isVoted() ? isVotedStyle2 : isNotVotedStyle2
   const numberOfVotes = vote.numberOfVotes.length
 
-  const onStyle = "bg-gray-300  w-1/2"
+  const onStyle = "bg-gray-300  w-1/2 "
   const offStyle = "w-1/2 border border-gray-300 "
 
   const menuCommentStyle = isCommentComp ? onStyle : offStyle
@@ -362,7 +362,7 @@ const VoteDetails = () => {
         {
           vote.choices.map((choice) => (
             <div key={choice.id}>
-              <button onClick={(e) => handleVote(choice.id, choice.text)} className='border border-gray-300 mb-2 w-full' key={choice.id}>
+              <button onClick={(e) => handleVote(choice.id, choice.text)} className='border border-gray-300 mb-2 w-full ' key={choice.id}>
                 <div className={styleBackground}>
                 
                
