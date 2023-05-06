@@ -31,7 +31,6 @@ const VoteCard:React.FC<Vote> = (props) => {
   }
 
   function isChoice(choice:Choice):boolean{
-    console.log(choice.text)
     const userid = cookies.userid
     //　選択肢を選んでいるかどうか確認する
     // props.choicesに自分のidがあるか調べる
@@ -58,14 +57,6 @@ const VoteCard:React.FC<Vote> = (props) => {
   const numberOfVotes =  props.numberOfVotes.length
 
 
-  
-  let isThread = false
-  if (location.pathname.split("/")[1] === "thread"){
-    isThread = true
-  }
-    
-
-
   return (
     // <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
     <Link to={"/vote/"+props.id} className='hover:bg-gray-100 w-full'>
@@ -78,17 +69,11 @@ const VoteCard:React.FC<Vote> = (props) => {
             </div>
             <h1>{props.createdAt}</h1>
           </div>
-          {
-            isThread ? (<h1 className='text-xl font-bold my-5 '>{questionText}</h1>): ( 
-              <Link to={"/vote/"+props.id} className='hover:bg-gray-100'>
-                <a className='inline-block text-xl font-bold my-5 hover:underline'>{questionText} </a>
-              </Link>)
-              }
-        
+          
         
         <div  className='mx-10'>
               
-      
+        <h1 className='my-4'>{questionText}</h1>
           {
             
             choices.map((choice)=>(

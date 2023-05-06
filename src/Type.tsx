@@ -47,16 +47,6 @@ export type User ={
 }
 
 
-export type Thread = {
-  id:number
-  user:Profile
-  vote:Vote
-  title:string
-  createdAt:string
-  explain:string
-} 
-
-
 export type Comment = {
   id: string
   user:Profile
@@ -91,14 +81,6 @@ export const defaultVote:Vote = {
   //全体の投稿数がほしいな
   numberOfVotes: [],
   tag: {title:""}
-}
-export const defaultThread:Thread = {
-  id:1,
-  user:defaultProfile,
-  vote: defaultVote,
-  title:"",
-  createdAt:"",
-  explain:""
 }
 
 export type Edit_Profile = {

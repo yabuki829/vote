@@ -28,7 +28,7 @@ export async function login(auth:Auth_Login){
     }
   });
   const token =  res.data["access"]
-  return res.data["access"]
+  return res.data
  
 }
 
@@ -137,23 +137,33 @@ export async function putAPISelectChoice(choiceID:string,token:string,voteID:str
 }
 
 
-export async function postAPIThread(token:string,vote_id:string,title:string,explain:string){
-  //vote id
-  //title
-  const data = {
-    vote_id:vote_id,
-    thread_title:title,
-    thread_explain:explain
-  }
-  
-  const res = await axios.post(`${baseURL}api/thread/`,data,{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "JWT " + `${token}`
-    }
-  });
-  return res.data
-}
-export async function postAPIThreadComment(){
 
+
+type Refresh = {
+  isComplete:boolean,
+  token:string
 }
+
+export function refreshAccessToken(token:string): Promise<Refresh> {
+  return axios.post(`${baseURL}authen/jwt/refresh`,{
+    refresh: `${token}`
+    
+  }).then((res)=> {
+    const refresh: Refresh = {
+      isComplete: true,
+      token: res.data["access"]
+    }
+    return refresh;
+  }).catch(()=>{
+    const refresh: Refresh = {
+      isComplete: false,
+      token: ""
+    }
+    return refresh;
+  });
+}
+
+export function vertifyToken(token:string) {
+  
+}
+

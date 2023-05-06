@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate,Link } from 'react-router-dom'
-import { baseURL } from '../../../methods/Api'
+import { baseURL, refreshAccessToken } from '../../../methods/Api'
 import { Profile, Vote } from '../../../Type'
 import VoteCard from '../Vote/VoteCard'
 import ProfileCard from './ProfileCard'
@@ -45,7 +45,26 @@ const MyProfile = () => {
         switch (e.response?.status) {
           case 401:
             //認証エラー
-            navigate("/login")
+            const refreshToken = cookies.refresh
+            refreshAccessToken(refreshToken)
+            .then(( data )=>{
+              // accessトークンを保存する
+              if (data.isComplete){
+                setCookie("token", data.token)
+                // もう一度習得する
+                getAPIProfileData()
+
+              }
+              else{
+                alert("失敗")
+              }
+             
+
+            })
+            .catch(()=>{ 
+              alert("エラー")
+              navigate("/login")
+            })
             break
           case 403:
 
@@ -75,7 +94,7 @@ const MyProfile = () => {
         switch (e.response?.status) {
           case 401:
             //認証エラー
-            // navigate("/login")
+            
             break
           case 403:
 

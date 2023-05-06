@@ -6,6 +6,7 @@ import { baseURL} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import VoteCard from '../Vote/VoteCard';
+import SearchInput from '../../headerComponents/SearchInput';
 const Search = () => {
   
 
@@ -47,6 +48,7 @@ const Search = () => {
 }
   return (
    <>
+   <div className='my-1 md:hidden'> <SearchInput/></div>
     {
        votes.map((vote) => (
           <div key={vote.id}>

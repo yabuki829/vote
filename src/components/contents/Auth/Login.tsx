@@ -19,10 +19,10 @@ const Login:React.FC =  () =>  {
   const handleLogin: SubmitHandler<Auth_Login> = async data =>{
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
-    const result:string = await login(auth)
-    setCookie("token",result)
-    
-    handleGetProfile(result)    
+    const result= await login(auth)
+    setCookie("token",result["access"])
+    setCookie("refresh",result["refresh"])
+    handleGetProfile(result["access"])    
   };
 
   async function handleGetProfile(token:string){

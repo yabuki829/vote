@@ -4,15 +4,15 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom"
 import { useModal } from 'react-hooks-use-modal';
 const Post = () => {
-  const [selections, setSelection] = useState([{ id: createRandomId(), text: "" }])
+  const [selections, setSelection] = useState([{ id: createRandomId(), text: "" },{ id: createRandomId(), text: "" }])
   const [text,setText] = useState("")
   const [tag,setTag] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
 
-
+  const [buttonTitle,setButtonTitle] = useState("全体公開")
   const [Modal, open, close, isOpen] = useModal('root', {
-    preventScroll: true //これはオプション。デフォルトはfalse
+    preventScroll: true 
   });
 
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -26,9 +26,12 @@ const Post = () => {
   }
 
   function handleChangeSelectionTitle(event: React.ChangeEvent<HTMLInputElement>, id: string) {
-    setSelection(
-      (preSelecitons) => preSelecitons.map((seleciton) => (seleciton.id === id ? { id: id, text: event.target.value } : seleciton))
-    )
+    if (event.target.value.length <= 15){
+      setSelection(
+        (preSelecitons) => preSelecitons.map((seleciton) => (seleciton.id === id ? { id: id, text: event.target.value } : seleciton))
+      )
+    }
+    
   }
 
   function handleChangeText(event: React.ChangeEvent<HTMLTextAreaElement>){
@@ -41,7 +44,7 @@ const Post = () => {
   //選択肢を削除する
   function handleDeleteSelection(id: string) {
     //イベントを削除する
-    if (selections.length > 1){
+    if (selections.length > 2){
       console.log(id, "を削除します")
       setSelection(selections.filter((selection) => selection.id !== id));
     }
@@ -110,22 +113,28 @@ const Post = () => {
         <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full md:text-xl  outline-0 shadow-sm border" placeholder='質問や選択肢の補足を入力'></textarea>
         <div className="sm:col-span-2 pt-10  ">
             <label className="block mb-2 text-2xl font-bold text-gray-500">選択肢</label>
-
             {selections.map((selection,index) =>
             
-              <div key={selection.id} className='flex h-8 mb-2 w-full' >
-                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="md:w-3/4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "placeholder='15文字まで' />
+
+              <div key={selection.id} className='flex h-8 mb-2 ' >
+                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="md:w-3/4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5  "placeholder='15文字まで' />
                 <button onClick={() => handleDeleteSelection(selection.id)} className='ml-2 border px-2 bg-red-600 text-white text-sm'>削除</button>
-                { index == selections.length - 1 && (<> <button  onClick={(e) => handleAddSelection(e)} className='ml-2 border px-2 bg-blue-400 text-white'>＋</button></>)}
+                { index == selections.length - 1 && (<> <button  onClick={(e) => handleAddSelection(e)} className='ml-2 border px-2 bg-blue-400 text-white rounded-full'>＋</button></>)}
               </div>
             )}
 
             </div>
       </div>
       <br />
-      <div className='flex justify-center'>
-        <button  className='bg-blue-400 text-white p-2 px-2  md:w-1/4'  onClick={(e) => onClick(e)} >投稿する</button>
+      <div className='flex justify-center items-center '>
+        <button  className='bg-blue-400 text-white p-2 px-2 font-bold'  onClick={(e) => onClick(e)} >
+         {buttonTitle}
+        </button>
+        <button className='h-full border p-2'>
+          <span>^</span>
+        </button>
       </div>
+      <br />
      
     </div>
   )

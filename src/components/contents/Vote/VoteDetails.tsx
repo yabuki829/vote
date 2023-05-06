@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import { Choice, User, Vote, Comment, Thread } from '../../../Type';
+import { Choice, User, Vote, Comment } from '../../../Type';
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 import { useCookies } from "react-cookie";
-import { baseURL, postAPIThread, putAPISelectChoice } from '../../../methods/Api';
+import { baseURL, putAPISelectChoice } from '../../../methods/Api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom"
-import ThreadCard from '../Thread/ThreadCard';
 import profile  from "../../../image/profile.png"
 import { useModal } from 'react-hooks-use-modal';
 
@@ -32,10 +31,7 @@ const VoteDetails = () => {
   
  
   const [comments, setComments] = useState<Array<Comment>>([])
-  const [threads,setThreads] = useState<Array<Thread>>([])
   const [mycomment, setMyComment] = useState("")
-  const [threadTitle,setThreadTitle] = useState("")
-  const [threadExplain,setThreadExplain] = useState("")
   const [isCommentComp, setisCommentComp] = useState(true)
   const [voted, setVoted] = useState(false)
   const [isME,setisMyVote] = useState(false)
@@ -205,7 +201,6 @@ const VoteDetails = () => {
   const offStyle = "w-1/2 border border-gray-300 "
 
   const menuCommentStyle = isCommentComp ? onStyle : offStyle
-  const menuThreadStyle = isCommentComp ? offStyle : onStyle
 
 
   function fetchAPICommentData() {
@@ -237,29 +232,6 @@ const VoteDetails = () => {
         }
       });
   }
-  function fetchAPIThreadData(){
-    
-    const token = cookies.token  
-    const vote_id = location.pathname.split('/')[2]
-    
-    axios.get(`${baseURL}api/vote/${vote_id }/thread`,{
-      headers: {
-        "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
-      }
-    })
-    .then((res: AxiosResponse<Array<Thread>>) => {
-      setThreads(res.data)
-    })
-
-  }
-
-  function handleChangeThreadTitle(event: React.ChangeEvent<HTMLInputElement>) {
-    setThreadTitle(event.target.value)
-  }
-  function handleChangeThreadExplain(event:React.ChangeEvent<HTMLTextAreaElement>){
-    setThreadExplain(event.target.value)
-  }
   function handleChangeCommentField(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setMyComment(event.target.value)
   }
@@ -267,19 +239,6 @@ const VoteDetails = () => {
     text: string
   }
 
-  async function handelPOSTThread(){
-    //新規スレッドの作成
-    const token = cookies.token
-    if (threadTitle == ""){
-      return
-    }
-    const result = await postAPIThread(token,vote.id,threadTitle,threadExplain)
-    
-    //スレッドの詳細画面に遷移する
-    setThreadTitle("")
-    setThreadExplain("")
-
-  }
   function handlePOSTComment() {
 
     const token = cookies.token
@@ -311,13 +270,6 @@ const VoteDetails = () => {
     commentCountText = comments.length + "件のコメント"
   }
 
-  let ThreadCountText 
-  if (threads.length === 0) {
-    ThreadCountText = "スレッドはまだありません"
-  }
-  else {
-    ThreadCountText = threads.length + "件のスレッド"
-  }
   const modalStyle: React.CSSProperties = {
     backgroundColor: '#fff',
     padding: '60px 100px',
@@ -393,26 +345,20 @@ const VoteDetails = () => {
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
         
         <div className='flex justify-end'>
-          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-400 px-3 text-white'>共有</button>
+          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-400 px-3 text-white text-sm'>URLをコピー</button>
           {  isMyVote() && ( <button onClick={open} className='border bg-red-400 px-3  text-white'>削除</button> )}
         </div>
             
       </div>
 
       <hr />
-      <div className='flex justify-center my-3'>
-        <button onClick={() => setisCommentComp(true)} className={menuCommentStyle}>コメント</button>
-        <button onClick={() => setisCommentComp(false)} className={menuThreadStyle}>スレッド</button>
-      </div>
      
       <div className=''>
-        {/* <h1 className='font-bold'>※コメントやスレッドは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
-        <h1 className=' font-bold'>コメントやスレッドは現在削除できません。</h1>
+        {/* <h1 className='font-bold'>※コメントは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
+        <h1 className=' font-bold'>コメントは現在削除できません。</h1>
       </div>
       <br />
-      {
-        isCommentComp ? (
-          <div>
+      <div>
             <div >
               <div className='p-2 flex'>
                 <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
@@ -444,47 +390,6 @@ const VoteDetails = () => {
               }
             </div>
           </div>
-        ) : (
-          <div>
-            <div >
-              <div className='p-2 '>
-                <div className='flex'>
-                  <a href="/">
-                    <img className=' w-8 h-8 text-sm  md:w-10 md:h-10 md:text-base  border-2 rounded-full object-cover' src={"http://127.0.0.1:8000" + cookies.profileimage} alt="" />
-                  </a>
-                  <div className='w-full'>
-                    <input onChange={(e) => handleChangeThreadTitle(e)} value={threadTitle} placeholder='新規スレッドタイトル' className='w-full mx-3 border  p-1' type="text" />
-                    
-                    <textarea onChange={(e) => handleChangeThreadExplain(e)}  value={threadExplain} placeholder='詳細' className='w-full mx-3 border p-1 h-32 mt-4' />
-                  </div>
-                  
-                </div>
-                
-              </div>
-              <div className='m-2 flex justify-end '>
-                <button onClick={()=>setThreadTitle("")} className=' py-2 px-2  ' >キャンセル</button>
-                <button onClick={handelPOSTThread} className='bg-blue-300 text-white font-bold px-3 py-2 m-5 cursor-pointer hover:bg-blue-400' >作成</button>
-              </div>
-              <h1>
-                { ThreadCountText}
-              </h1>
-              <hr />
-              {
-                threads.map((thread)=>(
-                  <ThreadCard 
-                    id={thread.id}
-                    user={thread.user}
-                    vote={thread.vote} title={thread.title} createdAt={thread.createdAt} explain={thread.explain}/>
-                ))
-              }
-               
-            </div>
-          
-          </div>
-          
-         
-        )
-      }
 
     </div>
 
