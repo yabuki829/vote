@@ -9,7 +9,7 @@ const Post = () => {
   const [tag,setTag] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
-
+  const [isMenuOpen,setIsMenuOpen] = useState(false)
   const [buttonTitle,setButtonTitle] = useState("全体公開")
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true 
@@ -64,16 +64,19 @@ const Post = () => {
 
   
   // 投稿
+  // ログインしていなければurlを知っている人にだけ公開される
+  // トークンなしでも投稿できるようにする
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    //処理
-    
-    console.log("質問内容",text)
+    var isLimitedRelease = false
+    if (buttonTitle == "限定公開"){
+      isLimitedRelease = true
+    }
     const token = cookies.token 
     const voteData= {
       questionText: text,
       image: null,
       tag:tag,
-      isOnlyLoginUser: true,
+      isLimitedRelease: isLimitedRelease,
       choices: selections,
     
     } 
@@ -90,26 +93,29 @@ const Post = () => {
 
 
   };
+  function openMenu(){
+    setIsMenuOpen((pre)=> !pre)
+  }
   return (
     <div>
        <Modal>
-      <div className='bg-white p-2'> 
-        <div className='px-10'>
-          <h1 className='text-center'>確認</h1>
-          <hr />
-        </div>
+        <div className='bg-white p-2'> 
+          <div className='px-10'>
+            <h1 className='text-center'>確認</h1>
+            <hr />
+          </div>
         
-        <h1 className='px-10 py-5'>削除しますよろしいですか？</h1>
-        <hr />
+          <h1 className='px-10 py-5'>{buttonTitle}しますがよろしいですか？</h1>
+          <hr />
+        
+          <div className='flex justify-evenly '>
+          <button onClick={close} className='w-full'>キャンセル</button>
+          <button onClick={(e) => onClick(e)} className='text-white font-bold w-full bg-blue-300 hover:bg-blue-400'>{buttonTitle}</button>
+          </div>
        
-        <div className='flex justify-evenly '>
-         <button className='w-full'>キャンセル</button>
-         <button  className='w-full bg-red-300 hover:bg-red-400'>投稿する</button>
         </div>
-       
-      </div>
-    </Modal>
-      <div className="w-4/5 mx-auto p-5 mt-5  ">
+      </Modal>
+      <div className="md:w-4/5 mx-auto p-5 mt-5  ">
         <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full md:text-xl  outline-0 shadow-sm border" placeholder='質問や選択肢の補足を入力'></textarea>
         <div className="sm:col-span-2 pt-10  ">
             <label className="block mb-2 text-2xl font-bold text-gray-500">選択肢</label>
@@ -117,24 +123,56 @@ const Post = () => {
             
 
               <div key={selection.id} className='flex h-8 mb-2 ' >
-                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="md:w-3/4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5  "placeholder='15文字まで' />
+                <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="w-3/4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5  "placeholder='15文字まで' />
                 <button onClick={() => handleDeleteSelection(selection.id)} className='ml-2 border px-2 bg-red-600 text-white text-sm'>削除</button>
                 { index == selections.length - 1 && (<> <button  onClick={(e) => handleAddSelection(e)} className='ml-2 border px-2 bg-blue-400 text-white rounded-full'>＋</button></>)}
               </div>
             )}
 
+     
+        </div>
+   
+        <br />
+            <div className='flex flex-col justify-center items-center'>
+              <div>
+                <button onClick={open} className='bg-blue-400 text-white p-2 px-2 font-bold'   >
+                  {buttonTitle}
+                </button>
+
+                <button onClick={openMenu} className='h-full border p-2'>
+                  <span >^</span>
+                </button>
+              </div>
+               
+              { isMenuOpen ? (<>
+              <div id="dropdownInformation" className="block mt-2 shadow-md border ">
+ 
+                <ul className="" aria-labelledby="dropdownInformationButton">
+                  <li>
+                    <button onClick={()=> {
+                      setButtonTitle("限定公開")
+                      openMenu()
+                    } } className=' px-6 hover:bg-gray-100'>限定公開</button>
+                  </li>
+                  <li>
+                    <button onClick={()=> {
+                      setButtonTitle("全体公開")
+                      openMenu()
+                    } }  className='border-t px-6 hover:bg-gray-100'>全体公開</button>
+                  </li>
+    
+                </ul>
+            
             </div>
+          
+          </>):(<></>) }
+       
+            
+      </div>
+      
       </div>
       <br />
-      <div className='flex justify-center items-center '>
-        <button  className='bg-blue-400 text-white p-2 px-2 font-bold'  onClick={(e) => onClick(e)} >
-         {buttonTitle}
-        </button>
-        <button className='h-full border p-2'>
-          <span>^</span>
-        </button>
-      </div>
-      <br />
+     
      
     </div>
   )

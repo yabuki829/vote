@@ -53,13 +53,13 @@ const Content:React.FC = () => {
                 window.location.reload()  
               }
               else{
-                alert("失敗")
+                navigate("/login")
+
               }
              
 
             })
             .catch(()=>{ 
-              alert("エラー")
               navigate("/login")
             })
             break
@@ -73,7 +73,7 @@ const Content:React.FC = () => {
     
     function fetchAdditionalData(){
       // TODO 一番下までスクロールしたら追加でデータを取得する
-      console.log("データ",vote_result.next)
+     
       if (vote_result.next == "" || vote_result.next == null){
         return
       }
@@ -85,7 +85,7 @@ const Content:React.FC = () => {
         }
        })
          .then((res:AxiosResponse<Result_Vote>) => {
-          console.log(res.data.count)
+
           
           if (res.data.next == null){
             setHasMore((pre)=> !pre)

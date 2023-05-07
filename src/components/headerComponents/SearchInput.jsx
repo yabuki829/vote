@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const SearchInput = () => {
-  console.log("SearchInput")
   const [searchText,setSearchText] = useState("")
   const navigate = useNavigate()
   function handleSearch(){

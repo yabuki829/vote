@@ -52,11 +52,11 @@ const MyProfile = () => {
               if (data.isComplete){
                 setCookie("token", data.token)
                 // もう一度習得する
-                getAPIProfileData()
-
+                window.location.reload()  
               }
               else{
-                alert("失敗")
+                navigate("/login")
+
               }
              
 

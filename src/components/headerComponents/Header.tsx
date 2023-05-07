@@ -29,15 +29,6 @@ const Header:React.FC = () => {
     navigate("/login")
   }
 
-  let profileImage
-  if (cookies.profileimage === "" || cookies.profileimage === "null" || cookies.profileimage === undefined){
-    profileImage = <img className='border-2 rounded-full object-cover pr-4 shadow w-10 h-10' src={profile} alt="" />
-  }
-  else{
-    console.log("登録したProfile")
-    const url = "http://127.0.0.1:8000"+cookies.profileimage
-    profileImage = <img className='border-2 rounded-full object-cover mr-4 shadow w-10 h-10' src={url} alt="" />
-  }
   function goBack(){
     navigate(-1)
   }

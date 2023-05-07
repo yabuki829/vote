@@ -338,9 +338,6 @@ const VoteDetails = () => {
             </div>
           ))
         } 
-        <div className='flex justify-center'>
-        {/* { openModal && (<Modal closeState={closeState} deleteVote={deleteVote}/>) }  */}
-        </div>
           
         <h1 className='text-right'>{numberOfVotes}人が投票</h1>
         
