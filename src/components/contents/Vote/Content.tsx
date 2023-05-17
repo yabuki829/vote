@@ -2,10 +2,12 @@ import React,{ useState,useEffect} from 'react'
 import VoteCard from './VoteCard'
 import axios, {  AxiosResponse ,AxiosError } from "axios"
 import { defaultVote, Profile, Result_Vote,Vote } from '../../../Type'
-import { baseURL, refreshAccessToken} from '../../../methods/Api'
+import { baseURL, instance, refreshAccessToken} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import InfiniteScroll from 'react-infinite-scroller'
+
+
 
 //API_TOKENはクッキーに保存する
 const Content:React.FC = () => {
@@ -23,81 +25,78 @@ const Content:React.FC = () => {
    useEffect(() => {
       fetchAPIQuestionData()
     },[]);
+    // csrfトークンの取得
+    // async function getCsrfToken(): Promise<string> {
+    //   console.log("csrftokenを取得します");
+    
+    //   try {
+    //     const response = await axios.get(`${baseURL}api/csrf/create`, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     });
+    //     console.log("csrftoken", response.data["csrfToken"]);
+    //     return response.data["csrfToken"];
+    //   } catch (e) {
+    //     console.log("csrfエラー", e);
+    //     return "";
+    //   }
+    // }
+    function  fetchAPIQuestionData(){
+      
+      instance.get("vote").then((res)=>{
+        console.log("ok")
+        setVote(res.data)
 
+      }).catch((e: AxiosError<{ error: string }>)=>{
+        switch (e.response?.status){
+          case 401:
 
-   function  fetchAPIQuestionData(){
-
-      const token = cookies.token  
-      axios.get(`${baseURL}api/vote/`,{
-         headers: { 
-          "Content-Type": "applicaiton/json",
-          Authorization: "JWT " + `${token}`
+            // リフレッシュトークンからアクセストークンを取得する
+            instance.post("token/refresh/").catch((res)=> {
+              console.log("トークンをリフレッシュしました")
+              console.log("ここだよ",)
+              switch (res.response.status){
+                case 200:
+                  window.location.reload()  
+                  break
+                case 401:
+                  console.log("リフレッシュできませんでした。")
+                  navigate("/login")
+                  break
+                default :
+                  navigate("/login")
+              }
+  
+            })
+            break
+          case 403:
+            break
+          default:
+            navigate("/login")
+            break
         }
-       })
-         .then((res:AxiosResponse<Result_Vote>) => {
-          setVote(res.data) 
-        
-     })
-     .catch((e: AxiosError<{ error: string }>) => {
-      switch (e.response?.status){
-        
-         case 401:
-            //認証エラー
-            const refreshToken = cookies.refresh
-            refreshAccessToken(refreshToken)
-            .then(( data )=>{
-              // accessトークンを保存する
-              if (data.isComplete){
-                setCookie("token", data.token)
-                // もう一度習得する
-                window.location.reload()  
-              }
-              else{
-                navigate("/login")
+      })
 
-              }
-             
-
-            })
-            .catch(()=>{ 
-              navigate("/login")
-            })
-            break
-         case 403:
-            break
-         default:
-            break
-      }
-    });
+      
     }
     
     function fetchAdditionalData(){
-      // TODO 一番下までスクロールしたら追加でデータを取得する
      
       if (vote_result.next == "" || vote_result.next == null){
         return
       }
-      const token = cookies.token  
-      axios.get(vote_result.next,{
-         headers: { 
-          "Content-Type": "applicaiton/json",
-          Authorization: "JWT " + `${token}`
+      instance.get(vote_result.next).then((res:AxiosResponse<Result_Vote>)=>{
+        if (res.data.next == null){
+          setHasMore((pre)=> !pre)
         }
-       })
-         .then((res:AxiosResponse<Result_Vote>) => {
-
-          
-          if (res.data.next == null){
-            setHasMore((pre)=> !pre)
-          }
-          setVote({
-            ...vote_result,
-            results: [...vote_result.results, ...(Array.isArray(res.data.results) ? res.data.results : [res.data.results])],
-            next: res.data.next,
-            previous: res.data.previous
-          });
-        
-     })
+        setVote({
+          ...vote_result,
+          results: [...vote_result.results, ...(Array.isArray(res.data.results) ? res.data.results : [res.data.results])],
+          next: res.data.next,
+          previous: res.data.previous
+        });
+      })
     }
    
   const loader =<div className="text-center text-gray-500" key={0}>Loading ...{hasMore}</div>;

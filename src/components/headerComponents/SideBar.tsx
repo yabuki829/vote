@@ -43,22 +43,16 @@ const SideBar: React.FC = () => {
           <Link to="/profile" className=''>
                 <a className='block px-4 py-2 hover:bg-indigo-700 rounded-md hidden md:block' >プロフィール</a>
                 <img className='w-full w-full block md:hidden  p-4 my-2 hover:bg-indigo-700' src={profile} alt="" />
-              </Link>
+          </Link>
           
           </div>
         </div>
-        
-      
-           
-         
-          
-        
-            <Link  to="/post">
+        <Link  to="/post">
               <div className='bg-blue-400 hover:bg-blue-300 text-center mt-10 p-5 rounded-full m-1 md:rounded '>
                 <a className=' hidden md:block' href="">質問を作成する</a>
                  <img className="block md:hidden    " src={post} alt="" />
               </div> 
-            </Link>
+        </Link>
             
             
       

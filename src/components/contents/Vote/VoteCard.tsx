@@ -60,27 +60,27 @@ const VoteCard:React.FC<Vote> = (props) => {
   return (
     // <div  className="bg-white border shadow-lg rounded-lg mx-10 my-3 p-3 ">
     <Link to={"/vote/"+props.id} className='hover:bg-gray-100 w-full'>
-      <div  className=" mx-10 my-3 ">
-        {/* 詳細画面に遷移する */}
-          <div className='flex justify-between  items-center '>
-            <div className='flex items-center '>
-              { user.image ? (<img className={imageStyle}  src={ "http://127.0.0.1:8000"+user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
-              <h1 className='a'>{user.nickName}</h1>
-            </div>
-            <h1>{props.createdAt}</h1>
+    <div  className=" mx-10 my-3 ">
+      {/* 詳細画面に遷移する */}
+        <div className='flex justify-between  items-center '>
+          <div className='flex items-center '>
+            { user.image ? (<img className={imageStyle}  src={ "http://127.0.0.1:8000"+user.image} alt="profile" />):(<img className={imageStyle} src={profile} alt="" />) }
+            <h1 className='a'>{user.nickName}</h1>
           </div>
-          
+          <h1>{props.createdAt}</h1>
+        </div>
         
-        <div  className='mx-10'>
-              
-        <h1 className='my-4'>{questionText}</h1>
-          {
+      
+      <div  className='mx-10'>
             
-            choices.map((choice)=>(
-              
+      <h1 className='my-4'>{questionText}</h1>
+        {
+          choices.length <= 3 ?(
+            choices.map((choice,index)=>(
+            
               //もし投稿していたらhover:色変わらない様にする
               <div key={choice.id}>
-                <button    className='border border-gray-300 mb-2 w-full' key={choice.id}>
+                <button  className='border border-gray-300 mb-2 w-full' key={choice.id}>
                   <div className={styleBackground}>         
                     <h1 className={styleChoiceText}>{choice.text}</h1>
                     {
@@ -105,22 +105,62 @@ const VoteCard:React.FC<Vote> = (props) => {
               
               
             ))
+          ):(
+             // 選択肢が多い場合は3件のみを表示する
+            choices.slice(0, 3).map((choice)=>(
             
+              <div key={choice.id}>
+                <button  className='border border-gray-300 mb-2 w-full' key={choice.id}>
+                  <div className={styleBackground}>         
+                    <h1 className={styleChoiceText}>{choice.text}</h1>
+                      {
+                        isVoted() && (
+                          isChoice(choice) ?( <div className={votedChoicedStyle} style={ { width: Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%" ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>) : ( <div className={voteNotChoicedStyle} style={ {width:Math.round(choice.votedUserCount.length / numberOfVotes  * 100)+"%"   ,color:"transparent"} }>こんな内側まで見ないでよ、えっち</div>)
+                        )  
+                      }
+                      
+                    {
+
+                      //投票済みであればその選択肢が％を表示する
+                    
+                      isVoted() ?(
+                        <h1 className='pr-3 text-gray-500 absolute right-0'>
+                          { Math.round(choice.votedUserCount.length / numberOfVotes  * 100)}%
+                        </h1>):(<></>)
+                    }
+                    
+                  
+                  </div>
+                </button>
+               
+              </div>
+              
+              
+            ))
+          )
+        
+
+        }
+        {
+          choices.length > 3 &&(
+            <h1 className='text-center font-bold text-2xl'>⋮</h1>
+          )
+        }
+        <div className='flex justify-end py-3  '>
+          {
+            isVoted() ?(
+              <h1 className='text-right'>{numberOfVotes}人が投票</h1>):(<></>)
+           
           }
-          <div className='flex justify-between py-3  '>
-            <div className='flex'>
-              {/* <Link to={"/tag"+"?title="+props.tag.title} className='bg-gray-200 rounded-full px-3 py- mr-2'>{props.tag.title}</Link> */}
-            </div>
-            <h1 className='text-right'>{numberOfVotes}人が投票</h1>
-          
-          </div>
         
         </div>
-          
-        <hr />
-        
+      
       </div>
-    </Link>
+        
+      <hr />
+      
+    </div>
+  </Link>
     // </div>
   )
 }

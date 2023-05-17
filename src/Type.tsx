@@ -72,7 +72,7 @@ export const defaultProfile:Profile = {
 export const defaultVote:Vote = {
   id: "",
   user: defaultProfile,
-  questionText: "読み込み中~",
+  questionText: "",
   createdAt: "",
   image: "",
   isOnlyLoginUser: false,

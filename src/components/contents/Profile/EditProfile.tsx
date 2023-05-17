@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import profile from "../../../image/profile.png"
-import { baseURL, Change_Profile, Change_Profile_without_image } from '../../../methods/Api'
+import { baseURL, Change_Profile, Change_Profile_without_image, instance } from '../../../methods/Api'
 import { Profile } from '../../../Type'
 
 const EditProfile = () => {
@@ -46,20 +46,18 @@ const EditProfile = () => {
   
  }
   async function putAPIChangeProfile(token:string,data:Change_Profile|Change_Profile_without_image ){
-    let url = `${baseURL}api/profile/`
+    let url ="profile/"
+  // 画像を変更するときurlが違う
     if (data.isImageNone) {
-      url = `${baseURL}api/profile/?type=none`
+      url = "profile/?type=none"
     }
-    await axios.put(url,data,{
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: "JWT " + `${token}`
-    }
-   }).then((res:AxiosResponse<Array<Profile>>) => {
+    await instance.put(url,data)
+    .then((res:AxiosResponse<Array<Profile>>) => {
       setCookie("profileimage", res.data[0].image)
       setCookie("nickName",data.nickName)
       setCookie("bio",data.bio)
     })
+   
   } 
   
 

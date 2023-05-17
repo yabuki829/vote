@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate,Link } from 'react-router-dom'
-import { baseURL, refreshAccessToken } from '../../../methods/Api'
+import { baseURL, instance, refreshAccessToken } from '../../../methods/Api'
 import { Profile, Vote } from '../../../Type'
 import VoteCard from '../Vote/VoteCard'
 import ProfileCard from './ProfileCard'
@@ -22,68 +22,57 @@ const MyProfile = () => {
 
   useEffect(() => {
     getAPIProfileData()
-    getAPIMyVotdData()
-    getAPIMyVote()
+   
   }, []);
   
   function getAPIProfileData() {
-    const token = cookies.token
-    axios.get(`${baseURL}api/profile`, {
-      headers: {
-        "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
+    instance.get("profile").then((res: AxiosResponse<Array<Profile>>)=>{
+      setProfile(res.data[0])
+          
+      setCookie("profileimage",res.data[0].image)
+      setCookie("nickName",res.data[0].nickName)
+      // サーバーへのアクセスを減らすためにprofileを取得できるかを確認してから自分の投稿と投票した投稿を取得している
+      getAPIMyVotdData()
+      getAPIMyVote()
+    })
+    .catch((e: AxiosError<{ error: string }>)=>{
+      switch (e.response?.status){
+        case 401:
+          // リフレッシュトークンからアクセストークンを取得する
+          instance.post("token/refresh/").catch((res)=> {
+            console.log("トークンをリフレッシュしました")
+            console.log("ここだよ",)
+            switch (res.response.status){
+              case 200:
+                window.location.reload()  
+                break
+              case 401:
+                console.log("リフレッシュできませんでした。")
+                navigate("/login")
+                break
+              default :
+                console.log("profileの取得に失敗しました")
+                navigate("/login")
+            }
+            
+            
+          })
+          break
+        case 403:
+          break
+        default:
+          navigate("/login")
+          break
       }
     })
-      .then((res: AxiosResponse<Array<Profile>>) => {
-        setProfile(res.data[0])
-          
-        setCookie("profileimage",res.data[0].image)
-        setCookie("nickName",res.data[0].nickName)
-      })
-      .catch((e: AxiosError<{ error: string }>) => {
-      //  alert(e.message)
-        switch (e.response?.status) {
-          case 401:
-            //認証エラー
-            const refreshToken = cookies.refresh
-            refreshAccessToken(refreshToken)
-            .then(( data )=>{
-              // accessトークンを保存する
-              if (data.isComplete){
-                setCookie("token", data.token)
-                // もう一度習得する
-                window.location.reload()  
-              }
-              else{
-                navigate("/login")
-
-              }
-             
-
-            })
-            .catch(()=>{ 
-              alert("エラー")
-              navigate("/login")
-            })
-            break
-          case 403:
-
-          default:
-            break
-        }
-      });
   }
 
   //自分の投稿を取得する
   function getAPIMyVote() {
     //自分の投稿を取得する
-    const token = cookies.token
-    axios.get(`${baseURL}api/vote/?type=me`, {
-      headers: {
-        "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
-      }
-    })
+    
+
+    instance.get("vote/?type=me")
       .then((res: AxiosResponse<Array<Vote>>) => {
 
         setVotes(res.data)
@@ -99,36 +88,31 @@ const MyProfile = () => {
           case 403:
 
           default:
-            break
+            console.log("投稿の取得に失敗しました")
+            navigate("/login")
         }
       });
 
   }
   //自分が投票した投稿を取得する
   function getAPIMyVotdData() {
-    const token = cookies.token
-    axios.get(`${baseURL}api/vote/?type=voted`, {
-      headers: {
-        "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
-      }
+    instance.get("vote/?type=voted")
+    .then((res: AxiosResponse<Array<Vote>>) => {
+      setVotedData(res.data)
     })
-      .then((res: AxiosResponse<Array<Vote>>) => {
-        setVotedData(res.data)
-      })
-      .catch((e: AxiosError<{ error: string }>) => {
-        console.log("エラー", e.response?.status)
-        switch (e.response?.status) {
-          case 401:
-            //認証エラー
-            // navigate("/login")
-            break
-          case 403:
+    .catch((e: AxiosError<{ error: string }>) => {
+      console.log("エラー", e.response?.status)
+      switch (e.response?.status) {
+        case 401:
+          //認証エラー
+          // navigate("/login")
+          break
+        case 403:
 
-          default:
-            break
-        }
-      });
+        default:
+          break
+      }
+    });
   }
 
 

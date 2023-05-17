@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import axios, {  AxiosResponse ,AxiosError } from "axios"
 import { Vote } from '../../../Type';
-import { baseURL} from '../../../methods/Api'
+import { baseURL, instance} from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import VoteCard from '../Vote/VoteCard';
@@ -18,37 +18,39 @@ const Search = () => {
   const navigate = useNavigate()
   const word = query.get("q")
   useEffect(() => {
-    fetchAPIQuestionData()
+
+   if (word != null){
+      fetchAPIQuestionData()
+   }
+    
   },[word]);
 
   function fetchAPIQuestionData(){
-    const token = cookies.token  
-    axios.get(`${baseURL}api/vote/?q=${query.get("q")}`,{
-       headers: { 
-        "Content-Type": "applicaiton/json",
-        Authorization: "JWT " + `${token}`
-      }
-     })
-       .then((res:AxiosResponse<Array<Vote>>) => {
-       setPost(res.data) 
-   })
-   .catch((e: AxiosError<{ error: string }>) => {
-    switch (e.response?.status){
+   const url = `vote/?q=${query.get("q")}`
+  
+   instance.get(url)
+   .then((res:AxiosResponse<Array<Vote>>) =>{
       
-       case 401:
-          //認証エラー
-          navigate("/login")
-          break
-       case 403:
-          break
-       default:
-          break
-    }
-  });
-}
+       setPost(res.data) 
+       console.log(res.data)
+   })
+   .catch((e: AxiosError<{ error: string }>)=>{
+      switch (e.response?.status) {
+         
+         case 401:
+            navigate("/login")
+            break
+         default:
+            navigate("/login")
+            break
+      }
+   })
+   }
   return (
    <>
-   <div className='my-1 md:hidden'> <SearchInput/></div>
+   <div className='my-1 md:hidden'>
+       <SearchInput/>
+   </div>
     {
        votes.map((vote) => (
           <div key={vote.id}>

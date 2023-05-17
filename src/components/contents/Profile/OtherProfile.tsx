@@ -62,7 +62,6 @@ const OtherProfile = () => {
 
       })
       .catch((e: AxiosError<{ error: string }>) => {
-        console.log("エラー", e.response?.status)
         switch (e.response?.status) {
           case 401:
             //認証エラー

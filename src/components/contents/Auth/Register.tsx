@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Footer from '../Footer/Footer'
 import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Auth_Login,Auth_Register , postAPIRegisterProfile, registerUser } from '../../../methods/Api';
+import { Auth_Login,Auth_Register , instance, registerUser } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
 
 type genderButtonType = {
@@ -25,15 +25,21 @@ const Register = () => {
 
   const handleLogin: SubmitHandler<Auth_Register> = async data =>{
     //アカウント作成
-    const auth:Auth_Register = { email:data["email"] ,password:data["password"],dateOfBirth:data["dateOfBirth"],gender:selectedGender}
-    const user_id = registerUser(auth)
-    setCookie("userid",user_id)
-    navigate("/entry")
-  
-   
-   
+    var gender = 0
+    if (selectedGender == "male"){
+      gender=1 
+    }
+    else {
+      gender = 2
+    }
+    const auth:Auth_Register = { email:data["email"] ,password:data["password"],dateOfBirth:data["dateOfBirth"],gender:gender}
+    instance.post("register/",auth).then((res)=>{
+      setCookie("userid",res.data["id"])
+      navigate("/entry")
+    })
   };
   const handleGenderChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    
     setSelectedGender(e.target.value); // ラジオボタンの状態を更新
   };
 
@@ -49,12 +55,12 @@ const Register = () => {
       
         <div className='items-center pb-5'>
           <label className=" ">メールアドレス</label>
-          <input {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "   />
+          <input autoComplete="email" {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "   />
           {errors.email?.type === 'required' && <p className='text-gray-600' role="alert">メールアドレスが入力されていません</p>}
         </div>
         <div className='items-center pb-5'>
         <label className=" ">パスワード</label>
-          <input {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "/>
+          <input autoComplete="current-password" {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "/>
           {errors.password?.type === 'required' && <p className='text-gray-600' role="alert">パスワードが入力されていません</p>}
         </div>
 
@@ -81,7 +87,7 @@ const Register = () => {
         <br />
         <div className='items-center pb-5 w-full'>
           <label className=" ">生年月日</label>
-          <input placeholder='例) 19901201 1990/12/1 生まれの場合' {...register("dateOfBirth", { required: true, maxLength: 8 })}  type="number"  id="number" className=" w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5"/>
+          <input placeholder='例)  1990/12/1 生まれの場合 19901201' {...register("dateOfBirth", { required: true, maxLength: 8 })}  type="number"  id="number" className=" w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5"/>
           {errors.password?.type === 'required' && <p className='text-gray-600' role="alert">生年月日が入力されていません</p>}
         </div>
         <p className='m-1'>性別と生年月日は、他の利用者に共有されることがあります。</p>

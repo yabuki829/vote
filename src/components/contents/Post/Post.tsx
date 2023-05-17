@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { postAPIQuestionData } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom"
@@ -14,6 +14,11 @@ const Post = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true 
   });
+  useEffect(() => {
+   if (cookies.userid == undefined || cookies.nickName == undefined  || cookies.profileimage == undefined){
+      navigate("/login")
+   }
+  }, [])
 
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = createRandomId()
@@ -80,7 +85,7 @@ const Post = () => {
       choices: selections,
     
     } 
-    postAPIQuestionData(voteData,token)
+    postAPIQuestionData(voteData)
     .then((vote_id) => {
       console.log(vote_id)
       navigate("/vote/"+vote_id)
@@ -125,7 +130,7 @@ const Post = () => {
               <div key={selection.id} className='flex h-8 mb-2 ' >
                 <input type="name" onChange={(e) => handleChangeSelectionTitle(e, selection.id)} id="name" value={selection.text} className="w-3/4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5  "placeholder='15文字まで' />
                 <button onClick={() => handleDeleteSelection(selection.id)} className='ml-2 border px-2 bg-red-600 text-white text-sm'>削除</button>
-                { index == selections.length - 1 && (<> <button  onClick={(e) => handleAddSelection(e)} className='ml-2 border px-2 bg-blue-400 text-white rounded-full'>＋</button></>)}
+                { index == selections.length - 1 && (<> <button  onClick={(e) => handleAddSelection(e)} className=' border px-2 bg-blue-400 text-white rounded-full'>＋</button></>)}
               </div>
             )}
 

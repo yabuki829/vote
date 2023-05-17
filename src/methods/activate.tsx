@@ -1,5 +1,5 @@
 import axios, {  AxiosResponse} from "axios"
-import { baseURL } from "./Api";
+import { baseURL, instance } from "./Api";
 
 type result_data = {
   message:string
@@ -15,11 +15,8 @@ export function activate(uidd64:string,token:string){
     uidb64:uidd64,
     token: token
   }
-  const res = axios.post(`${baseURL}api/activate/`,data,{
-    headers: {
-      "Content-Type": "application/json",
-    }
-  }).then((res:AxiosResponse<result_data>) => {
+  instance.post("activate/",data)
+  .then((res:AxiosResponse<result_data>) => {
     if (res.data.message == "success"){
       return true
     }

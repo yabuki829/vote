@@ -6,6 +6,23 @@ import { Profile, Vote } from '../Type';
 //TODO デプロイする時隠す
 export const baseURL = "http://127.0.0.1:8000/"
 
+// corsの設定
+//"http://127.0.0.1:8000/" だとcookieが保存されない
+// http://localhost:8000の部分を合わせないといけない？
+
+
+export const instance = axios.create({
+
+  baseURL:  "http://localhost:8000/api/",
+  timeout: 5000,
+  withCredentials: true ,
+  headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    
+  },
+})
+
 export type Auth_Login = {
   email: string;
   password: string;
@@ -16,68 +33,38 @@ export type Auth_Register = {
   email:string
   password: string
   dateOfBirth: number
-  gender: string
+  gender: number
 }
 
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 export async function login(auth:Auth_Login){
   //トークン メールアドレス　パスワードが必要
   console.log("api接続します")
-  const res = await axios.post(`${baseURL}authen/jwt/create`,auth,{
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-  const token =  res.data["access"]
+  const res = await instance.post("token/",auth)
+
   return res.data
  
 }
 
 export async function registerUser(auth:Auth_Register){
   alert("apiに接続します")
-  await axios.post(`${baseURL}api/register/`,auth,{
-    headers: {
-      "Content-Type": "application/json",
-    }
-  }).then((res)=> {
-    //useridが返ってくる　
-    return res.data["id"]
-  }).catch(()=>{
-    alert("エラー")
-    }
-  )
+  
  
 }
-
 //質問を取得する 
 //TODO 現在は全て取得になっていて投稿数が多くなったときに動作が重くなるため、取得数を変更したい。
 
-export async function postAPIQuestionData(vote:any,token:string){
+export async function postAPIQuestionData(vote:object){
   console.log("投稿します",vote)
-  const res = await axios.post(`${baseURL}api/vote/`,vote,{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "JWT " + `${token}`
-    }
-  });
+  
+  const res =  await instance.post("vote/",vote)
+  console.log("ここだよ",res.data)
+  
   console.log("--------------投稿完了---------------")
   
   
-  // vote_idを返す
-  return res.data[0].id
-}
-
-export async function postAPIRegisterProfile(auth:Auth_Login,token:string){
-  console.log("profileを作成します")
-  const res = await axios.post(`${baseURL}api/profile/`,auth,{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "JWT " + `${token}`
-    }
-
-    
-  })
   
-  return res.data
 }
 
 

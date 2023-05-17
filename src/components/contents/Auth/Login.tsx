@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { useNavigate,Link} from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import { Auth_Login, baseURL, login } from '../../../methods/Api';
+import { Auth_Login, baseURL, instance, login } from '../../../methods/Api';
 import { useCookies } from "react-cookie";
 import axios, { AxiosResponse } from 'axios';
 import { Profile } from '../../../Type';
@@ -20,30 +20,26 @@ const Login:React.FC =  () =>  {
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
     const result= await login(auth)
-    setCookie("token",result["access"])
-    setCookie("refresh",result["refresh"])
+    
     handleGetProfile(result["access"])    
   };
 
   async function handleGetProfile(token:string){
-    axios.get(`${baseURL}api/profile`,{
-      headers: { 
-       "Content-Type": "applicaiton/json",
-       Authorization: "JWT " + `${token}`
+    instance.get("profile").then((res:AxiosResponse<Array<Profile>>) => {
+      alert("priofileを取得しました")
+      console.log(res.data)
+      setCookie("userid",res.data[0].user.id)
+    //profileに画像が登録されていればクッキーに保存する
+      if(res.data[0].image != ""){
+        console.log("画像を保存します")
+        setCookie("profileimage",res.data[0].image)
      }
-    })
-      .then((res:AxiosResponse<Array<Profile>>) => {
-        // alert("priofileを取得しました")
-        console.log(res.data)
-        setCookie("userid",res.data[0].user.id)
-      //profileに画像が登録されていればクッキーに保存する
-        if(res.data[0].image != ""){
-          console.log("画像を保存します")
-          setCookie("profileimage",res.data[0].image)
-       }
-       setCookie("nickName",res.data[0].nickName)
-      //  alert("ホーム画面に移動します")
-        navigate("/")
+      setCookie("nickName",res.data[0].nickName)
+      alert("ホーム画面に移動します")
+      navigate("/")       
+    }).catch((e)=>{
+      alert(e)
+      console.log(e)
   })
   }
   
@@ -57,12 +53,12 @@ const Login:React.FC =  () =>  {
         <form onSubmit={handleSubmit(handleLogin)} className='py-5 ' action="">
           <div className='items-center pb-5'>
             <label className="">メールアドレス</label>
-            <input {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "   />
+            <input autoComplete="email" {...register("email", { required: true, maxLength: 20 })} type="email" id="email" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "   />
             {errors.email?.type === 'required' && <p className='text-gray-600' role="alert">メールアドレスを入力してください</p>}
           </div>
           <div className='items-center pb-5'>
             <label className=" ">パスワード</label>
-            <input {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "/>
+            <input autoComplete="current-password" {...register("password", { required: true, maxLength: 20 })}  type="password"  id="password" className="w-full shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block  p-2.5 "/>
             {errors.password?.type === 'required' && <p className='text-gray-600' role="alert">パスワードを入力してください</p>}
             {/* {errors.password?.type === "minLength" &&  <p className='text-red-600 text-base' role="alert">*8文字以上の半角英数字</p>} */}
             

@@ -338,18 +338,23 @@ const VoteDetails = () => {
             </div>
           ))
         } 
-          
-        <h1 className='text-right'>{numberOfVotes}人が投票</h1>
+
+
+        { isVoted()? ( <h1 className='text-right'>{numberOfVotes}人が投票</h1>):(<></>) }
+       
         
         <div className='flex justify-end'>
-          <button onClick={()=>copyTextToClipboard("http://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-400 px-3 text-white text-sm'>URLをコピー</button>
+          <button onClick={()=>copyTextToClipboard("https://localhost:3000/"+"vote/"+location.pathname.split('/')[2])} className='border bg-blue-400 px-3 text-white text-sm'>URLをコピー</button>
           {  isMyVote() && ( <button onClick={open} className='border bg-red-400 px-3  text-white'>削除</button> )}
         </div>
             
       </div>
-
       <hr />
-     
+      <div className='bg-blue-300 h-32 mx-10 md:mx-20 my-8 flex justify-center items-center'>
+          <h1 className='text-white font-bold'>広告募集</h1>
+        </div>
+      <hr />
+      
       <div className=''>
         {/* <h1 className='font-bold'>※コメントは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
         <h1 className=' font-bold'>コメントは現在削除できません。</h1>

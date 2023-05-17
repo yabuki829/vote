@@ -5,6 +5,7 @@ import profile  from "../../image/profile.png"
 import arrowleft  from "../../image/arrowleft.png"
 import { useLocation } from 'react-router-dom'
 import SearchInput from './SearchInput';
+import { instance } from '../../methods/Api';
 const Header:React.FC = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
   const navigate = useNavigate();
@@ -19,14 +20,19 @@ const Header:React.FC = () => {
   
   function handleLogout(){
     // token profileを削除する
-    alert("ログアウトしました")
-    removeCookie("token")
-    removeCookie("refreshToken")
+    // alert("ログアウトしました")
+
     removeCookie("bio")
     removeCookie("profileimage")
     removeCookie("userid")
     removeCookie("nickName")
-    navigate("/login")
+   
+    // ログアウトのapiを呼び出す
+
+    instance.post("logout/").then((res)=>{
+      navigate("/login")
+    })
+   
   }
 
   function goBack(){
@@ -90,9 +96,13 @@ const Header:React.FC = () => {
        
        
         {/* モバイル */}
-        <h1 className='text-3xl sm: text-xl font-bold mx-5 md:mx-10 block md:hidden'>Vote</h1>
+        <div className='flex items-center'>
+          <button className='hover:bg-gray-200 rounded-full block md:hidden' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+          <h1 className='text-3xl sm: text-xl font-bold md:mx-10 block md:hidden'>Vote</h1>
+        </div>
+      
         {/* <div className='items-center block'> */}
-        { cookies.token ? (
+        { cookies.userid && cookies.nickname ? (
         <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
           Logout
         </button>):(
