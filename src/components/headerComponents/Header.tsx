@@ -46,7 +46,8 @@ const Header:React.FC = () => {
         {/*  パソコン */}
         <div className='text-3xl sm: text-xl font-bold  hidden md:block'>
         <Routes>
-              <Route path='/' element={<h1>投票箱</h1> }>
+              <Route path='/' element={<h1>質問サービスVote</h1>}></Route>
+              <Route path='/vote' element={<h1>投票箱</h1> }>
               </Route>
               <Route path='/vote/:id' element={
                 <div className='flex items-center'> 
@@ -56,20 +57,21 @@ const Header:React.FC = () => {
               </Route>
            
 
-                
+              
               <Route path='tag' element={
                 <div className='flex items-center'> 
-                  <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+                  {/* <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button> */}
                   <h1>「{query.get('title')}」</h1>
                 </div>
               }> </Route>
               <Route path='search' element={
                 <div className='flex items-center'>
-                  <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+                  {/* <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button> */}
                    <h1>「{query.get('q')}」で検索しました</h1>
                 </div>
                
               }> </Route>
+               <Route path='/thread' element={<h1>スレッド</h1>}></Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}></Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}></Route>
               <Route path='/profile' element={<h1>プロフィール</h1>}></Route>
@@ -81,7 +83,7 @@ const Header:React.FC = () => {
 
               <Route path='/profile/:id' element={
                  <div className='flex items-center'> 
-                  <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+                  {/* <button className='hover:bg-gray-200 rounded-full' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button> */}
                   <h1>プロフィール</h1>
                </div>
               }></Route>
@@ -97,8 +99,22 @@ const Header:React.FC = () => {
        
         {/* モバイル */}
         <div className='flex items-center'>
-          <button className='hover:bg-gray-200 rounded-full block md:hidden' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
-          <h1 className='text-3xl sm: text-xl font-bold md:mx-10 block md:hidden'>Vote</h1>
+          <Routes>
+            <Route path='/' element={
+              <>
+                {/* <button className='hover:bg-gray-200 rounded-full block md:hidden' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button> */}
+                <h1 className=' font-bold m-5 block md:hidden'>質問サービスVote</h1>
+              </>
+            }></Route>
+            <Route path='/vote/:id' element={
+              <div>
+                <button className='hover:bg-gray-200 rounded-full block md:hidden m-1' onClick={goBack}><img className='w-10 h-10' src={arrowleft} alt="" /></button>
+              </div>
+            }></Route>
+            <Route path='/post' element={<h1 className='font-bold m-5 block md:hidden'>投稿する</h1>}></Route>
+            
+          </Routes>
+         
         </div>
       
         {/* <div className='items-center block'> */}

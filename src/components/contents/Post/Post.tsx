@@ -122,7 +122,8 @@ const Post = () => {
       </Modal>
       <div className="md:w-4/5 mx-auto p-5 mt-5  ">
         <textarea onChange={(e) => handleChangeText(e)} id="message" value={text} className="block p-2.5 w-full md:text-xl  outline-0 shadow-sm border" placeholder='質問や選択肢の補足を入力'></textarea>
-        <div className="sm:col-span-2 pt-10  ">
+        <input type="name" className=" shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-primary-500 focus:border-primary-500 block p-1 my-3  "placeholder='タグ' />
+        <div className="sm:col-span-2 pt-5  ">
             <label className="block mb-2 text-2xl font-bold text-gray-500">選択肢</label>
             {selections.map((selection,index) =>
             

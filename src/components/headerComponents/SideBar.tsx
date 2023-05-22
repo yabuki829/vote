@@ -4,6 +4,7 @@ import profile from "../../image/profile.png"
 import post from "../../image/post.png"
 import home from "../../image/home.png"
 import search from "../../image/search.png"
+import thread from "../../image/thread.png"
 const SideBar: React.FC = () => {
   const navigate = useNavigate();
 
@@ -30,6 +31,12 @@ const SideBar: React.FC = () => {
                 <img className='w-full h-full block md:hidden  p-4 mb-2 hover:bg-indigo-700' src={home} alt="" />
               </Link>
               
+          </div>
+          <div>
+            <Link to="/thread" className=''>
+              <a className='block px-4 py-2 hover:bg-indigo-700 rounded-md hidden md:block' >スレッド</a>
+              <img className='w-full h-full block md:hidden  p-4 mb-2 hover:bg-indigo-700' src={thread} alt="" />
+            </Link>
           </div>
           
           <div>

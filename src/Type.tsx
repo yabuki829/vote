@@ -20,10 +20,11 @@ export type Vote = {
   choices:Array<Choice>
   //全体の投稿数がほしいな
   numberOfVotes:Array<User>
-  tag:Tag
+  tags:[Tag]
 }
 
-type Tag = {
+export type Tag = {
+  id:string
   title:string
 }
 
@@ -80,7 +81,7 @@ export const defaultVote:Vote = {
   choices: [],
   //全体の投稿数がほしいな
   numberOfVotes: [],
-  tag: {title:""}
+  tags: [{id:"",title:""}]
 }
 
 export type Edit_Profile = {

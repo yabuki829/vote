@@ -7,7 +7,7 @@ import { Link, useLocation} from "react-router-dom"
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 
 const VoteCard:React.FC<Vote> = (props) => {
-  const { questionText,user,choices } = props
+  const { questionText,user,choices ,tags} = props
   const imageStyle = "w-10 h-10 border-2 rounded-full object-cover mr-4 "
   const [cookies, setCookie, removeCookie] = useCookies()
   const location = useLocation();
@@ -141,10 +141,18 @@ const VoteCard:React.FC<Vote> = (props) => {
         
 
         }
+
         {
           choices.length > 3 &&(
-            <h1 className='text-center font-bold text-2xl'>⋮</h1>
+            <h1 className='text-center text-gray-500 font-bold text-2xl pt-2'>⋮</h1>
           )
+        }
+       
+         {
+          tags.map((tag)=>(
+            <button key={tag.id} className='text-white bg-blue-400 inline-block px-2 py-1 rounded-md  text-xs md:text-base'>{tag.title}</button>
+            
+          ))
         }
         <div className='flex justify-end py-3  '>
           {

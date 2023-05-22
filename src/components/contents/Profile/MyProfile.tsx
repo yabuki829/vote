@@ -153,7 +153,7 @@ const MyProfile = () => {
            <h1 className='mx-3'> {votesMessage}</h1>
           <hr />
           {votes.map((vote) => (
-             <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} tag={vote.tag}/>
+             <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} tags={vote.tags}/>
           ))}
         </div>
       ) : ( 
@@ -163,7 +163,7 @@ const MyProfile = () => {
           
           <hr />
           {voteddata.map((vote) => (
-            <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} tag={vote.tag}/>
+            <VoteCard id={vote.id} user={vote.user} questionText={vote.questionText} createdAt={vote.createdAt} image={vote.image} isOnlyLoginUser={false} choices={vote.choices} numberOfVotes={vote.numberOfVotes} tags={vote.tags}/>
           ))}
         </div>
       )}

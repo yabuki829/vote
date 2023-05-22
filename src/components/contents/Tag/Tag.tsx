@@ -56,7 +56,7 @@ const Tag = () => {
              image={vote.image}
              isOnlyLoginUser={vote.isOnlyLoginUser}
              choices={vote.choices}
-             numberOfVotes={vote.numberOfVotes} tag={vote.tag}                        /> 
+             numberOfVotes={vote.numberOfVotes} tags={vote.tags}                        /> 
           </div>
          
        ))
