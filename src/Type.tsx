@@ -28,7 +28,7 @@ export type Tag = {
   title:string
 }
 
- 
+
 export type Choice ={
   id:string
   text:string
@@ -92,3 +92,18 @@ export type Edit_Profile = {
 }
 
 
+export type Thread = {
+  id: string
+  user:Profile
+  vote:Vote
+  title:string
+  createdAt:string
+}
+
+export const defaultThread:Thread = {
+  id:"",
+  user:defaultProfile,
+  vote: defaultVote,
+  title:"",
+  createdAt:""
+}

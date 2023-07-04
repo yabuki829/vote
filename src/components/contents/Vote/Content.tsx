@@ -13,7 +13,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 const Content:React.FC = () => {
    const [cookies, setCookie, removeCookie] = useCookies()
    //再読み込み判定
-   const [hasMore, setHasMore] = useState(true);  
+   const [hasMore, setHasMore] = useState(false);  
    const [vote_result, setVote] = useState<Result_Vote>({
     count:0,
     next: "",
@@ -25,23 +25,7 @@ const Content:React.FC = () => {
    useEffect(() => {
       fetchAPIQuestionData()
     },[]);
-    // csrfトークンの取得
-    // async function getCsrfToken(): Promise<string> {
-    //   console.log("csrftokenを取得します");
-    
-    //   try {
-    //     const response = await axios.get(`${baseURL}api/csrf/create`, {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     });
-    //     console.log("csrftoken", response.data["csrfToken"]);
-    //     return response.data["csrfToken"];
-    //   } catch (e) {
-    //     console.log("csrfエラー", e);
-    //     return "";
-    //   }
-    // }
+
     function  fetchAPIQuestionData(){
       
       instance.get("vote").then((res)=>{

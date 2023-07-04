@@ -15,7 +15,7 @@ const SearchInput = () => {
   }
   return (
     
-      <div  className='flex w-5/6 mx-auto'>
+      <div  className='flex mx-10 md:mx-1 '>
             
         <input  onChange={(e)=>handleChangeSearchText(e)} className='w-full px-2 border rounded-full ' type="text" placeholder='検索' value={searchText} />
         <button onClick={handleSearch} className='bg-blue-400 p-2 text-white ml-2 '>

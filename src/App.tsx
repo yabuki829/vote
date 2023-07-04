@@ -22,7 +22,8 @@ import InfoPage from './components/contents/Info/InfoPage';
 import PrivacyPolicy from './components/contents/Info/PrivacyPolicy';
 import TermsOfService from './components/contents/Info/TermsOfService';
 import Opening from './Opening';
-import Thread from './components/contents/Thread/Thread';
+import DetailThread from './components/contents/Thread/DetailThread';
+import ThreadContent from './components/contents/Thread/Thread';
 
 function App(){
   const [isLoading, setIsLoading] = useState(true)
@@ -70,12 +71,12 @@ function App(){
           <Header/ >
           <div className=' md:mt-0 '>
               <Routes>
-                
                 <Route path='/' element={<Content/>}></Route>
                 <Route path='/vote/:id' element={<VoteDetails/>}></Route>
                 <Route path='/contact' element={<Contact/>}></Route>
                 <Route path='/post' element={<Post/>}></Route>
-                <Route path='thread' element={<Thread/>}></Route>
+                <Route path='thread' element={<ThreadContent/>}></Route>
+                <Route path='thread/:id' element={<DetailThread/>}></Route>
                 <Route path='profile/:id' element={<OtherProfile/>}> </Route>
                 <Route path='search' element={<Search/>}> </Route>
                 <Route path='tag' element={<Tag/>}> </Route>
@@ -105,6 +106,7 @@ function App(){
             <Route path='search' element={<RightBar/>}> </Route>
             <Route path='tag' element={<RightBar/>}> </Route>
             <Route path='thread' element={ <RightBar  />}> </Route>
+            <Route path='thread/:id' element={<RightBar/>}></Route>
             <Route path='/vote/:id' element={<RightBar/>}></Route>
             <Route path='/info' element={<RightBar/>}></Route>
             <Route path='/privacypolicy' element={<RightBar/>}></Route>

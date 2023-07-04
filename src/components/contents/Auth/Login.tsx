@@ -20,18 +20,22 @@ const Login:React.FC =  () =>  {
     //ログインする
     const auth:Auth_Login = {email:data["email"] ,password:data["password"]}
     const result= await login(auth)
-    
+
     handleGetProfile(result["access"])    
   };
 
   async function handleGetProfile(token:string){
     instance.get("profile").then((res:AxiosResponse<Array<Profile>>) => {
-      alert("priofileを取得しました")
-      console.log(res.data)
+
+
+      removeCookie("bio")
+      removeCookie("profileimage")
+      removeCookie("userid")
+      removeCookie("nickName")
+
       setCookie("userid",res.data[0].user.id)
     //profileに画像が登録されていればクッキーに保存する
       if(res.data[0].image != ""){
-        console.log("画像を保存します")
         setCookie("profileimage",res.data[0].image)
      }
       setCookie("nickName",res.data[0].nickName)

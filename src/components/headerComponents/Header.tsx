@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate,Route,Routes,Link} from "react-router-dom"
 import { useCookies } from "react-cookie";
-import profile  from "../../image/profile.png"
 import arrowleft  from "../../image/arrowleft.png"
 import { useLocation } from 'react-router-dom'
 import SearchInput from './SearchInput';
@@ -17,22 +16,33 @@ const Header:React.FC = () => {
   function handleImageTap(){
       navigate("/profile")
   }
+
+  function showloginORLogoutButton(){
+    if (cookies.userid != undefined && cookies.nickName != undefined){
+      const button = <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>ログアウト</button>
+      return button
+    }
+    else{
+      return <Link to="/login" className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " >ログイン</Link>
+    }
+    
+  }
   
   function handleLogout(){
     // token profileを削除する
     // alert("ログアウトしました")
-
-    removeCookie("bio")
-    removeCookie("profileimage")
-    removeCookie("userid")
-    removeCookie("nickName")
-   
-    // ログアウトのapiを呼び出す
-
     instance.post("logout/").then((res)=>{
+      removeCookie("bio")
+      removeCookie("profileimage")
+      removeCookie("userid")
+      removeCookie("nickName")
       navigate("/login")
     })
    
+    
+   
+
+    
   }
 
   function goBack(){
@@ -71,7 +81,8 @@ const Header:React.FC = () => {
                 </div>
                
               }> </Route>
-               <Route path='/thread' element={<h1>スレッド</h1>}></Route>
+               <Route path='/thread' element={<h1>新規スレッド</h1>}></Route>
+               <Route path='/thread/:id' element={<h1>スレッド</h1>}></Route>
               <Route path='/contact' element={<h1>お問い合せ</h1>}></Route>
               <Route path='/post' element={<h1>投票を作成する</h1>}></Route>
               <Route path='/profile' element={<h1>プロフィール</h1>}></Route>
@@ -112,18 +123,14 @@ const Header:React.FC = () => {
               </div>
             }></Route>
             <Route path='/post' element={<h1 className='font-bold m-5 block md:hidden'>投稿する</h1>}></Route>
-            
+            <Route path='/thread' element={<h1 className='font-bold m-5 block md:hidden'>新規スレッド</h1>}></Route>
+            <Route path='search' element={<h1 className='font-bold m-5 block md:hidden'>検索</h1> }> </Route>
           </Routes>
          
         </div>
       
-        {/* <div className='items-center block'> */}
-        { cookies.userid && cookies.nickname ? (
-        <button className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " onClick={handleLogout}>
-          Logout
-        </button>):(
-          <Link to="/login" className="items-center block font-bold text-gray-800 p-2 hover:bg-gray-200 " >Login</Link>
-        )}
+      
+       {showloginORLogoutButton()}
       </header>
     
      

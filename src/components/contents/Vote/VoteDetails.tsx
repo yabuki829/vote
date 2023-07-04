@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import { Choice, User, Vote, Comment } from '../../../Type';
+import { Choice, User, Vote, Comment , Thread} from '../../../Type';
 import { isNotVotedStyle1, isNotVotedStyle2, isVotedStyle1, isVotedStyle2, votedChoicedStyle, voteNotChoicedStyle } from '../../../styles/VoteStyle'
 import { useCookies } from "react-cookie";
 import { baseURL, instance } from '../../../methods/Api';
@@ -26,7 +26,7 @@ const VoteDetails = () => {
 
   useEffect(() => {
     fetchAPICommentData()
-    // fetchAPIThreadData()
+    fetchAPIThreadData()
     fetchAPIDetailVoteData()
   }, [word,vote_id]);
 
@@ -47,6 +47,7 @@ const VoteDetails = () => {
   const [isCommentComp, setisCommentComp] = useState(true)
 
   // スレッドの名前と詳細
+  const [threads,setThreads] = useState<Array<Thread>>([])
   const [threadTitle,setThreadTitle] = useState("")
   const [threadContent,setThreadContent] = useState("")
 
@@ -104,6 +105,13 @@ const VoteDetails = () => {
     }
   }
   
+
+  function fetchAPIThreadData(){
+    const url =  `vote/${vote_id}/thread/`
+    instance.get(url).then((res)=>{
+      setThreads(res.data)
+    })
+  }
   function fetchAPIDetailVoteData(){
     //投稿の詳細を取得する
    
@@ -153,6 +161,7 @@ const VoteDetails = () => {
 
   //投票する
   async function handleVote(choiceID: string, choiceText: string) {
+   
     if (!isVoted()){
       let userid = cookies.userid
       if (userid == "" || userid == undefined){
@@ -165,8 +174,10 @@ const VoteDetails = () => {
       const url = `vote/${vote.id}/`
       instance.put(url,data).then((res)=>{
         console.log(res.data["userid"])
-  
-        if (userid != undefined){
+
+        userid = res.data["userid"]
+        // 未ログインのuserの場合
+        if (userid != undefined && userid != ""){
           setCookie("userid",userid)
           const user: User = { id: userid }
           vote.numberOfVotes.push(user)
@@ -174,7 +185,9 @@ const VoteDetails = () => {
           vote.choices.map((choice) => (
             (choice.id === choiceID) ? (choice.votedUserCount.push(user)) : ("")
           ))
-        }else{
+        }
+        // ログイン済みのuserの場合
+        else{
           const user: User = { id: cookies.userid }
           vote.numberOfVotes.push(user)
     
@@ -197,12 +210,14 @@ const VoteDetails = () => {
       title: threadTitle,
       content: threadContent
     } 
-
-    instance.post("thread/",data).then((res)=>{ 
-      console.log(res.data)
-      setThreadTitle("")
-      setThreadContent("")
-    })
+    if (threadTitle != ""){
+      instance.post("thread/",data).then((res)=>{ 
+        console.log(res.data)
+        setThreadTitle("")
+        setThreadContent("")
+      })
+    }
+    
   
   }
 
@@ -253,7 +268,6 @@ const VoteDetails = () => {
 
   function handlePOSTComment() {
 
-    const token = cookies.token
     if (mycomment == ""){
       return 
     }
@@ -436,10 +450,19 @@ const VoteDetails = () => {
           </div>
         </div>
         <div>
-          <h1 className='mx-3'>
+          <h1 className=''>
             {threadCountText}
           </h1>
           <hr />
+          <div className='mx-2'>
+          {  
+            threads.map((thread) =>
+            
+              <a key={thread.id} className='text-blue-400' href="">{thread.title}</a>
+            )
+          }
+          </div>
+          <br />
 
         </div>
       </div>

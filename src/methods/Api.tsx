@@ -38,11 +38,12 @@ export type Auth_Register = {
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 export async function login(auth:Auth_Login){
   //トークン メールアドレス　パスワードが必要
   console.log("api接続します")
   const res = await instance.post("token/",auth)
-
+  
   return res.data
  
 }

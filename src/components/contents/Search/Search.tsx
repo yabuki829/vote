@@ -48,9 +48,12 @@ const Search = () => {
    }
   return (
    <>
-   <div className='my-1 md:hidden'>
+   <div className='my-5 w-full md:hidden'>
        <SearchInput/>
+       
    </div>
+   <hr className='mx-10 md:hidden' />
+   
     {
        votes.map((vote) => (
           <div key={vote.id}>

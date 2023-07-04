@@ -11,8 +11,6 @@ const VoteCard:React.FC<Vote> = (props) => {
   const imageStyle = "w-10 h-10 border-2 rounded-full object-cover mr-4 "
   const [cookies, setCookie, removeCookie] = useCookies()
   const location = useLocation();
-
-
   function isVoted():boolean{
     //投票済みかどうか確認する
     //props.numberOfVotesに自分のidがあるかどうかを調べる
@@ -148,12 +146,7 @@ const VoteCard:React.FC<Vote> = (props) => {
           )
         }
        
-         {
-          tags.map((tag)=>(
-            <button key={tag.id} className='text-white bg-blue-400 inline-block px-2 py-1 rounded-md  text-xs md:text-base'>{tag.title}</button>
-            
-          ))
-        }
+  
         <div className='flex justify-end py-3  '>
           {
             isVoted() ?(
