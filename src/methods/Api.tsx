@@ -53,19 +53,11 @@ export async function registerUser(auth:Auth_Register){
   
  
 }
-//質問を取得する 
-//TODO 現在は全て取得になっていて投稿数が多くなったときに動作が重くなるため、取得数を変更したい。
-
 export async function postAPIQuestionData(vote:object){
-  console.log("投稿します",vote)
-  
-  const res =  await instance.post("vote/",vote)
-  console.log("ここだよ",res.data)
-  
-  console.log("--------------投稿完了---------------")
-  
-  
-  
+  alert("投稿します")
+    
+  return 
+
 }
 
 

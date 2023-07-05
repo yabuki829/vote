@@ -38,9 +38,12 @@ const Login:React.FC =  () =>  {
       if(res.data[0].image != ""){
         setCookie("profileimage",res.data[0].image)
      }
+      setCookie("bio",res.data[0].bio)
       setCookie("nickName",res.data[0].nickName)
       alert("ホーム画面に移動します")
       navigate("/")       
+      window.location.reload()
+     
     }).catch((e)=>{
       alert(e)
       console.log(e)

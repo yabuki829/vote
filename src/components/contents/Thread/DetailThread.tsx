@@ -28,10 +28,6 @@ const DetailThread = () => {
     fetcheAPIThreadData()
     fetchAPIThreadCommentData()
   },[]);
-
-  // -TODO fetcheAPIThreadDataではtokenを付与できているが、
-  // fetchAPIThreadCommentDataではtokenを付与できていない
-  // サーバー側の問題説が濃厚かな？
   function fetcheAPIThreadData(){
     const thread_id = location.pathname.split('/')[2]
     const url = `thread/${thread_id}/`
@@ -53,7 +49,22 @@ const DetailThread = () => {
 
           case 401:
             //認証エラー
-            navigate("/login")
+            instance.post("token/refresh/").catch((res)=> {
+             
+              switch (res.response.status){
+                case 200:
+                  console.log("リフレッシュしました。")
+                  window.location.reload()  
+                  break
+                case 401:
+                  
+                  break
+                default :
+                  // navigate("/login")
+                  break
+              }
+  
+            })
             break
           case 403:
             break

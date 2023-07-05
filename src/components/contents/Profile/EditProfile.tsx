@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { url } from 'inspector'
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
@@ -23,42 +24,50 @@ const EditProfile = () => {
 
  function handleEdit(){
   if (imageFile === null  || imageFile === undefined){
-    const token = cookies.token
     const data:Change_Profile_without_image = {
       nickName: username,
       bio: bio,
       isImageNone: true
     }
-    putAPIChangeProfile(token,data)
+
+    let url ="profile/?type=none"
+    instance.put(url,data)
+    .then((res:AxiosResponse<Array<Profile>>) => {
+      setCookie("profileimage", res.data[0].image)
+      setCookie("nickName",data.nickName)
+      setCookie("bio",data.bio)
+    })
+
     navigate("/profile")
+
   }
   else{
-    const token = cookies.token
+    console.log(imageFile)
     const data:Change_Profile = {
       nickName: username,
       profileImage: imageFile as File,
       bio: bio,
       isImageNone: false
     }
-    putAPIChangeProfile(token,data)
-    navigate("/profile")
-  }
-  
- }
-  async function putAPIChangeProfile(token:string,data:Change_Profile|Change_Profile_without_image ){
     let url ="profile/"
-  // 画像を変更するときurlが違う
-    if (data.isImageNone) {
-      url = "profile/?type=none"
-    }
-    await instance.put(url,data)
+    alert(data.profileImage)
+    console.log(data.profileImage)
+    instance.put(url,data,
+      {
+        headers: {
+          'content-type': 'multipart/form-data',
+          },
+      })
     .then((res:AxiosResponse<Array<Profile>>) => {
       setCookie("profileimage", res.data[0].image)
       setCookie("nickName",data.nickName)
       setCookie("bio",data.bio)
     })
-   
-  } 
+    // navigate("/profile")
+  }
+  
+}
+
   
 
 

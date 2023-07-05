@@ -55,7 +55,7 @@ function App(){
                 <Route path='tag' element={<Tag/>}> </Route>
                 <Route path='/edit/profile' element={ <SideBar  />}></Route>
                 <Route path='/profile' element={ <SideBar  />}></Route>
-                <Route path='/register' element={ <></>}></Route>
+                <Route path='/register' element={<SideBar  />}></Route>
                 <Route path='/404' element={ <SideBar  />}></Route>
                 <Route path='/activate/:id/:id' element={  <SideBar  />}></Route>
                 <Route path='/info' element={ <SideBar  />}></Route>

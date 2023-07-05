@@ -20,6 +20,7 @@ const VoteDetails = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true //これはオプション。デフォルトはfalse
   });
+  const [isLogin,setIsLogin] = useState(false)
   const word = ""
   const navigate = useNavigate()
   const vote_id = location.pathname.split('/')[2]
@@ -28,6 +29,7 @@ const VoteDetails = () => {
     fetchAPICommentData()
     fetchAPIThreadData()
     fetchAPIDetailVoteData()
+    checkLogin()
   }, [word,vote_id]);
 
 
@@ -39,8 +41,15 @@ const VoteDetails = () => {
     choices:[{id:"",text:"",votedUserCount:[{id:""},]}],numberOfVotes:[],tags:[{id:"",title:""}]
 
   })
- 
-  
+  function checkLogin(){
+    if (cookies.userid != undefined && cookies.nickName != undefined){
+
+      setIsLogin(true)
+    }
+    else{
+      setIsLogin(false)
+    }
+  }
   // コメント関連
   const [comments, setComments] = useState<Array<Comment>>([])
   const [mycomment, setMyComment] = useState("")
@@ -161,7 +170,7 @@ const VoteDetails = () => {
 
   //投票する
   async function handleVote(choiceID: string, choiceText: string) {
-   
+    // TODO: 未ログインの時に投票すると、投票した時の色が変わらない。投票判定にならない
     if (!isVoted()){
       let userid = cookies.userid
       if (userid == "" || userid == undefined){
@@ -284,6 +293,7 @@ const VoteDetails = () => {
    
 
   }
+  // ログインしていなければコメントやスレッドは表示しない
 
   let commentCountText
   if (comments.length === 0) {
@@ -381,20 +391,20 @@ const VoteDetails = () => {
       <hr />
       <div className='bg-blue-300 h-32 mx-10 md:mx-20 my-8 flex justify-center items-center'>
           <h1 className='text-white font-bold'>広告募集</h1>
-        </div>
-      
+      </div>
       <div className='flex justify-center my-3'>
         <button onClick={() => setisCommentComp(true)} className={menuCommentStyle}>コメント</button>
         <button onClick={() => setisCommentComp(false)} className={menuThreadStyle}>スレッド</button>
       </div>
-      
-      <div className=''>
-        {/* <h1 className='font-bold'>※コメントは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
-        <h1 className=' font-bold'>コメントやスレッドは現在削除できません。</h1>
-      </div>
-      <br />
-  
-      { isCommentComp ? (
+      { isLogin? (
+        <>
+         
+          <div className=''>
+            {/* <h1 className='font-bold'>※コメントは削除できません。適切な言葉かどうか一度考えてから書き込みをしてください。</h1> */}
+            <h1 className=' font-bold'>コメントやスレッドは現在削除できません。</h1>
+          </div>
+          <br />
+          { isCommentComp ? (
         <div>
         <div >
           <div className='p-2 flex'>
@@ -466,7 +476,17 @@ const VoteDetails = () => {
 
         </div>
       </div>
-) }
+      ) }
+        </>):(
+        <>
+        ログインするとご覧いただけます
+        </>)
+      }
+     
+      
+     
+  
+      
     </div>
 
   )

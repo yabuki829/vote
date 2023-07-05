@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { postAPIQuestionData } from '../../../methods/Api'
+import { instance, postAPIQuestionData } from '../../../methods/Api'
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom"
 import { useModal } from 'react-hooks-use-modal';
@@ -15,9 +15,7 @@ const Post = () => {
     preventScroll: true 
   });
   useEffect(() => {
-   if (cookies.userid == undefined || cookies.nickName == undefined  || cookies.profileimage == undefined){
-      navigate("/login")
-   }
+ 
   }, [])
 
   function handleAddSelection(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -69,7 +67,7 @@ const Post = () => {
 
   
   // 投稿
-  // ログインしていなければurlを知っている人にだけ公開される
+  // TODO- ログインしていなければurlを知っている人にだけ公開される
   // トークンなしでも投稿できるようにする
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     var isLimitedRelease = false
@@ -85,10 +83,10 @@ const Post = () => {
       choices: selections,
     
     } 
-    postAPIQuestionData(voteData)
-    .then((vote_id) => {
-      console.log(vote_id)
-      navigate("/vote/"+vote_id)
+
+    instance.post("vote/",voteData).then((res)=>{
+      const id = res.data[0]["id"]
+      navigate("/vote/"+id)
     })
     .catch((error) => {
       console.error("エラーが発生しました:", error);

@@ -74,9 +74,7 @@ const MyProfile = () => {
 
     instance.get("vote/?type=me")
       .then((res: AxiosResponse<Array<Vote>>) => {
-
         setVotes(res.data)
-
       })
       .catch((e: AxiosError<{ error: string }>) => {
         console.log("エラー", e.response?.status)
@@ -89,7 +87,7 @@ const MyProfile = () => {
 
           default:
             console.log("投稿の取得に失敗しました")
-            navigate("/login")
+            // navigate("/login")
         }
       });
 
